@@ -1,0 +1,8 @@
+Paso 1) Entrar a la shell de python
+python3.4 manage.py shell
+
+Paso 2) Dentro de la shell, llamar el codigo que se preparo en ./main/management/commands/crear_ciudades_paises.py ... Eso son 3 instrucciones
+
+from main.management.commands import crear_ciudades_paises
+c = crear_ciudades_paises.Command()
+c.handle()

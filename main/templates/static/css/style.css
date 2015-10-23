@@ -1,0 +1,93 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,900);
+
+body {
+  font-family: "Lato";
+  font-weight: 300;
+  font-size: 14px;
+  color: #333;
+  background: #fff;
+  line-height: 1.42857143;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+  /*margin-top: 70px;*/
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: "Lato";
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.separado {
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.centrado {
+  text-align: center;
+}
+
+.cuadrado {
+  background-color: #F8F8F8;
+  border-style: solid;
+  border-color: #cfcfcf;
+  border-width: 2px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 3px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
+.bolitas {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-color: black;
+  border-style: solid;
+  display: inline-block;
+  padding-left: 10px;
+  padding-top: 4px;
+  font-size: 16px;
+  font-weight: 900;
+  color: white
+}
+
+.activa {
+  background: #53B35A;
+}
+
+.apagada {
+  background: white;
+}
+
+.dato {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 400;
+
+}
+
+.entradastxt {
+  width: 100%;
+}
+
+.dropdowns {
+  width: 100%;
+}
+
+.elboton {
+  background-color: #071323;
+  color: #BABABA;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+}
+
+.elboton:hover {
+  background-color: #579f43;
+}
