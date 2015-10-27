@@ -5,18 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Smells Like Bakin' Cupcake Company</title>
+    <title>Liquidación de costos de importación</title>
     <!-- imports css -->
     <!-- Bootstrap ; es posible que lo queramos local-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen">
   </head>
   <body>
     <div class="container">
       <h3 class="uppercase separado centrado">Liquidación de costos de importación</h3>
       <h4 class="uppercase centrado">Aproximacion presupuestal</h4>
         <div class="row">
-          <div class="col-md-4 bolitas activa">1</div>
+          <div class="col-md-4 bolitas activa" >1</div>
           <div class="col-md-4 bolitas apagada">2</div>
           <div class="col-md-4 bolitas apagada">3</div>
         </div>
@@ -24,19 +24,29 @@
         <form>
           <span class="dato">Nombre de empresa</span><br/>
           <input type="type" name="nombreDeEmpresa" value="" class="entradastxt"/><br/>
-          <span class="dato">País</span><br/>
-          <input type="type" name="pais" value="" class="entradastxt"/><br/>
-          <span class="dato">Ciudad</span><br/>
-          <input type="type" name="ciudad" value="" class="entradastxt"/><br/>
-          <span class="dato">Correo electrónico</span><br/>
+          
+          <span class="dato agrandado">País</span><br/>
+          <select class="dropdowns agrandado" name="el_pais" onchange="cambiarCiudades(this.value)">
+          {% for pais in lista_paises %}
+            <option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "CO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
+          {% endfor %}
+          </select><br/>
+          
+          <span class="dato agrandado">Ciudad</span><img id="dePrueba"/><br/>
+          <select class="dropdowns agrandado" name="las_ciudades" id="ciudades"></select><br/>
+          
+          <span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
           <input type="type" name="correoElectronico" value="" class="entradastxt"/><br/>
+          
           <span class="dato">Teléfono</span><br/>
           <input type="type" name="telefono" value="" class="entradastxt"/><br/>
-          <input class="elboton" type="submit">
+          
+          <input class="elboton uppercase separado agrandado" type="submit" value="Siguiente"/>
         </form>
       </div>
     </div>
     <!-- imports js -->
+    <script src="{{STATIC_URL}}js/cosasAjax.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </body>
