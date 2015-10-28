@@ -1,53 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Liquidación de costos de importación</title>
+		<!-- imports css -->
+		<!-- Bootstrap ; es posible que lo queramos local-->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen">
+	</head>
+	<body>
+		<div class="container">
+			<h3 class="uppercase separado centrado">Liquidación de costos de importación</h3>
+			<h4 class="uppercase centrado">Aproximacion presupuestal</h4>
+			<div class="palCentro">
+				<span id="bola1" class="bolitas primera activa movidas">1</span>
+				<span id="bola2" class="bolitas segunda apagada movidas">2</span>
+				<span id="bola3" class="bolitas tercera apagada">3</span>
+			</div>
+			<div id="Parte1" class="cuadrado">
+				<form>
+					<span class="dato">Nombre de empresa</span><br/>
+					<input type="type" name="nombreDeEmpresa" value="" class="entradastxt form-control" placeholder="Nombre de empresa"/><br/>
 
-    <title>Liquidación de costos de importación</title>
-    <!-- imports css -->
-    <!-- Bootstrap ; es posible que lo queramos local-->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen">
-  </head>
-  <body>
-    <div class="container">
-      <h3 class="uppercase separado centrado">Liquidación de costos de importación</h3>
-      <h4 class="uppercase centrado">Aproximacion presupuestal</h4>
-        <div class="row">
-          <div class="col-md-4 bolitas activa" >1</div>
-          <div class="col-md-4 bolitas apagada">2</div>
-          <div class="col-md-4 bolitas apagada">3</div>
-        </div>
-      <div class="cuadrado">
-        <form>
-          <span class="dato">Nombre de empresa</span><br/>
-          <input type="type" name="nombreDeEmpresa" value="" class="entradastxt"/><br/>
-          
-          <span class="dato agrandado">País</span><br/>
-          <select class="dropdowns agrandado" name="el_pais" onchange="cambiarCiudades(this.value)">
-          {% for pais in lista_paises %}
-            <option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "CO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
-          {% endfor %}
-          </select><br/>
-          
-          <span class="dato agrandado">Ciudad</span><img id="dePrueba"/><br/>
-          <select class="dropdowns agrandado" name="las_ciudades" id="ciudades"></select><br/>
-          
-          <span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
-          <input type="type" name="correoElectronico" value="" class="entradastxt"/><br/>
-          
-          <span class="dato">Teléfono</span><br/>
-          <input type="type" name="telefono" value="" class="entradastxt"/><br/>
-          
-          <input class="elboton uppercase separado agrandado" type="submit" value="Siguiente"/>
-        </form>
-      </div>
-    </div>
-    <!-- imports js -->
-    <script src="{{STATIC_URL}}js/cosasAjax.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  </body>
+					<span class="dato agrandado">País</span><br/>
+					<select class="dropdowns agrandado form-control" name="el_pais" onchange="cambiarCiudades(this.value)">
+					{% for pais in lista_paises %}
+						<option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "CO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
+					{% endfor %}
+					</select><br/>
+
+					<span class="dato agrandado">Ciudad</span><img id="dePrueba"/><br/>
+					<select class="dropdowns agrandado form-control" name="las_ciudades" id="ciudades"></select><br/>
+
+					<span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
+					<input type="type" name="correoElectronico" value="" class="entradastxt form-control" placeholder="Correo electrónico"/><br/>
+
+					<span class="dato">Teléfono</span><br/>
+					<input type="type" name="telefono" value="" class="entradastxt form-control" placeholder="Teléfono"/><br/>
+
+					<button class="btn elboton uppercase separado agrandado" value="Siguiente" onclick="mostrarPag(3)"/>
+				</form>
+			</div>
+			<div id="Parte2" class="cuadrado">
+				<form>
+					<span class="dato">Nombre de empresa</span><br/>
+					<input type="type" name="nombreDeEmpresa" value="" class="entradastxt form-control" placeholder="Nombre de empresa"/><br/>
+
+					<span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
+					<input type="type" name="correoElectronico" value="" class="entradastxt form-control" placeholder="Correo electrónico"/><br/>
+
+					<span class="dato">Teléfono</span><br/>
+					<input type="type" name="telefono" value="" class="entradastxt form-control" placeholder="Teléfono"/><br/>
+
+					<input class="btn elboton uppercase separado agrandado" type="submit" value="Siguiente"/>
+				</form>
+			</div>
+		</div>
+		<!-- imports js -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="{{STATIC_URL}}js/scripts.js"></script>
+	</body>
 </html>
