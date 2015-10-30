@@ -1,7 +1,8 @@
-/* 1) PAra que la pagina use la fuente "Lato"*/
+/* 1) Para que la pagina use la fuente "Lato"*/
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,900);
 
-body {
+body
+{
   font-family: "Lato";
   font-weight: 300;
   font-size: 14px;
@@ -13,32 +14,88 @@ body {
   /*margin-top: 70px;*/
 }
 
-h1,h2,h3,h4,h5,h6{
-  font-family: "Lato";
-}
+h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 
 /* 2) Lo que maneja el texto de arriba {"Titulo", "SubtitulosS"}*/
-.uppercase {
-  text-transform: uppercase;
-}
+.uppercase {text-transform: uppercase;}
 
-.separado {
+.separado
+{
   letter-spacing: 2px;
   font-weight: bold;
 }
 
-.centrado {
+.centrado {text-align: center;}
+
+.palCentroBolas
+{
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
 
-.palCentro {
+.palCentroTxtBolas
+{
   margin-left: auto;
   margin-right: auto;
-  width: 28%
+  text-align: center;
 }
 
-/* 3) Aqui va lo relacionado con las figuras geometricas {"Cuadrado","Bolitas"}*/
-.cuadrado {
+#textoB1 {color:#000000; margin-right:76px;}
+#textoB2 {color:#909090; margin-right:55px;}
+#textoB3 {color:#909090;}
+/* 3) Aqui va lo relacionado con la parte de arriba donde van las bolas*/
+.cajaBolas
+{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.bolitas
+{
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border:3px solid transparent;
+  border-color: black;
+  display: inline-block;
+  padding-top: 3px;
+  font-size: 16px;
+  font-weight: 900;
+  color: white;
+  position:relative;
+}
+
+.bolitas.primera:before,.bolitas.segunda:before
+{
+  content:"";
+  width:101px;
+  height:3px;
+  background-color:#000000;
+  top:-webkit-calc(50% - 3px);
+  top:-moz-calc(50% - 3px);
+  top:calc(50% - 3px);
+  left:110%;
+  position:absolute;
+}
+
+.movidas {margin-right:98px;}
+
+.activa {background: #53B35A;}
+
+.apagada {background: white;}
+
+.textoBolas
+{
+  font-size:15px;
+  font-weight:600;
+  position: relative;
+  top: 10px;
+}
+
+/* 4) Para el cuadrado*/
+.cuadrado
+{
   background-color: #F8F8F8;
   border-style: solid;
   border-color: #cfcfcf;
@@ -49,73 +106,43 @@ h1,h2,h3,h4,h5,h6{
   border-radius: 3px;
   padding-left: 50px;
   padding-right: 50px;
-  padding-bottom: 25px;
-  padding-top: 25px;
+  padding-bottom: 50px;
+  padding-top: 35px;
 }
+
+/*Esto es para que al comienzo solo se vea la parte 1 del formulario*/
+.cuadrado#Parte1 {display: block}
+.cuadrado#Parte2 {display: none}
+.cuadrado#Parte3 {display: none}
 
 /* Que el cuadrado se vea bien en moviles*/
-@media(max-width: 480px){
-  .cuadrado{
-    width: 100%;
-  }
+@media(max-width: 480px)
+{
+  .cuadrado {width: 100%;}
 }
 
-.bolitas {
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  border:3px solid transparent;
-  border-color: black;
-  display: inline-block;
-  padding-left: 10px;
-  padding-top: 3px;
-  font-size: 16px;
-  font-weight: 900;
-  color: white;
-  position:relative
-}
-
-.bolitas.primera:before,.bolitas.segunda:before{
-  content:"";
-  width:101px;
-  height:3px;
-  background-color:#000000;
-  top:-webkit-calc(50% - 3px);
-  top:-moz-calc(50% - 3px);
-  top:calc(50% - 3px);
-  left:110%;
-  position:absolute
-}
-
-.movidas{margin-right:98px}
-
-.activa{background: #53B35A}
-
-.apagada {background: white}
-
-/* 4) Para las entradas de texto*/
-.dato {
+/* 5) Para las entradas de texto*/
+.dato
+{
   color: #000000;
   font-size: 16px;
   font-weight: 400;
 }
 
-.escondido {
+.escondido
+{
   color: #999999;
   font-size: 14px;
   font-weight: 500;
 }
 
-.entradastxt {
-  width: 100%;
-}
+.entrada {width: 100%;}
 
-.dropdowns {
-  width: 100%;
-}
+.dropdowns {width: 100%;}
 
-/* 5) Para controlar el boton*/
-.elboton {
+/* 6) Para el boton*/
+.elboton
+{
   background-color: #071323;
   color: #FFFFFF;
   font-size: 16px;
@@ -125,11 +152,43 @@ h1,h2,h3,h4,h5,h6{
   border-color: #071323;
 }
 
-.elboton:hover {
-  background-color: #579f43;
+.elboton:hover {background-color: #579f43;}
+
+/* EXTRA) Este esta en todos los input*/
+.agrandado
+{
+  padding-top: 10px;
+  height: 43px;
+  font-size: 18px;
+  margin-top: 10px;
+  font-weight: 500;
 }
 
-.agrandado {
-  padding-top: 15px;
-  padding-left: 15px
+.orientadoDerecha {padding-left: 15px;}
+/*7)Esto lo voy a usar en el cuadrado del panel 2 */
+.containerEnLinea {display: inline-flex; width: 100%;}
+
+.cuadrado#part2_cuadrado1 {padding-top: 16px;padding-bottom: 22px;}
+#campoPeso {width: 40%;}
+#espacio1_peso {width: 5%;}
+#dropdownPeso {width: 14%;}
+#espacio2_peso {width: 41%;}
+
+.cuadrado#part2_cuadrado2
+{
+  padding-top: 26px;
+  padding-bottom: 22px;
+  position: relative;
+  bottom: 2px;
+}
+
+.division6prc {width: 8%;}
+.division47prc {width: 47%;}
+
+.cuadrado#part2_cuadrado3
+{
+  padding-top: 10px;
+  padding-bottom: 16px;
+  position: relative;
+  bottom: 4px;
 }
