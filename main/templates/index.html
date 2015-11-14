@@ -16,108 +16,219 @@
 			<h3 class="uppercase separado centrado">Liquidación de costos de importación</h3>
 			<h4 class="uppercase centrado">Aproximacion presupuestal</h4>
 			<div class="cajaBolas">
-				<div class="palCentroBolas">
+				<div class="palCentro">
 					<span id="bola1" class="bolitas primera activa movidas">1</span>
 					<span id="bola2" class="bolitas segunda apagada movidas">2</span>
 					<span id="bola3" class="bolitas tercera apagada">3</span><br/>
 				</div>
-				<div class="palCentroTxtBolas">
+				<div class="palCentro">
 					<span id="textoB1" class="textoBolas">Tus datos</span>
 					<span id="textoB2" class="textoBolas">Tu carga</span>
 					<span id="textoB3" class="textoBolas">Tu cotización</span>
 				</div>
 			</div>
-			<form>
-				<div id="Parte1" class="cuadrado"><!-- XXX PARTE1 XXX -->
-					<span class="dato agrandado">Nombre de empresa</span><br/>
-					<input type="type" name="nombreDeEmpresa" value="" class="entrada agrandado orientadoDerecha form-control" placeholder="Nombre de empresa"/><br/>
+			<div id="Parte1" class="row"><!-- XXX PARTE1 XXX -->
+				<div class="cuadrado col-md-6 col-md-offset-3">
+					<form name="myForm1">
+						<span class="dato agrandado">Nombre de empresa</span><br/>
+						<input ng-model="user.nombre" type="text" name="nombreDeEmpresa" class="entrada agrandado orientadoDerecha form-control" placeholder="Nombre de empresa"/><br/>
+						<span id="avisoNombre" class="aviso">Debes poner el nombre de tu compañia</span><br/>
 
-					<span class="dato agrandado">País</span><br/>
-					<select class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" onchange="cambiarCiudades(this.value, 0)">
-					{% for pais in lista_paises %}
-						<option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "IO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
-					{% endfor %}
-					</select><br/>
+						<span class="dato agrandado">País</span><br/>
+						<select ng-model="user.paisDatos" id="paisDatos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" ng-change="cambiarCiudades(user.paisDatos, 0)" ng-options="template.cc_fips as template.nombre_pais for template in configPais"></select><br/>
 
-					<span class="dato agrandado">Ciudad</span><img id="icono_datos"/><br/>
-					<select class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" id="ciudad_datos"></select><br/>
+						<div class="row">
+							<span class="col-md-11 dato agrandado">Ciudad</span><img id="icono_datos"/><br/>
+						</div>
+						<select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select><br/>
 
-					<span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
-					<input type="type" name="correoElectronico" value="" class="entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/><br/>
+						<span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
+						<input ng-model="user.correo" type="email" name="correoElectronico" value="" class="entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/><br/>
+						<span id="avisoCorreo" class="aviso">Debes poner el correo de tu compañia</span><br/>
 
-					<span class="dato agrandado">Teléfono</span><br/>
-					<input type="type" name="telefono" value="" class="entrada agrandado orientadoDerecha form-control" placeholder="Teléfono"/><br/>
+						<span class="dato agrandado">Teléfono</span><br/>
+						<input ng-model="user.telefono" type="tel" name="telefono" value="" class="entrada agrandado orientadoDerecha form-control" placeholder="Teléfono"/><br/>
+						<span id="avisoTelefono" class="aviso">Debes poner el telefono de tu compañia</span><br/>
 
-					<button class="btn elboton uppercase separado agrandado" type="button" onclick="mostrarPag(2)"/>Siguiente</button>
+						<button id="boton1" class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(2)" disabled/>Siguiente</button>
+					</form>
 				</div>
-				<div id="Parte2"><!-- XXX PARTE2 XXX -->
-					<div id="part2_cuadrado1" class="cuadrado">
-						<span class="dato agrandado">Tipo de carga</span><br/>
-						<select class="entrada dropdowns agrandado orientadoDerecha form-control" name="tipo_carga">
-						{% for pais in lista_paises %}
-							<option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "IO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
-						{% endfor %}
-						</select><br/>
+			</div>
+			<div id="Parte2" <div class="row"><!-- XXX PARTE2 XXX -->
+				<form>
+					<div class="col-md-6 col-md-offset-3">
+						<div id="part2_cuadrado1" class="cuadrado"><!--Aqui voy a poner lo del tipo de envio-->
+							<span class="dato agrandado">Tipo de Envío</span><br/>
+							<select ng-model="user.tipoCarga" class="entrada dropdowns agrandado orientadoDerecha form-control" name="tipo_carga"></select>
+							<br/>
 
-						<span class="dato agrandado">Peso</span><br/>
-						<div class="containerEnLinea">
-							<input type="type" name="peso" value="" id="campoPeso" class="agrandado orientadoDerecha form-control"/><p id="espacio1_peso">&nbsp;</p>
-							<select id="dropdownPeso" class="agrandado orientadoDerecha form-control" name="tipo_carga">
-								<option selected="selected">kg</option>
-							</select>
-							<p id="espacio2_peso">&nbsp;</p>
-						</div>
-						<br/><br/>
-
-						<span class="dato agrandado">Categoría del producto</span><br/>
-						<select class="dropdowns agrandado orientadoDerecha form-control" name="categoria_producto">
-						{% for pais in lista_paises %}
-							<option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "IO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
-						{% endfor %}
-						</select><br/>
-					</div>
-					<div id="part2_cuadrado2" class="cuadrado">
-						<span class="dato agrandado escondido">TRAYECTO</span><br/>
-						<div class="containerEnLinea">
-							<span class="dato agrandado division47prc">País origen</span><p class="division6prc">&nbsp;</p><img id="icono_origen"/><span class="dato agrandado division47prc">Ciudad Origen</span><br/>
-						</div>
-						<div class="containerEnLinea">
-							<select class="dropdowns agrandado orientadoDerecha form-control" name="pais_origen" onchange="cambiarCiudades(this.value, 1)">
-							{% for pais in lista_paises %}
-								<option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "IO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
-							{% endfor %}
-							</select>
-							<p class="division6prc">&nbsp;</p>
-							<select class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" name="ciudad_origen" id="ciudad_origen"></select>
+							<span class="dato agrandado">Peso</span><br/>
+							<div class="containerEnLinea">
+								<input ng-model="user.peso" type="type" name="peso" value="" id="campoPeso" class="agrandado orientadoDerecha form-control"/><p id="espacio1_peso">&nbsp;</p>
+								<select ng-model="user.medidaPeso" id="dropdownPeso" class="agrandado orientadoDerecha form-control" name="tipo_carga">
+									<option ng-selected="true">kg</option>
+								</select>
+								<p id="espacio2_peso">&nbsp;</p>
+							</div>
 							<br/><br/>
-						</div>
-						<div class="containerEnLinea">
-							<span class="dato agrandado division47prc">País destino</span><p class="division6prc">&nbsp;</p><img id="icono_destino"/><span class="dato agrandado division47prc">Ciudad Destino</span><br/>
-						</div>
-						<div class="containerEnLinea">
-							<select class="dropdowns agrandado orientadoDerecha form-control division47prc" name="pais_destino" onchange="cambiarCiudades(this.value, 2)">
-							{% for pais in lista_paises %}
-								<option value="{{ pais.cc_fips }}" {%if pais.cc_fips in "IO" %}selected="selected"{% endif %}>{{ pais.nombre_pais }}</option>
-							{% endfor %}
-							</select>
-							<p class="division6prc">&nbsp;</p>
-							<select class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" name="ciudad_destino" id="ciudad_destino"></select>
-							<br/><br/>
-						</div>
-					</div>
 
-					<div id="part2_cuadrado3" class="cuadrado">
-						<button class="btn elboton uppercase separado agrandado" type="button" onclick="mostrarPag(3)"/>Siguiente</button>
+							<span class="dato agrandado">Categoría del producto</span><br/>
+							<select ng-model="user.categoriaProducto" class="dropdowns agrandado orientadoDerecha form-control" name="categoria_producto"></select><br/>
+						</div>
+						<div id="part2_cuadrado2" class="cuadrado"><!--Esto debe cambiar segun el tipo de envio-->
+							<span class="dato agrandado escondido uppercase">Trayecto</span><br/><br/>
+							<div class="row">
+								<span class="dato col-md-6">País origen</span><span class="dato col-md-5">Ciudad Origen</span><img id="icono_origen"/><br/>
+							</div>
+							<div class="containerEnLinea">
+								<select ng-model="user.paisOrigen" id="paisOrigen" class="dropdowns agrandado orientadoDerecha form-control division47prc" name="pais_origen" onchange="cambiarCiudades(this.value, 1)"></select>
+								<p class="division6prc">&nbsp;</p>
+								<select ng-model="user.ciudadOrigen" class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" name="ciudad_origen" id="ciudad_origen"></select>
+								<br/><br/>
+							</div>
+							<br/><br/>
+							<div class="row">
+								<span class="dato col-md-6">País destino</span><span class="dato col-md-5">Ciudad Destino</span><img id="icono_destino"/><br/>
+							</div>
+							<div class="containerEnLinea">
+								<select ng-model="user.paisDestino" id="paisDestino" class="dropdowns agrandado orientadoDerecha form-control division47prc" name="pais_destino" onchange="cambiarCiudades(this.value, 2)">
+								</select>
+								<p class="division6prc">&nbsp;</p>
+								<select ng-model="user.ciudadDestino" class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" name="ciudad_destino" id="ciudad_destino"></select>
+								<br/><br/>
+							</div>
+						</div>
+						<div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
+						</div>
+						<div id="part2_cuadrado4" class="cuadrado">
+							<button class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(3)"/>Siguiente</button>
+						</div>
 					</div>
+				</form>
+			</div>
+			<div id="Parte3" class="row"><!-- XXX PARTE3 XXX -->
+				<form>
+					<div id="zonaCentro" class="col-md-6 col-md-offset-3">
+						<div id="part3_cuadrado1" class="cuadrado">
+							<span class="dato agrandado escondido uppercase">1. Tributos Aduaneros</span><br/><br/>
+							<div class="containerEnLinea">
+								<span id="gravamen" class="dato division60prc">Gravamen</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 0</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="iva" class="dato division60prc">IVA 16% (IVA deducible de aduanas)</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 5.843.456</span>
+							</div>
+							<div class="containerEnLinea">
+								<span class="dato division60prc total">Total</span><p class="division6prc">&nbsp;</p><span class="dato division34prc conNegrilla">$ 5.843.456</span>
+							</div>
+						</div>
+						<div id="part3_cuadrado2" class="cuadrado">
+							<span class="dato agrandado escondido uppercase">2. Flete internacional</span><br/><br/>
+							<div class="containerEnLinea">
+								<span id="flete" class="dato division60prc">Flete internacional</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 15.609.600</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="bl" class="dato division60prc">BL</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 137.500</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="manejo" class="dato division60prc">Manejo logístico</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 2.100.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="radicacion" class="dato division60prc">Radicación, liberación y endoso</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 600.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="emisionBl" class="dato division60prc">Emisión BL</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 137.500</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="colect" class="dato division60prc">Colect Fee</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 468.288</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="seguro" class="dato division60prc">Seguro de transporte de mercancía 0.35%</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 136.575</span>
+							</div>
+							<div class="containerEnLinea">
+								<span class="dato division60prc total">Total</span><p class="division6prc">&nbsp;</p><span class="dato division34prc conNegrilla">$ 19.189.463</span>
+							</div>
+						</div>
+						<div id="part3_cuadrado3" class="cuadrado">
+							<span class="dato agrandado escondido uppercase">3. Transporte Nacional</span><br/><br/>
+							<div class="containerEnLinea">
+								<span id="transporte" class="dato division60prc">Transporte nacional</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 9.855.730</span>
+							</div>
+							<div class="containerEnLinea">
+								<span class="dato division60prc total">Total</span><p class="division6prc">&nbsp;</p><span class="dato division34prc conNegrilla">$ 9.855.730</span>
+							</div>
+						</div>
+						<div id="part3_cuadrado4" class="cuadrado">
+							<span class="dato agrandado escondido uppercase">4. Nacionalización</span><br/><br/>
+							<div class="containerEnLinea">
+								<span id="outsourcing" class="dato division60prc">Outsourcing en comercio exterior</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 500.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="gastosOperativos" class="dato division60prc">Gastos operativos</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 110.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="declaracion" class="dato division60prc">Elaboracion de declaracion de impo/valor</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 72.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="transmision" class="dato division60prc">Transmisión siglo XXI - Formularios</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 12.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="gastosPortuarios" class="dato division60prc">Gastos portuarios</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 1.500.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="poliza" class="dato division60prc">Poliza seguro nacional</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 220.500</span>
+							</div>
+							<div class="containerEnLinea">
+								<span id="decontenerizacion" class="dato division60prc">Descontenerización</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris">$ 2.100.000</span>
+							</div>
+							<div class="containerEnLinea">
+								<span class="dato division60prc total">Total</span><p class="division6prc">&nbsp;</p><span class="dato division34prc conNegrilla">$ 4.514.500</span>
+							</div>
+						</div>
+						<div id="part3_cuadrado5" class="cuadrado">
+							<div class="containerEnLinea">
+								<span class="dato division60prc textoBlanco conNegrilla">Total liquidación costos de importación</span><p class="division6prc">&nbsp;</p><span class="dato division34prc textoGris textoBlanco conNegrilla">$ 54.471.693</span>
+							</div>
+						</div>
+						<div id="part3_cuadrado6" class="cuadrado">
+							<button class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(1)"/>Enviar a mi Email</button>
+							<span class="textoGris">Este correo será enviado a &nbsp;</span><span class="textoGris" ng-bind="user.correo"></span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div id="part3_cuadrado_lado1" class="cuadrado">
+						</div>
+						<div id="part3_cuadrado_lado2" class="cuadradoBlanco">
+							<span class="dato agrandado escondido uppercase distanciado">Tasas de conversión</span><br/><br/>
+						</div>
+						<div id="part3_cuadrado_lado3" class="cuadradoBlanco">
+							<span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
+							<p id="textoInformacion">Situa el puntero encima de cualquier item para ver mas información</p>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id="waitting" class="row"><!-- XXX Cambio entre el 2 y el 3 XXX -->
+				<div class="cuadrado col-md-6 col-md-offset-3">
+					<img id="icono_destino" src="/static/img/loadingGrande.gif"/>
 				</div>
-				<div id="Parte3" class="cuadrado"><!-- XXX PARTE3 XXX -->
-					<button class="btn elboton uppercase separado agrandado" type="submit" onclick="mostrarPag(1)"/>Siguiente</button>
-				</div>
-			</form>
+			</div>
+			<!--TODO QUITAR LINEA -->
+			<center><br/><p ng-bind="user | json"></p></center>
+			<div id="slider20"></div>
+			<div id="slider40"></div>
+			<center><div id="containers20"></div></center>
+			<center><div id="containers40"></div></center>
 		</div>
 		<!-- imports js -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!--Estas 3 lineas son para incluir JQuery y poder usar la libreria de los sliders... include the jQuery and jQuery UI scripts -->
+		<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"><!-- plus a jQuery UI theme, here I use "flick" -->
+		<link rel="stylesheet" href="{{STATIC_URL}}css/jquery-ui-slider-pips.css">
+
+		<!--Luego si meto las librerias que uso y finalmente mis javascripts-->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="{{STATIC_URL}}js/jquery-ui-slider-pips.js"></script>
 		<script src="{{STATIC_URL}}js/scripts.js"></script>
 	</body>
 </html>

@@ -27,14 +27,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 
 .centrado {text-align: center;}
 
-.palCentroBolas
-{
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.palCentroTxtBolas
+.palCentro
 {
   margin-left: auto;
   margin-right: auto;
@@ -100,7 +93,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   border-style: solid;
   border-color: #cfcfcf;
   border-width: 1px;
-  width: 50%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 3px;
@@ -111,15 +104,10 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 }
 
 /*Esto es para que al comienzo solo se vea la parte 1 del formulario*/
-.cuadrado#Parte1 {display: block}
-.cuadrado#Parte2 {display: none}
-.cuadrado#Parte3 {display: none}
-
-/* Que el cuadrado se vea bien en moviles*/
-@media(max-width: 480px)
-{
-  .cuadrado {width: 100%;}
-}
+#Parte1   {display: block;}
+#Parte2   {display: none;}
+#Parte3   {display: none;}
+#waitting {display: none;}
 
 /* 5) Para las entradas de texto*/
 .dato
@@ -140,6 +128,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 
 .dropdowns {width: 100%;}
 
+.aviso {color: orange; display: none;}
 /* 6) Para el boton*/
 .elboton
 {
@@ -157,15 +146,12 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 /* EXTRA) Este esta en todos los input*/
 .agrandado
 {
-  padding-top: 10px;
-  height: 43px;
   font-size: 18px;
-  margin-top: 10px;
   font-weight: 500;
 }
 
 .orientadoDerecha {padding-left: 15px;}
-/*7)Esto lo voy a usar en el cuadrado del panel 2 */
+/*7) Esto lo voy a usar en el cuadrado del panel 2 */
 .containerEnLinea {display: inline-flex; width: 100%;}
 
 .cuadrado#part2_cuadrado1 {padding-top: 16px;padding-bottom: 22px;}
@@ -192,3 +178,39 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   position: relative;
   bottom: 4px;
 }
+
+/*8) Esto es todo lo del panel 3*/
+.distanciado {margin-bottom: 10px;}
+.textoGris {color: #999999;}
+.conNegrilla {font-weight: 900;}
+.cuadrado#part3_cuadrado1 {padding-top: 16px;padding-bottom: 22px;}
+.cuadrado#part3_cuadrado2 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 2px;}
+.cuadrado#part3_cuadrado3 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 4px;}
+.cuadrado#part3_cuadrado4 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 6px;}
+.cuadrado#part3_cuadrado5 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 8px; background-color: #52B259}
+.textoBlanco {color: white;}
+.cuadrado#part3_cuadrado6 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 10px; text-align: center;}
+
+.division60prc {width: 70%;}
+.division34prc {width: 24%; text-align: right;}
+
+/*9) Esto es el estilo que va en las cajas de la derecha*/
+.cuadradoBlanco
+{
+  background-color: #FFFFFF;
+  border-style: solid;
+  border-color: #cfcfcf;
+  border-width: 1px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.cuadrado#part3_cuadrado_lado1 {margin-bottom: 10px;}
+.cuadradoBlanco#part3_cuadrado_lado2 {margin-bottom: 10px;}
+.cuadradoBlanco#part3_cuadrado_lado2 {}
