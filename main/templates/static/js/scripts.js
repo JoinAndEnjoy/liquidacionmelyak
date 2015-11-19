@@ -67,6 +67,18 @@ var app = angular.module('appMelyak', []);
 app.controller('ctrlMelyak', function($scope)
 {
 	$scope.user={};
+	$scope.user.otm=false;
+	$scope.user.bl=false;
+	//TODO: poner los valores que son.
+	$scope.configTipoProducto=[{name:"lol", value:"lolV"},{name:"fu", value:"lol2V"}];
+	$scope.user.tipoProducto=$scope.configTipoProducto[0].value;
+	//TODO: poner los valores que son.
+	$scope.configTipoMoneda=[{name:"USD", value:"USD"},{name:"COP", value:"COP"},{name:"EUR", value:"EUR"},{name:"libra", value:"libra"}];
+	$scope.user.tipoMoneda=$scope.configTipoMoneda[0].value;
+	//TODO: poner los valores que son.
+	$scope.configTipoEnvio=[{name:"Via Maritima", value:"Via Maritima"},{name:"Via Aerea", value:"Via Aerea"}];
+	$scope.configTipoEnvio2=[{name:"FCL", value:"FCL"},{name:"opcion2", value:"opcion2"}];
+	//$scope.user.tipoEnvio=$scope.configTipoEnvio[0].value;
 
 	//Para pedir los pasises a la base de datos
 	$.ajax({
@@ -79,6 +91,7 @@ app.controller('ctrlMelyak', function($scope)
 			{
 				$scope.configPais=data;
 				$scope.user.paisDatos = $scope.configPais[32].cc_fips;//.TODO: El numero corresponde a Colombia (50)
+				$scope.user.paisProducto=$scope.configPais[0].cc_fips;
 			});
 
 			//for(var i=0; i<3; i++) $scope.cambiarCiudades("IO",i); //TODO: Para colombia es CO
@@ -88,7 +101,6 @@ app.controller('ctrlMelyak', function($scope)
 	});
 
 	var contenedores20=0;
-	$baa = $("<audio src='/static/sound/glass.wav'></audio>");
 	$("#slider20").slider({max: 10, step: 1}).slider("pips", {rest: "label"}).on("slidechange", function( e, ui )
 	{
 		var hayQueArmar=ui.value-contenedores20;
@@ -121,7 +133,6 @@ app.controller('ctrlMelyak', function($scope)
 	});
 
 	var contenedores40=0;
-	$baa = $("<audio src='/static/sound/glass.wav'></audio>");
 	$("#slider40").slider({max: 10}).slider("pips", {rest: "label"}).on("slidechange", function( e, ui )
 	{
 		var hayQueArmar=ui.value-contenedores40;
@@ -251,6 +262,24 @@ app.controller('ctrlMelyak', function($scope)
 			$("#boton1").attr("disabled", "true");
 		}
 	};
+
+	$scope.cambiarTipoEnvio = function(tipoEnvio, etapa)
+	{
+		if(tipoEnvio=="Via Maritima" && etapa==1)
+		{
+			console.log("mar 1");
+			$("#TipoEnvioBarco").css("display", "block");
+		}
+		else if(tipoEnvio=="Via Maritima" && etapa==2)
+		{
+			console.log("mar 2");
+		}
+		else if(tipoEnvio=="Via Aerea")
+		{
+			console.log("aerea");
+			$("#TipoEnvioBarco").css("display", "none");
+		}
+	};
 });
 
 //----------------------------------------------------------------------------------------------------------
@@ -272,6 +301,7 @@ window.onload = function()
 		type : "GET",
 		success : function(json)
 		{
+			console.log("Poblar la base de datos de descripciones");
 			var data = json.todas_ids;
 			for(var i=0; i<data.length; i++)
 			{
@@ -282,6 +312,13 @@ window.onload = function()
 			document.getElementById("zonaCentro").onmouseleave =function(){$("#textoInformacion").html("Situa el puntero encima de cualquier item para ver más información");};
 			for(var i=0; i<texto.length; i++) pegarDescripcion(i);
 		},
+
+		error : function(xhr,errmsg,err)
+		{
+			$('body').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+			" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+			console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+		}
 	});
 }
 

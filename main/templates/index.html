@@ -27,10 +27,10 @@
 					<span id="textoB3" class="textoBolas">Tu cotización</span>
 				</div>
 			</div>
-			<div id="Parte1" class="row"><!-- XXX PARTE1 XXX -->
+			<div id="Parte2" class="row"><!-- XXX PARTE1 XXX -->
 				<div class="cuadrado col-md-6 col-md-offset-3">
 					<form name="myForm1">
-						<span class="dato agrandado">Nombre de empresa</span><br/>
+						<span class="dato agrandado">Nombre de la empresa</span><br/>
 						<input ng-model="user.nombre" type="text" name="nombreDeEmpresa" class="entrada agrandado orientadoDerecha form-control" placeholder="Nombre de empresa"/><br/>
 						<span id="avisoNombre" class="aviso">Debes poner el nombre de tu compañia</span><br/>
 
@@ -54,18 +54,28 @@
 					</form>
 				</div>
 			</div>
-			<div id="Parte2" <div class="row"><!-- XXX PARTE2 XXX -->
+			<div id="Parte1" <div class="row"><!-- XXX PARTE2 XXX -->
 				<form>
 					<div class="col-md-6 col-md-offset-3">
 						<div id="part2_cuadrado1" class="cuadrado"><!--Aqui voy a poner lo del tipo de envio-->
 							<span class="dato agrandado">Tipo de Envío</span><br/>
-							<select ng-model="user.tipoCarga" class="entrada dropdowns agrandado orientadoDerecha form-control" name="tipo_carga"></select>
+							<select ng-model="user.tipoEnvio" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio, 1)" ng-options="template.value as template.name for template in configTipoEnvio">
+							</select>
 							<br/>
 
-							<span class="dato agrandado">Peso</span><br/>
+							<div id="TipoEnvioBarco">
+								<span class="dato agrandado">preguntar a carlos</span><br/>
+								<select ng-model="user.tipoEnvio2" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio, 2)" ng-options="template.value as template.name for template in configTipoEnvio2">
+									<option value="" ng-if="false"></option>
+								</select>
+								<br/>
+							</div>
+
+							<!--span class="dato agrandado">Peso</span><br/>
 							<div class="containerEnLinea">
 								<input ng-model="user.peso" type="type" name="peso" value="" id="campoPeso" class="agrandado orientadoDerecha form-control"/><p id="espacio1_peso">&nbsp;</p>
 								<select ng-model="user.medidaPeso" id="dropdownPeso" class="agrandado orientadoDerecha form-control" name="tipo_carga">
+									<option value="" ng-if="false"></option>
 									<option ng-selected="true">kg</option>
 								</select>
 								<p id="espacio2_peso">&nbsp;</p>
@@ -73,10 +83,14 @@
 							<br/><br/>
 
 							<span class="dato agrandado">Categoría del producto</span><br/>
-							<select ng-model="user.categoriaProducto" class="dropdowns agrandado orientadoDerecha form-control" name="categoria_producto"></select><br/>
+							<select ng-model="user.categoriaProducto" class="dropdowns agrandado orientadoDerecha form-control" name="categoria_producto"></select><br/-->
 						</div>
 						<div id="part2_cuadrado2" class="cuadrado"><!--Esto debe cambiar segun el tipo de envio-->
 							<span class="dato agrandado escondido uppercase">Trayecto</span><br/><br/>
+							<div class="row">
+								<div id="slider20" class="col-md-5"></div><span class="col-md-2"></span><div id="slider40" class="col-md-5"></div>
+							</div>
+							<br/><br/>
 							<div class="row">
 								<span class="dato col-md-6">País origen</span><span class="dato col-md-5">Ciudad Origen</span><img id="icono_origen"/><br/>
 							</div>
@@ -99,6 +113,38 @@
 							</div>
 						</div>
 						<div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
+							<span class="dato agrandado">Tipo de producto</span><br/>
+							<select ng-model="user.tipoProducto" id="tipoProducto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.value as template.name for template in configTipoProducto">
+								<option value="" ng-if="false"></option>
+							</select><br/>
+							<span class="dato agrandado">País de procedencia</span><br/>
+							<select ng-model="user.paisProducto" id="paisProducto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.cc_fips as template.nombre_pais for template in configPais">
+								<option value="" ng-if="false"></option>
+							</select><br/>
+							<div class="row">
+								<span class="dato col-md-6">Valor de la mercancia</span><span class="dato col-md-5">Moneda</span><br/>
+							</div>
+							<div class="containerEnLinea">
+								<input ng-model="user.valorMercancia" type="number" class="form-control" min="1">
+								<p class="division6prc">&nbsp;</p>
+								<select ng-model="user.tipoMoneda" id="valorMercancia" class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" ng-options="template.value as template.name for template in configTipoMoneda">
+									<option value="" ng-if="false"></option>
+								</select>
+							</div>
+							<br/><br/>
+
+							<span class="dato agrandado">Número de productos diferentes</span><br/>
+							<input ng-model="user.prdif" type="number" class="form-control" min="1" step="1"><br/>
+							<div class="row">
+								<span class="dato agrandado col-md-11">¿La carga es OTM?</span>
+								<input ng-model="user.otm" type="checkbox"/>
+							</div>
+							</br></br>
+							<div class="row">
+								<span class="dato agrandado col-md-11">¿Desea emitir BL?</span>
+								<input ng-model="user.bl" type="checkbox"/>
+							</div>
+
 						</div>
 						<div id="part2_cuadrado4" class="cuadrado">
 							<button class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(3)"/>Siguiente</button>
@@ -213,11 +259,8 @@
 				</div>
 			</div>
 			<!--TODO QUITAR LINEA -->
+			<center><div id="containers20"></div><div id="containers40"></div></center>
 			<center><br/><p ng-bind="user | json"></p></center>
-			<div id="slider20"></div>
-			<div id="slider40"></div>
-			<center><div id="containers20"></div></center>
-			<center><div id="containers40"></div></center>
 		</div>
 		<!-- imports js -->
 		<!--Estas 3 lineas son para incluir JQuery y poder usar la libreria de los sliders... include the jQuery and jQuery UI scripts -->

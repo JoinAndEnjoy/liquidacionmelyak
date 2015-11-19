@@ -108,6 +108,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 #Parte2   {display: none;}
 #Parte3   {display: none;}
 #waitting {display: none;}
+#TipoEnvioBarco {display: none;}
 
 /* 5) Para las entradas de texto*/
 .dato
@@ -177,6 +178,14 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   padding-bottom: 16px;
   position: relative;
   bottom: 4px;
+}
+
+.cuadrado#part2_cuadrado4
+{
+  padding-top: 10px;
+  padding-bottom: 16px;
+  position: relative;
+  bottom: 6px;
 }
 
 /*8) Esto es todo lo del panel 3*/
