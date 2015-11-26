@@ -112,4 +112,4 @@ def metodoPrincipal(request):
                     print("especial")
                 return HttpResponse(json.dumps(response_data), content_type="application/json")
             #-------------------------------------------------
-            print noEncontradas
+            print(noEncontradas)
