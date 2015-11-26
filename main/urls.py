@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^auxiliar/get/tarifas_HTTP', views.getTarifasHTTP, name='getTarifasHTTP'),
     url(r'^auxiliar/get/descripcionesJSON', views.getDescripcionesJSON, name='getDescripcionesJSON'),
     url(r'^auxiliar/post/metodoPrincipal', views.metodoPrincipal, name='metodoPrincipal'),
-    #url(r'^auxiliar/get/JSON', views.getPaisesJSON, name='getPaisesJSON'),
+    url(r'^auxiliar/get/getParejasPuertosJSON', views.getParejasPuertosJSON, name='getParejasPuertosJSON'),
 ]

@@ -25,23 +25,31 @@ class Ciudad(models.Model):
     def __repr__(self):
         return self.__str__()
 
-class TarifasFijas(models.Model):
-    nombre_tarifa = models.CharField(max_length=200, primary_key=True)
-    valor_tarifa = models.DecimalField(max_digits=19, decimal_places=10)
-    PORCENTAJE = 'PORC'
+class InfoFCL(models.Model):
+    puerto_cargue = models.CharField(max_length=90)
+    puerto_descargue = models.CharField(max_length=90)
     PESO_COLOMBIANO = 'COP'
     EURO = 'EUR'
     DOLAR = 'USD'
     TIPO_TARIFA_CHOICES = (
-        (PORCENTAJE, 'Porcentaje'),
-        (PESO_COLOMBIANO, 'Pesos'),
-        (EURO, 'Euros'),
-        (DOLAR, 'Dolares'),
+        (PESO_COLOMBIANO, 'COP'),
+        (EURO, 'EUR'),
+        (DOLAR, 'USD'),
     )
-    tipo_tarifa = models.CharField(max_length=5, choices=TIPO_TARIFA_CHOICES, default=PORCENTAJE)
+    divisa = models.CharField(max_length=5, choices=TIPO_TARIFA_CHOICES, default=PESO_COLOMBIANO)
+    FCL_20 = models.FloatField()
+    FCL_40 = models.FloatField()
+    servicio = models.CharField(max_length=90)
+    tiempo_transito = models.FloatField()
+    bl = models.FloatField()
+    gastos_fob = models.FloatField()
+    gastos_naviera = models.FloatField()
+    manejo = models.FloatField()
+    collect_fee = models.FloatField()
+    pais = models.CharField(max_length=90)
 
     def __str__(self):              # __unicode__ on Python 2
-        return self.nombre_tarifa
+        return self.puerto_cargue+" "+self.puerto_descargue
 
     def __repr__(self):
         return self.__str__()

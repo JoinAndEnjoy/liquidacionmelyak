@@ -76,9 +76,8 @@ app.controller('ctrlMelyak', function($scope)
 	$scope.configTipoMoneda=[{name:"USD", value:"USD"},{name:"COP", value:"COP"},{name:"EUR", value:"EUR"},{name:"libra", value:"libra"}];
 	$scope.user.tipoMoneda=$scope.configTipoMoneda[0].value;
 	//TODO: poner los valores que son.
-	$scope.configTipoEnvio=[{name:"Via Maritima", value:"Via Maritima"},{name:"Via Aerea", value:"Via Aerea"}];
-	$scope.configTipoEnvio2=[{name:"FCL", value:"FCL"},{name:"opcion2", value:"opcion2"}];
-	//$scope.user.tipoEnvio=$scope.configTipoEnvio[0].value;
+	$scope.configTipoEnvio=[{name:"Via Maritima", value:"Via Maritima"},{name:"Via Aerea", value:"Via Aerea"},{name:"Proyecto Especial", value:"Proyecto Especial"}];
+	$scope.configTipoEnvio2=[{name:"FCL", value:"FCL"},{name:"LCL", value:"LCL"}];
 
 	//Para pedir los pasises a la base de datos
 	$.ajax({
@@ -94,71 +93,80 @@ app.controller('ctrlMelyak', function($scope)
 				$scope.user.paisProducto=$scope.configPais[0].cc_fips;
 			});
 
-			//for(var i=0; i<3; i++) $scope.cambiarCiudades("IO",i); //TODO: Para colombia es CO
+			$scope.cambiarCiudades("IO"); //TODO: Para colombia es CO
 
 			$("#boton1").removeAttr("disabled");
 		},
 	});
 
-	var contenedores20=0;
-	$("#slider20").slider({max: 10, step: 1}).slider("pips", {rest: "label"}).on("slidechange", function( e, ui )
-	{
-		var hayQueArmar=ui.value-contenedores20;
-		if(hayQueArmar>0)
+	//Para pedir la informacion de los puertos a la base de datos
+	$.ajax({
+		url : 'auxiliar/get/getParejasPuertosJSON',
+		type : "GET",
+		success : function(json)
 		{
-			var aPoner=contenedores20+1;
-			for(var i=0; i<hayQueArmar; i++)
+			$scope.$apply(function()
 			{
-				$scope.$apply(function()
-				{
-					var texto="<p ng-model='user.caja20_"+aPoner+"' id=\"caja20_"+aPoner+"\">"+aPoner+"</p>"
-					$("#containers20").append(texto);
-
-					aPoner++;
-				});
-			}
-		}
-		else if(hayQueArmar<0)//Cuando tengo que quitar contenedores
-		{
-			var aQuitar=contenedores20;
-			hayQueArmar*=-1;
-			for(var i=0; i<hayQueArmar; i++)
-			{
-				var texto="#caja20_"+aQuitar;
-				$(texto).remove();
-				aQuitar--;
-			}
-		}
-		contenedores20=ui.value;
+				$scope.configParPuertos=json.infoFCL;
+				$scope.user.idPuertosFCL = $scope.configParPuertos[0].id;
+				$scope.puertoLlegadaFCL = $scope.configParPuertos[0].puerto_descargue;
+			});
+			$("#boton1").removeAttr("disabled");
+		},
 	});
 
-	var contenedores40=0;
-	$("#slider40").slider({max: 10}).slider("pips", {rest: "label"}).on("slidechange", function( e, ui )
+	$scope.cambiarPuertos=function(id)
 	{
-		var hayQueArmar=ui.value-contenedores40;
+		for(var i=0; i<$scope.configParPuertos.length; i++)
+		{
+			if($scope.configParPuertos[i].id==id)
+			{
+				$scope.puertoLlegadaFCL = $scope.configParPuertos[i].puerto_descargue;
+				break;
+			}
+		}
+	}
+
+	var contenedores=[0,0,0];
+	var nombres=["20","40","Aereo"];
+	//Cuando lo meto en un for se daña
+	$("#slider"+nombres[0]).slider({max: 10}).slider("pips", {rest: "label"}).on("slidechange", function(e, ui){$scope.crearCajas(ui, 0);});
+	$("#slider"+nombres[1]).slider({max: 10}).slider("pips", {rest: "label"}).on("slidechange", function(e, ui){$scope.crearCajas(ui, 1);});
+	$("#slider"+nombres[2]).slider({max: 10}).slider("pips", {rest: "label"}).on("slidechange", function(e, ui){$scope.crearCajas(ui, 2);});
+
+	$scope.crearCajas=function(ui, index)
+	{
+		var hayQueArmar=ui.value-contenedores[index];
 		if(hayQueArmar>0)
 		{
-			var aPoner=contenedores40+1;
+			var aPoner=contenedores[index]+1;
 			for(var i=0; i<hayQueArmar; i++)
 			{
-				var texto="<p id=\"caja40_"+aPoner+"\">"+aPoner+"</p>"
-				$("#containers40").append(texto);
+				//Se crean diferentes cosas segun el contenedor
+				var texto="<div class='row' id='caja"+nombres[index]+"_"+aPoner+"'>";
+				if(index==0) texto+="<p class='col-md-7 col-sm-7'>Container "+aPoner+":</p><input class='col-md-5 col-sm-5' id='FCL20_"+aPoner+"' type='number' min=0 value=0\>";
+				else if(index==1) texto+="<p class='col-md-7 col-sm-7'>Container "+aPoner+":</p><input class='col-md-5 col-sm-5' id='FCL40_"+aPoner+"' type='number' min=0 value=0\>";
+				else if(index==2) texto+="<p>"+aPoner+"</p>";
+				texto+="</div>"
+				$("#containers"+nombres[index]).append(texto);
 				aPoner++;
 			}
 		}
 		else if(hayQueArmar<0)//Cuando tengo que quitar contenedores
 		{
-			var aQuitar=contenedores40;
+			var aQuitar=contenedores[index];
 			hayQueArmar*=-1;
 			for(var i=0; i<hayQueArmar; i++)
 			{
-				var texto="#caja40_"+aQuitar;
+				var texto="#caja"+nombres[index]+"_"+aQuitar;
 				$(texto).remove();
 				aQuitar--;
 			}
 		}
-		contenedores40=ui.value;
-	});
+		contenedores[index]=ui.value;
+		if(contenedores[0]!=0 || contenedores[1]!=0) $("#textosPreguntaPeso").css("display","block");
+		else  $("#textosPreguntaPeso").css("display","none");
+	}
 
 	//Este metodo se llama desde los botones de siguiente y anterior
 	$scope.mostrarPag = function(pagina)
@@ -192,6 +200,34 @@ app.controller('ctrlMelyak', function($scope)
 		else if(pagina==3)
 		{
 			var pasa=true;
+			//decide si mostrar o no cada uno de los errores de tipado
+			if(angular.isUndefined($scope.user.valorMercancia) || $scope.user.valorMercancia=="" || $scope.user.valorMercancia==null) {pasa=false; $("#avisoValMerc").css("display", "block");}
+			else $("#avisoValMerc").css("display", "none");
+			if(angular.isUndefined($scope.user.prdif) || $scope.user.prdif=="" || $scope.user.prdif==null) {pasa=false; $("#avisoPrdif").css("display", "block");}
+			else $("#avisoPrdif").css("display", "none");
+			if(angular.isUndefined($scope.user.tipoEnvio) || $scope.user.tipoEnvio=="") {pasa=false; $("#avisoTipoEnvio").css("display", "block");}
+			else
+			{
+				$("#avisoTipoEnvio").css("display", "none");
+				if($scope.user.tipoEnvio=="Via Maritima")
+				{
+					if(angular.isUndefined($scope.user.tipoEnvio2) || $scope.user.tipoEnvio2=="") {pasa=false; $("#avisoTipoEnvio2").css("display", "block");}
+					else $("#avisoTipoEnvio2").css("display", "none");
+				}
+			}
+
+			$scope.user.arregloFCL_20=[];
+			$scope.user.arregloFCL_40=[];
+			$scope.user.arregloAereo=[];
+			for(var c=0; c<3; c++)
+			{
+				for(var i=1; i<=contenedores[c]; i++)
+				{
+					if(c==0) $scope.user.arregloFCL_20.push($("#FCL20_"+i).val());
+					else if(c==1) $scope.user.arregloFCL_40.push($("#FCL40_"+i).val());
+					else if(c==2) $scope.user.arregloAereo.push($("#Aereo_"+i).val());
+				}
+			}
 
 			if(pasa)
 			{
@@ -204,12 +240,20 @@ app.controller('ctrlMelyak', function($scope)
 					// handle a successful response
 					success : function(json)
 					{
-						console.log(json); // log the returned json to the console
-            console.log("-----Muy bien-----")
-
 						$("#Parte1").css("display", "none");
 						$("#Parte2").css("display", "none");
+						//--------------Dependiendo del tipo de cotizacion-------------------
 						$("#Parte3").css("display", "block");
+						var tipoCotizacion;
+						if($scope.user.tipoEnvio=="Via Aerea") tipoCotizacion="Via Aerea"
+						else if($scope.user.tipoEnvio=="Via Maritima")
+						{
+							if($scope.user.tipoEnvio2=="FCL") tipoCotizacion="FCL";
+							else if($scope.user.tipoEnvio2=="LCL") tipoCotizacion="LCL";
+						}
+						else if($scope.user.tipoEnvio=="Proyecto Especial") tipoCotizacion="Proyecto Especial";
+						pintarPagina3(json, tipoCotizacion)
+						//-------------------------------------------------------------------
 						$("#waitting").css("display", "none");
 						//Sobre colorear las bolitas
 						$("#bola1").attr("class", "bolitas primera apagada movidas");
@@ -233,12 +277,13 @@ app.controller('ctrlMelyak', function($scope)
 		}
 	};
 
-	$scope.cambiarCiudades = function(cc_fips, target)
-	{
-		var idDropdown = "#"+dropdownsCiudades[target];
-		var idIcono = "#"+iconoCargando[target];
+	$scope.cotizar = function(){console.log("PERRITO");}
 
-		if(cc_fips == "") $(idDropdown).html("");
+	var dropdownsCiudades = ["ciudad_datos", "ciudad_origen", "ciudad_destino"];
+	var iconoCargando = ["icono_datos", "icono_origen", "icono_destino"];
+	$scope.cambiarCiudades = function(cc_fips)
+	{
+		if(cc_fips == "") $("#ciudad_datos").html("");
 		else
 		{
 			var laUrl="auxiliar/get/JSON_"+cc_fips;
@@ -255,46 +300,202 @@ app.controller('ctrlMelyak', function($scope)
 					});
 
 					$("#boton1").removeAttr("disabled");
-					$(idIcono).attr("src", "");
+					$("#icono_datos").attr("src", "");
 				},
 			});
-			$(idIcono).attr("src", "/static/img/loading.gif");
+			$("#icono_datos").attr("src", "/static/img/loading.gif");
 			$("#boton1").attr("disabled", "true");
 		}
 	};
 
-	$scope.cambiarTipoEnvio = function(tipoEnvio, etapa)
+	$scope.cambiarTipoEnvio = function(tipoEnvio)
 	{
-		if(tipoEnvio=="Via Maritima" && etapa==1)
+		if(tipoEnvio=="Via Aerea")
 		{
-			console.log("mar 1");
-			$("#TipoEnvioBarco").css("display", "block");
-		}
-		else if(tipoEnvio=="Via Maritima" && etapa==2)
-		{
-			console.log("mar 2");
-		}
-		else if(tipoEnvio=="Via Aerea")
-		{
-			console.log("aerea");
+			$("#proyectoEspecial").css("display", "none");
 			$("#TipoEnvioBarco").css("display", "none");
+			$(".maritimo").css("display", "none");
+			$("#envioAereo").css("display", "block");
+			$("#part2_cuadrado1").css("padding-bottom","6px");
+		}
+		else if(tipoEnvio=="Proyecto Especial")
+		{
+			$("#proyectoEspecial").css("display", "block");
+			$("#TipoEnvioBarco").css("display", "none");
+			$(".maritimo").css("display", "none");
+			$("#part2_cuadrado1").css("padding-bottom","6px");
+			$("#envioAereo").css("display", "none");
+		}
+		else if(tipoEnvio=="Via Maritima")
+		{
+			$("#proyectoEspecial").css("display", "none");
+			$("#envioAereo").css("display", "none");
+			$("#TipoEnvioBarco").css("display", "block");
+			$("#part2_cuadrado1").css("padding-bottom","20px");
+			if(angular.isDefined($scope.user.tipoEnvio2))
+			{
+				if($scope.user.tipoEnvio2=="FCL")
+				{
+					$("#maritimoFCL").css("display", "block");
+					$("#maritimoLCL").css("display", "none");
+				}
+				else if($scope.user.tipoEnvio2=="LCL")
+				{
+					$("#maritimoFCL").css("display", "none");
+					$("#maritimoLCL").css("display", "block");
+				}
+			}
+		}
+		else if(tipoEnvio=="FCL")
+		{
+			$("#maritimoFCL").css("display", "block");
+			$("#maritimoLCL").css("display", "none");
+		}
+		else if(tipoEnvio=="LCL")
+		{
+			$("#maritimoFCL").css("display", "none");
+			$("#maritimoLCL").css("display", "block");
 		}
 	};
 });
+
+function pintarPagina3(json, tipoCotizacion)
+{
+	//"Via Aerea" "LCL"
+	var contenido="";
+	var textospar3=["1. Costos de la Carga","2. Informacion del Transporte","3. Costos Fijos","4. Costos Opcionales"];
+	if(tipoCotizacion=="FCL")
+	{
+		var k, keys = [];
+		for (k in json)
+			if(json.hasOwnProperty(k)) keys.push(k);
+
+		keys.sort();
+
+		for(var i=0; i<keys.length; i++)
+		{
+			k = keys[i];
+			contenido+="<div id='part3_cuadrado"+(i+1)+"' class='cuadrado'>";
+			contenido+="	<span class='dato agrandado escondido uppercase'>"+textospar3[i]+"</span><br/><br/>";
+
+			var total=0;
+			console.log(k);
+			for(var key in json[k])
+			{
+				if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
+				contenido+="<div class='row'>";
+				contenido+="	<span id='"+key+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
+				contenido+="</div>"
+				if($.isNumeric(json[k][key])) total+=json[k][key];
+			}
+			contenido+="<div class='row'>";
+			contenido+="<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ "+total+"</span>";
+			contenido+="</div>"
+			contenido+="</div>";
+		}
+	}
+	else if(tipoCotizacion=="Proyecto Especial")
+	{
+		contenido="<div id='part3_cuadrado1' class='cuadrado'>";
+		contenido+="							<span class='dato agrandado escondido uppercase'>1. Aviso</span><br/><br/>"
+		contenido+="</div>";
+	}
+	else
+	{
+		contenido="<div id='part3_cuadrado1' class='cuadrado'>"
++"							<span class='dato agrandado escondido uppercase'>1. Tributos Aduaneros</span><br/><br/>"
++"							<div class='row'>"
++"								<span id='gravamen' class='dato col-md-7 col-sm-7 col-xs-7'>Gravamen</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 0</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='iva' class='dato dato col-md-7 col-sm-7 col-xs-7'>IVA 16% (IVA deducible de aduanas)</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 5.843.456</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 5.843.456</span>"
++"							</div>"
++"						</div>"
++"						<div id='part3_cuadrado2' class='cuadrado'>"
++"							<span class='dato agrandado escondido uppercase'>2. Flete internacional</span><br/><br/>"
++"							<div class='row'>"
++"								<span id='flete' class='dato col-md-7 col-sm-7 col-xs-7'>Flete internacional</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 15.609.600</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='bl' class='dato col-md-7 col-sm-7 col-xs-7'>BL</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 137.500</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='manejo' class='dato col-md-7 col-sm-7 col-xs-7'>Manejo logístico</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 2.100.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='radicacion' class='dato col-md-7 col-sm-7 col-xs-7'>Radicación, liberación y endoso</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 600.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='emisionBl' class='dato col-md-7 col-sm-7 col-xs-7'>Emisión BL</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 137.500</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='colect' class='dato col-md-7 col-sm-7 col-xs-7'>Colect Fee</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 468.288</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='seguro' class='dato col-md-7 col-sm-7 col-xs-7'>Seguro de transporte de mercancía 0.35%</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 136.575</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 19.189.463</span>"
++"							</div>"
++"						</div>"
++"						<div id='part3_cuadrado3' class='cuadrado'>"
++"							<span class='dato agrandado escondido uppercase'>3. Transporte Nacional</span><br/><br/>"
++"							<div class='row'>"
++"								<span id='transporte' class='dato col-md-7 col-sm-7 col-xs-7'>Transporte nacional</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 9.855.730</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 9.855.730</span>"
++"							</div>"
++"						</div>"
++"						<div id='part3_cuadrado4' class='cuadrado'>"
++"							<span class='dato agrandado escondido uppercase'>4. Nacionalización</span><br/><br/>"
++"							<div class='row'>"
++"								<span id='outsourcing' class='dato col-md-7 col-sm-7 col-xs-7'>Outsourcing en comercio exterior</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 500.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='gastosOperativos' class='dato col-md-7 col-sm-7 col-xs-7'>Gastos operativos</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 110.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='declaracion' class='dato col-md-7 col-sm-7 col-xs-7'>Elaboracion de declaracion de impo/valor</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 72.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='transmision' class='dato col-md-7 col-sm-7 col-xs-7'>Transmisión siglo XXI - Formularios</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 12.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='gastosPortuarios' class='dato col-md-7 col-sm-7 col-xs-7'>Gastos portuarios</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 1.500.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='poliza' class='dato col-md-7 col-sm-7 col-xs-7'>Poliza seguro nacional</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 220.500</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span id='decontenerizacion' class='dato col-md-7 col-sm-7 col-xs-7'>Descontenerización</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 2.100.000</span>"
++"							</div>"
++"							<div class='row'>"
++"								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 4.514.500</span>"
++"							</div>"
++"						</div>"
++"						<div id='part3_cuadrado5' class='cuadrado'>"
++"							<div class='row'>"
++"								<span class='dato col-md-7 col-sm-7 col-xs-7 textoBlanco conNegrilla'>Total liquidación costos de importación</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris textoBlanco conNegrilla'>$ 54.471.693</span>"
++"							</div>"
++"						</div>"
+	}
+	$("#zonaCentro").html(contenido);
+	invocar_Descripciones();
+}
 
 //----------------------------------------------------------------------------------------------------------
 //																							LOL
 //----------------------------------------------------------------------------------------------------------
 
-//1) Aqui va lo que se necesita para que se desplieguen los dropdowns
-var dropdownsPaises = ["paisDatos", "paisOrigen", "paisDestino"];
-var dropdownsCiudades = ["ciudad_datos", "ciudad_origen", "ciudad_destino"];
-var iconoCargando = ["icono_datos", "icono_origen", "icono_destino"];
-
-//3) Tiene que ver con como
+//3) Tiene que ver con como se pegaron las descripciones para la pagina 3
 var idPaDescripcion =[];
 var texto=[];
-window.onload = function()
+
+function invocar_Descripciones()
 {
 	$.ajax({
 		url : "auxiliar/get/descripcionesJSON",
@@ -330,4 +531,15 @@ function pegarDescripcion(i)
 		$("#"+idPaDescripcion[i]).css("color", "#999999");
 	};
 	document.getElementById(""+idPaDescripcion[i]).onmouseleave = function(){$("#"+idPaDescripcion[i]).css("color", "black");};
+}
+
+document.getElementById("valorMercancia").addEventListener("input", SoloDejarPositivos, false)
+document.getElementById("prdif").addEventListener("input", SoloDejarPositivos, false)
+
+function SoloDejarPositivos()
+{
+	// Let's match only digits.
+  var num = this.value.match(/^\d+$/);
+  if(num === null) this.value = "";
+  // If we have no match, value will be empty.
 }

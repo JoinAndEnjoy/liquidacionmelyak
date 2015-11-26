@@ -109,6 +109,8 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 #Parte3   {display: none;}
 #waitting {display: none;}
 #TipoEnvioBarco {display: none;}
+#proyectoEspecial {display: none;}
+#textoEspecial {width: 100%;}
 
 /* 5) Para las entradas de texto*/
 .dato
@@ -155,19 +157,16 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 /*7) Esto lo voy a usar en el cuadrado del panel 2 */
 .containerEnLinea {display: inline-flex; width: 100%;}
 
-.cuadrado#part2_cuadrado1 {padding-top: 16px;padding-bottom: 22px;}
+.cuadrado#part2_cuadrado1 {padding-top: 16px;padding-bottom: 6px;}
 #campoPeso {width: 40%;}
 #espacio1_peso {width: 5%;}
 #dropdownPeso {width: 14%;}
 #espacio2_peso {width: 41%;}
 
-.cuadrado#part2_cuadrado2
-{
-  padding-top: 26px;
-  padding-bottom: 22px;
-  position: relative;
-  bottom: 2px;
-}
+.cuadrado#envioAereo {padding-top: 26px; padding-bottom: 22px; position: relative; bottom: 2px; display: none;}
+.cuadrado#proyectoEspecial {padding-top: 26px; padding-bottom: 22px; position: relative; bottom: 2px; display: none;}
+.cuadrado.maritimo {padding-top: 26px; padding-bottom: 22px; position: relative; bottom: 2px; display: none;}
+#textosPreguntaPeso {display :none;}
 
 .division6prc {width: 8%;}
 .division47prc {width: 47%;}
@@ -200,9 +199,6 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 .textoBlanco {color: white;}
 .cuadrado#part3_cuadrado6 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 10px; text-align: center;}
 
-.division60prc {width: 70%;}
-.division34prc {width: 24%; text-align: right;}
-
 /*9) Esto es el estilo que va en las cajas de la derecha*/
 .cuadradoBlanco
 {
@@ -220,6 +216,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   padding-top: 20px;
 }
 
-.cuadrado#part3_cuadrado_lado1 {margin-bottom: 10px;}
-.cuadradoBlanco#part3_cuadrado_lado2 {margin-bottom: 10px;}
-.cuadradoBlanco#part3_cuadrado_lado2 {}
+.cuadradoBlanco#part3_cuadrado_lado1 {}
+.derecha { direction: rtl;}
+
+img#icono_destino {max-width: 100%; max-height: 100%;}
