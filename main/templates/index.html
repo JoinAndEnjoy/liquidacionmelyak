@@ -144,7 +144,7 @@
 				</form>
 			</div>
 			<div id="Parte3" class="row"><!-- XXX PARTE3 XXX -->
-				<form>
+				<form action="." method="post">{% csrf_token %}
 					<div class="col-md-3 col-md-push-9 col-sm-2 col-xs-12">
 						<div id="part3_cuadrado_lado1" class="cuadradoBlanco">
 							<span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
@@ -168,7 +168,7 @@
 			</div>
 			<br/>
 			<!--TODO QUITAR LINEA -->
-			<center><p ng-bind="user | json"></p></center>
+			<!--center><p ng-bind="user | json"></p></center-->
 		</div>
 		<!-- imports js -->
 		<!--Estas 3 lineas son para incluir JQuery y poder usar la libreria de los sliders... include the jQuery and jQuery UI scripts -->

@@ -4,7 +4,6 @@
 // This function gets cookie with a given name
 function getCookie(name)
 {
-	console.log("get cookie: "+name)
 	var cookieValue = null;
   if(document.cookie && document.cookie != '')
 	{
@@ -67,7 +66,6 @@ $.ajaxSetup({
 var app = angular.module('appMelyak', []);
 app.controller('ctrlMelyak', function($scope)
 {
-	if(csrftoken==null) csrftoken=getCookie('csrftoken');
 	$scope.user={};
 	$scope.user.otm=false;
 	$scope.user.bl=false;
@@ -381,10 +379,10 @@ function pintarPagina3(json, tipoCotizacion)
 			contenido+="	<span class='dato agrandado escondido uppercase'>"+textospar3[i]+"</span><br/><br/>";
 
 			var total=0;
-			console.log(k);
+			//console.log(k);
 			for(var key in json[k])
 			{
-				if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
+				//if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
 				contenido+="<div class='row'>";
 				contenido+="	<span id='"+key+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
 				contenido+="</div>"
@@ -504,7 +502,6 @@ function invocar_Descripciones()
 		type : "GET",
 		success : function(json)
 		{
-			console.log("Poblar la base de datos de descripciones");
 			var data = json.todas_ids;
 			for(var i=0; i<data.length; i++)
 			{
