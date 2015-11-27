@@ -4,6 +4,7 @@
 // This function gets cookie with a given name
 function getCookie(name)
 {
+	console.log("get cookie: "+name)
 	var cookieValue = null;
   if(document.cookie && document.cookie != '')
 	{
@@ -21,7 +22,6 @@ function getCookie(name)
   }
   return cookieValue;
 }
-var csrftoken = getCookie('csrftoken');
 
 /*The functions below will create a header with csrftoken*/
 function csrfSafeMethod(method)
@@ -29,6 +29,7 @@ function csrfSafeMethod(method)
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+var csrftoken = getCookie('csrftoken');
 
 function sameOrigin(url)
 {
@@ -66,6 +67,7 @@ $.ajaxSetup({
 var app = angular.module('appMelyak', []);
 app.controller('ctrlMelyak', function($scope)
 {
+	if(csrftoken==null) csrftoken=getCookie('csrftoken');
 	$scope.user={};
 	$scope.user.otm=false;
 	$scope.user.bl=false;
