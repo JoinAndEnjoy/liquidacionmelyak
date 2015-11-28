@@ -396,7 +396,7 @@ function pintarPagina3(json, tipoCotizacion)
 				if($.isNumeric(json[k][key])) total+=json[k][key];
 			}
 			contenido+="<div class='row'>";
-			contenido+="<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ "+total+"</span>";
+			contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>$ "+total+"</span>";
 			contenido+="</div>"
 			contenido+="</div>";
 		}
