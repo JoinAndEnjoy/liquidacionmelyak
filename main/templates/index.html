@@ -38,7 +38,7 @@
 						<select ng-model="user.paisDatos" id="paisDatos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" ng-change="cambiarCiudades(user.paisDatos, 0)" ng-options="template.cc_fips as template.nombre_pais for template in configPais"></select><br/>
 
 						<div class="row">
-							<span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><img id="icono_datos"/><br/>
+							<span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><img id="icono_datos" class="col-md-1 col-sm-1 col-xs-1" src="/static/img/loading.gif"/><br/>
 						</div>
 						<select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select><br/>
 
@@ -145,15 +145,15 @@
 			</div>
 			<div id="Parte3" class="row"><!-- XXX PARTE3 XXX -->
 				<form action="." method="post">{% csrf_token %}
-					<div class="col-md-3 col-md-push-9 col-sm-2 col-xs-12">
+					<div class="col-md-3 col-md-push-9 col-sm-3 col-sm-push-9 col-xs-12">
 						<div id="part3_cuadrado_lado1" class="cuadradoBlanco">
 							<span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
 							<p id="textoInformacion">Situa el puntero encima de cualquier item para ver mas información</p>
 						</div>
 					</div>
-					<div id="zonaCentro"   class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-8 col-sm-offset-2 col-xs-12 ">
+					<div id="zonaCentro"   class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-6 col-sm-offset-3 col-sm-pull-3 col-xs-12 ">
 					</div>
-					<div id="botonCuadro3" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+					<div id="botonCuadro3" class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
 						<div id='part3_cuadrado6' class='cuadrado'>
 							<button class='btn elboton uppercase separado agrandado' type='button' ng-click='cotizar'/>Enviar a mi Email</button>
 							<span class='textoGris'>Este correo será enviado a &nbsp;</span><span class='textoGris' ng-bind='user.correo'></span>
@@ -162,7 +162,7 @@
 				</form>
 			</div>
 			<div id="waitting" class="row"><!-- XXX Cambio entre el 2 y el 3 XXX -->
-				<div class="cuadrado col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+				<div class="cuadrado col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
 					<center><img id="icono_destino" src="/static/img/loadingGrande.gif"/></center>
 				</div>
 			</div>

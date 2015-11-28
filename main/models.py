@@ -58,7 +58,6 @@ class InfoFCL(models.Model):
 class Descripcion(models.Model):
     idDescripcion = models.CharField(max_length=100, primary_key=True)
     descripcion = models.TextField()
-    tipoDescripcion = models.IntegerField()
 
     def __str__(self):              # __unicode__ on Python 2
         return self.idDescripcion

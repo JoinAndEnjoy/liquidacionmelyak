@@ -37,7 +37,7 @@ def getTarifasHTTP(request):
 
 def getDescripcionesJSON(request):
     response_data = {}
-    todas_ids = [model_to_dict(item) for item in Descripcion.objects.order_by('tipoDescripcion', 'idDescripcion')]
+    todas_ids = [model_to_dict(item) for item in Descripcion.objects.order_by('idDescripcion')]
     response_data['todas_ids'] = todas_ids
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
@@ -87,21 +87,21 @@ def metodoPrincipal(request):
                             response_data['parte4']=parte4
 
                             parte3={} #La voy a usar para mandar los costos fijos
-                            parte3['gastos_fob']=infoNecesaria.gastos_fob
-                            parte3['gastos_naviera']=infoNecesaria.gastos_naviera
-                            parte3['manejo']=infoNecesaria.manejo
-                            parte3['collect_fee']=infoNecesaria.collect_fee
+                            parte3['Gastos fob']=infoNecesaria.gastos_fob
+                            parte3['Gastos naviera']=infoNecesaria.gastos_naviera
+                            parte3['Manejo']=infoNecesaria.manejo
+                            parte3['Collect fee']=infoNecesaria.collect_fee
                             response_data['parte3']=parte3
 
                             parte2={} #La voy a usar para mandar la informacion del transporte
-                            parte2['servicio']=infoNecesaria.servicio
-                            parte2['tiempo_transito']=infoNecesaria.tiempo_transito
+                            parte2['Servicio']=infoNecesaria.servicio
+                            parte2['Tiempo de transito']=infoNecesaria.tiempo_transito
                             response_data['parte2']=parte2
 
                             parte1={} #La voy a usar para mandar los costos de la carga
                             parte1['Divisa']=infoNecesaria.divisa
-                            parte1['Costo Transoprte20']=len(arreglo20)*infoNecesaria.FCL_20
-                            parte1['Costo Transoprte40']=len(arreglo40)*infoNecesaria.FCL_40
+                            parte1['Costo Transoprte contenedores 20 ft']=len(arreglo20)*infoNecesaria.FCL_20
+                            parte1['Costo Transoprte contenedores 40 ft']=len(arreglo40)*infoNecesaria.FCL_40
                             response_data['parte1']=parte1
 
                         elif d['tipoEnvio2']=="LCL":

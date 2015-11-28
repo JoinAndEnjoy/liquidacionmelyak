@@ -70,12 +70,19 @@ app.controller('ctrlMelyak', function($scope)
 	$scope.user.otm=false;
 	$scope.user.bl=false;
 	//TODO: poner los valores que son.
-	$scope.configTipoProducto=[{name:"lol", value:"lolV"},{name:"fu", value:"lol2V"}];
+	$scope.configTipoProducto=[	{name:"Textiles", value:"Textiles"},
+															{name:"Confecciones", value:"Confecciones"},
+															{name:"Ferreteria", value:"Ferreteria"},
+															{name:"Autopartes", value:"Autopartes"},
+															{name:"Jugueteria", value:"Jugueteria"},
+															{name:"Productos Medicos", value:"Productos Medicos"},
+															{name:"Farmaceuticos", value:"Farmaceuticos"},
+															{name:"Maquinaria Agricola", value:"Maquinaria Agricola"},
+															{name:"Electricidad", value:"Electricidad"}];
 	$scope.user.tipoProducto=$scope.configTipoProducto[0].value;
 	//TODO: poner los valores que son.
 	$scope.configTipoMoneda=[{name:"USD", value:"USD"},{name:"COP", value:"COP"},{name:"EUR", value:"EUR"},{name:"libra", value:"libra"}];
 	$scope.user.tipoMoneda=$scope.configTipoMoneda[0].value;
-	//TODO: poner los valores que son.
 	$scope.configTipoEnvio=[{name:"Via Maritima", value:"Via Maritima"},{name:"Via Aerea", value:"Via Aerea"},{name:"Proyecto Especial", value:"Proyecto Especial"}];
 	$scope.configTipoEnvio2=[{name:"FCL", value:"FCL"},{name:"LCL", value:"LCL"}];
 
@@ -89,11 +96,11 @@ app.controller('ctrlMelyak', function($scope)
 			$scope.$apply(function()
 			{
 				$scope.configPais=data;
-				$scope.user.paisDatos = $scope.configPais[32].cc_fips;//.TODO: El numero corresponde a Colombia (50)
+				$scope.user.paisDatos = $scope.configPais[50].cc_fips;//El numero corresponde a Colombia (50)
 				$scope.user.paisProducto=$scope.configPais[0].cc_fips;
 			});
 
-			$scope.cambiarCiudades("IO"); //TODO: Para colombia es CO
+			$scope.cambiarCiudades("CO"); //Para colombia es CO
 
 			$("#boton1").removeAttr("disabled");
 		},
@@ -296,14 +303,14 @@ app.controller('ctrlMelyak', function($scope)
 					$scope.$apply(function()
 					{
 						$scope.configCiudad=data;
-						$scope.user.ciudad_datos = $scope.configCiudad[0].nombre_ciudad;//TODO: El numero corresponde a Bogota es (TODO)
+						$scope.user.ciudad_datos = $scope.configCiudad[1279].nombre_ciudad;//: El numero corresponde a Bogota es (1279)
+						$("#icono_datos").css("display", "none");
+						$("#boton1").removeAttr("disabled");
 					});
 
-					$("#boton1").removeAttr("disabled");
-					$("#icono_datos").attr("src", "");
 				},
 			});
-			$("#icono_datos").attr("src", "/static/img/loading.gif");
+			$("#icono_datos").css("display", "block");
 			$("#boton1").attr("disabled", "true");
 		}
 	};
@@ -384,7 +391,7 @@ function pintarPagina3(json, tipoCotizacion)
 			{
 				//if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
 				contenido+="<div class='row'>";
-				contenido+="	<span id='"+key+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
+				contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
 				contenido+="</div>"
 				if($.isNumeric(json[k][key])) total+=json[k][key];
 			}
@@ -505,7 +512,7 @@ function invocar_Descripciones()
 			var data = json.todas_ids;
 			for(var i=0; i<data.length; i++)
 			{
-				idPaDescripcion.push(data[i].idDescripcion);
+				idPaDescripcion.push(data[i].idDescripcion.replace(/\s/g, ""));
 				texto.push(data[i].descripcion);
 			}
 
