@@ -280,6 +280,9 @@ app.controller('ctrlMelyak', function($scope)
 						$("#bola2").css("padding-top", "5px");
 						$("#chulo2").css("display","block");
 						$("#chulo2").css("color","green");
+
+						$scope.cotizacion={};
+						
 					},
 
 					// handle a non-successful response
@@ -324,11 +327,12 @@ app.controller('ctrlMelyak', function($scope)
 
 	$scope.enviarLiquidacion = function()
 	{
-		console.log("HOLA");
+
+
 		$.ajax({
 			url : 'auxiliar/post/metodoPrincipal/', // the endpoint
 			type : "POST", // http method
-			data : { elUsuario : JSON.stringify(angular.toJson($scope.user))},
+			data : { cotizacion : JSON.stringify(angular.toJson($scope.cotizacion))},
 			// handle a successful response
 			success : function(json)
 			{
@@ -416,15 +420,18 @@ function pintarPagina3(json, tipoCotizacion)
 			contenido+="<div id='part3_cuadrado"+(i+1)+"' class='cuadrado'>";
 			contenido+="	<span class='dato agrandado escondido uppercase'>"+textospar3[i]+"</span><br/><br/>";
 
+			var moneda="$ ";
 			var total=0;
 			//console.log(k);
 			for(var key in json[k])
 			{
 				//if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
+				if(key=="Divisa" && json[k][key]=="EUR") moneda="€ ";
+				else if(key=="Divisa" && json[k][key]=="USD") moneda="$ ";
 				contenido+="<div class='row'>";
 				if($.isNumeric(json[k][key]) && i>0)
 				{
-					contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
+					contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>"+moneda+json[k][key]+"</span>"
 					total+=json[k][key];
 				}
 				else contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>"+json[k][key]+"</span>"
@@ -433,7 +440,7 @@ function pintarPagina3(json, tipoCotizacion)
 			if(i>0)
 			{
 				contenido+="<div class='row'>";
-				contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>$ "+total+"</span>";
+				contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>"+moneda+total+"</span>";
 				contenido+="</div>"
 			}
 			contenido+="</div>";

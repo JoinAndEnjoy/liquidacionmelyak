@@ -42,7 +42,6 @@ def getDescripcionesJSON(request):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def metodoPrincipal(request):
-    response_data = {}
     if request.is_ajax():
         if request.method == 'POST':
             #Para coger un json de un request post
@@ -113,3 +112,14 @@ def metodoPrincipal(request):
                 return HttpResponse(json.dumps(response_data), content_type="application/json")
             #-------------------------------------------------
             print(noEncontradas)
+
+def hacerCotizacion(request):
+    if request.is_ajax():
+        if request.method == 'POST':
+            #Para coger un json de un request post
+            str=request.POST['elUsuario'] #envien el json como un texto y el key es "elUsuario"
+            str=str.replace("\\", "")[1:-1] #Viene con algo de ruido que hay que limpiar
+            d = json.loads(str) #Se carga en esta estructura especial para json y ahora se puede acceder cada parametro ej: print d['telefono']
+            #-------------------------------------------------
+            response_data={}
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
