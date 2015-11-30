@@ -72,6 +72,10 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   position:absolute;
 }
 
+#chulo1{display: none;}
+#chulo2{display: none;}
+#chulo3{display: none;}
+
 .movidas {margin-right:98px;}
 
 .activa {background: #53B35A;}

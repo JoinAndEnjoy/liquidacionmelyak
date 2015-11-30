@@ -93,15 +93,15 @@ def metodoPrincipal(request):
                             parte3['Collect fee']=infoNecesaria.collect_fee
                             response_data['parte3']=parte3
 
-                            parte2={} #La voy a usar para mandar la informacion del transporte
-                            parte2['Servicio']=infoNecesaria.servicio
-                            parte2['Tiempo de transito']=infoNecesaria.tiempo_transito
+                            parte2={} #La voy a usar para mandar los costos de la carga
+                            parte2['Divisa']=infoNecesaria.divisa
+                            parte2['Costo Transoprte contenedores 20 ft']=len(arreglo20)*infoNecesaria.FCL_20
+                            parte2['Costo Transoprte contenedores 40 ft']=len(arreglo40)*infoNecesaria.FCL_40
                             response_data['parte2']=parte2
 
-                            parte1={} #La voy a usar para mandar los costos de la carga
-                            parte1['Divisa']=infoNecesaria.divisa
-                            parte1['Costo Transoprte contenedores 20 ft']=len(arreglo20)*infoNecesaria.FCL_20
-                            parte1['Costo Transoprte contenedores 40 ft']=len(arreglo40)*infoNecesaria.FCL_40
+                            parte1={} #La voy a usar para mandar la informacion del transporte
+                            parte1['Servicio']=infoNecesaria.servicio
+                            parte1['Tiempo de transito']=infoNecesaria.tiempo_transito
                             response_data['parte1']=parte1
 
                         elif d['tipoEnvio2']=="LCL":

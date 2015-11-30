@@ -202,6 +202,11 @@ app.controller('ctrlMelyak', function($scope)
 				$("#textoB1").css("color", "#909090");
 				$("#textoB2").css("color", "#000000");
 				$("#textoB3").css("color", "#909090");
+				//Sobre los chulos
+				$("#num1").css("display","none");
+				$("#bola1").css("padding-top", "5px");
+				$("#chulo1").css("display","block");
+				$("#chulo1").css("color","green");
 			}
 		}
 		else if(pagina==3)
@@ -270,6 +275,11 @@ app.controller('ctrlMelyak', function($scope)
 						$("#textoB1").css("color", "#909090");
 						$("#textoB2").css("color", "#909090");
 						$("#textoB3").css("color", "#000000");
+						//Sobre los chulos
+						$("#num2").css("display","none");
+						$("#bola2").css("padding-top", "5px");
+						$("#chulo2").css("display","block");
+						$("#chulo2").css("color","green");
 					},
 
 					// handle a non-successful response
@@ -284,10 +294,6 @@ app.controller('ctrlMelyak', function($scope)
 		}
 	};
 
-	$scope.cotizar = function(){console.log("PERRITO");}
-
-	var dropdownsCiudades = ["ciudad_datos", "ciudad_origen", "ciudad_destino"];
-	var iconoCargando = ["icono_datos", "icono_origen", "icono_destino"];
 	$scope.cambiarCiudades = function(cc_fips)
 	{
 		if(cc_fips == "") $("#ciudad_datos").html("");
@@ -303,7 +309,8 @@ app.controller('ctrlMelyak', function($scope)
 					$scope.$apply(function()
 					{
 						$scope.configCiudad=data;
-						$scope.user.ciudad_datos = $scope.configCiudad[1279].nombre_ciudad;//: El numero corresponde a Bogota es (1279)
+						if(cc_fips == "CO") $scope.user.ciudad_datos = $scope.configCiudad[1279].nombre_ciudad;//: El numero corresponde a Bogota es (1279)
+						else $scope.user.ciudad_datos = $scope.configCiudad[0].nombre_ciudad;
 						$("#icono_datos").css("display", "none");
 						$("#boton1").removeAttr("disabled");
 					});
@@ -313,6 +320,29 @@ app.controller('ctrlMelyak', function($scope)
 			$("#icono_datos").css("display", "block");
 			$("#boton1").attr("disabled", "true");
 		}
+	};
+
+	$scope.enviarLiquidacion = function()
+	{
+		console.log("HOLA");
+		$.ajax({
+			url : 'auxiliar/post/metodoPrincipal/', // the endpoint
+			type : "POST", // http method
+			data : { elUsuario : JSON.stringify(angular.toJson($scope.user))},
+			// handle a successful response
+			success : function(json)
+			{
+
+			},
+
+			// handle a non-successful response
+			error : function(xhr,errmsg,err)
+			{
+				$('body').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+				" <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+				console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+			}
+		});
 	};
 
 	$scope.cambiarTipoEnvio = function(tipoEnvio)
@@ -370,7 +400,7 @@ function pintarPagina3(json, tipoCotizacion)
 {
 	//"Via Aerea" "LCL"
 	var contenido="";
-	var textospar3=["1. Costos de la Carga","2. Informacion del Transporte","3. Costos Fijos","4. Costos Opcionales"];
+	var textospar3=["1. Informacion del Transporte","2. Costos de la Carga","3. Costos Fijos","4. Costos Opcionales"];
 	if(tipoCotizacion=="FCL")
 	{
 		var k, keys = [];
@@ -378,6 +408,7 @@ function pintarPagina3(json, tipoCotizacion)
 			if(json.hasOwnProperty(k)) keys.push(k);
 
 		keys.sort();
+		var granTotal=0;
 
 		for(var i=0; i<keys.length; i++)
 		{
@@ -391,15 +422,28 @@ function pintarPagina3(json, tipoCotizacion)
 			{
 				//if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
 				contenido+="<div class='row'>";
-				contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
+				if($.isNumeric(json[k][key]) && i>0)
+				{
+					contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+json[k][key]+"</span>"
+					total+=json[k][key];
+				}
+				else contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>"+json[k][key]+"</span>"
 				contenido+="</div>"
-				if($.isNumeric(json[k][key])) total+=json[k][key];
 			}
-			contenido+="<div class='row'>";
-			contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>$ "+total+"</span>";
-			contenido+="</div>"
+			if(i>0)
+			{
+				contenido+="<div class='row'>";
+				contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>$ "+total+"</span>";
+				contenido+="</div>"
+			}
 			contenido+="</div>";
+			granTotal+=total;
 		}
+		contenido+="<div id='part3_cuadrado5' class='cuadrado'>";
+		contenido+="	<div class='row'>";
+		contenido+="		<span class='dato col-md-7 col-sm-7 col-xs-7 textoBlanco conNegrilla'>Total liquidación costos de importación</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris textoBlanco conNegrilla'>$ "+granTotal+"</span>";
+		contenido+="	</div>";
+		contenido+="</div>";
 	}
 	else if(tipoCotizacion=="Proyecto Especial")
 	{
@@ -531,12 +575,15 @@ function invocar_Descripciones()
 
 function pegarDescripcion(i)
 {
-	document.getElementById(""+idPaDescripcion[i]).onmouseover = function()
+	if($("#"+idPaDescripcion[i]).length > 0)//it exist
 	{
-		$("#textoInformacion").html(""+texto[i]);
-		$("#"+idPaDescripcion[i]).css("color", "#999999");
-	};
-	document.getElementById(""+idPaDescripcion[i]).onmouseleave = function(){$("#"+idPaDescripcion[i]).css("color", "black");};
+		document.getElementById(""+idPaDescripcion[i]).onmouseover = function()
+		{
+			$("#textoInformacion").html(""+texto[i]);
+			$("#"+idPaDescripcion[i]).css("color", "#999999");
+		};
+		document.getElementById(""+idPaDescripcion[i]).onmouseleave = function(){$("#"+idPaDescripcion[i]).css("color", "black");};
+	}
 }
 
 document.getElementById("valorMercancia").addEventListener("input", SoloDejarPositivos, false)
