@@ -78,13 +78,15 @@ app.controller('ctrlMelyak', function($scope)
 															{name:"Productos Medicos", value:"Productos Medicos"},
 															{name:"Farmaceuticos", value:"Farmaceuticos"},
 															{name:"Maquinaria Agricola", value:"Maquinaria Agricola"},
-															{name:"Electricidad", value:"Electricidad"}];
+															{name:"Electricidad", value:"Electricidad"},
+															{name:"peligrosa (IMO)", value:"peligrosa (IMO)"},
+															{name:"Carga general no peligrosa", value:"Carga general no peligrosa"}];
 	$scope.user.tipoProducto=$scope.configTipoProducto[0].value;
 	//TODO: poner los valores que son.
 	$scope.configTipoMoneda=[{name:"USD", value:"USD"},{name:"COP", value:"COP"},{name:"EUR", value:"EUR"},{name:"libra", value:"libra"}];
 	$scope.user.tipoMoneda=$scope.configTipoMoneda[0].value;
 	$scope.configTipoEnvio=[{name:"Via Maritima", value:"Via Maritima"},{name:"Via Aerea", value:"Via Aerea"},{name:"Proyecto Especial", value:"Proyecto Especial"}];
-	$scope.configTipoEnvio2=[{name:"FCL", value:"FCL"},{name:"LCL", value:"LCL"}];
+	$scope.configTipoEnvio2=[{name:"Full Container Load (FCL)", value:"FCL"},{name:"Less than Container Load (LCL)", value:"LCL"}];
 
 	//Para pedir los pasises a la base de datos
 	$.ajax({
@@ -151,8 +153,8 @@ app.controller('ctrlMelyak', function($scope)
 			{
 				//Se crean diferentes cosas segun el contenedor
 				var texto="<div class='row' id='caja"+nombres[index]+"_"+aPoner+"'>";
-				if(index==0) texto+="<p class='col-md-7 col-sm-7'>Container "+aPoner+":</p><input class='col-md-5 col-sm-5' id='FCL20_"+aPoner+"' type='number' min=0 value=0\>";
-				else if(index==1) texto+="<p class='col-md-7 col-sm-7'>Container "+aPoner+":</p><input class='col-md-5 col-sm-5' id='FCL40_"+aPoner+"' type='number' min=0 value=0\>";
+				if(index==0) texto+="<i class='col-md-1 col-sm-1 col-xs-1 fa fa-cube'></i><p class='col-md-6 col-sm-6 col-xs-6'>Container "+aPoner+":</p><input class='col-md-4 col-sm-4 col-xs-4' id='FCL20_"+aPoner+"' type='number' min=0 value=0\>";
+				else if(index==1) texto+="<i class='col-md-1 col-sm-1 col-xs-1 fa fa-cube'></i><p class='col-md-6 col-sm-6 col-xs-6'>Container "+aPoner+":</p><input class='col-md-4 col-sm-4 col-xs-4' id='FCL40_"+aPoner+"' type='number' min=0 value=0\>";
 				else if(index==2) texto+="<p>"+aPoner+"</p>";
 				texto+="</div>"
 				$("#containers"+nombres[index]).append(texto);
@@ -264,7 +266,8 @@ app.controller('ctrlMelyak', function($scope)
 							else if($scope.user.tipoEnvio2=="LCL") tipoCotizacion="LCL";
 						}
 						else if($scope.user.tipoEnvio=="Proyecto Especial") tipoCotizacion="Proyecto Especial";
-						pintarPagina3(json, tipoCotizacion)
+
+						pintarPagina3(json, tipoCotizacion);
 						//-------------------------------------------------------------------
 						$("#waitting").css("display", "none");
 						//Sobre colorear las bolitas
@@ -282,7 +285,7 @@ app.controller('ctrlMelyak', function($scope)
 						$("#chulo2").css("color","green");
 
 						$scope.cotizacion={};
-						
+
 					},
 
 					// handle a non-successful response
@@ -325,10 +328,7 @@ app.controller('ctrlMelyak', function($scope)
 		}
 	};
 
-	$scope.enviarLiquidacion = function()
-	{
-
-
+	$scope.enviarLiquidacion = function(){
 		$.ajax({
 			url : 'auxiliar/post/metodoPrincipal/', // the endpoint
 			type : "POST", // http method
@@ -336,7 +336,7 @@ app.controller('ctrlMelyak', function($scope)
 			// handle a successful response
 			success : function(json)
 			{
-
+				console.log(json);
 			},
 
 			// handle a non-successful response
@@ -420,18 +420,18 @@ function pintarPagina3(json, tipoCotizacion)
 			contenido+="<div id='part3_cuadrado"+(i+1)+"' class='cuadrado'>";
 			contenido+="	<span class='dato agrandado escondido uppercase'>"+textospar3[i]+"</span><br/><br/>";
 
-			var moneda="$ ";
+			var hayQueCambiar=false;
 			var total=0;
 			//console.log(k);
 			for(var key in json[k])
 			{
 				//if(json[k].hasOwnProperty(key)) console.log("    "+key + " -> " + json[k][key]);
-				if(key=="Divisa" && json[k][key]=="EUR") moneda="€ ";
-				else if(key=="Divisa" && json[k][key]=="USD") moneda="$ ";
+				if(key=="Divisa") continue;
 				contenido+="<div class='row'>";
 				if($.isNumeric(json[k][key]) && i>0)
 				{
-					contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>"+moneda+json[k][key]+"</span>"
+					var valorAPoner=parseFloat(Math.round(json[k][key] * 100) / 100).toFixed(2);
+					contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ "+valorAPoner+"</span>"
 					total+=json[k][key];
 				}
 				else contenido+="	<span id='"+key.replace(/\s/g, "")+"' class='dato dato col-md-7 col-sm-7 col-xs-7'>"+key+"</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>"+json[k][key]+"</span>"
@@ -440,7 +440,7 @@ function pintarPagina3(json, tipoCotizacion)
 			if(i>0)
 			{
 				contenido+="<div class='row'>";
-				contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>"+moneda+total+"</span>";
+				contenido+="<span class='dato col-md-9 col-sm-9 col-xs-9 total'>Total</span><span class='dato derecha col-md-3 col-sm-3 col-xs-3 conNegrilla'>$ "+parseFloat(Math.round(total * 100) / 100).toFixed(2)+"</span>";
 				contenido+="</div>"
 			}
 			contenido+="</div>";
@@ -448,7 +448,7 @@ function pintarPagina3(json, tipoCotizacion)
 		}
 		contenido+="<div id='part3_cuadrado5' class='cuadrado'>";
 		contenido+="	<div class='row'>";
-		contenido+="		<span class='dato col-md-7 col-sm-7 col-xs-7 textoBlanco conNegrilla'>Total liquidación costos de importación</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris textoBlanco conNegrilla'>$ "+granTotal+"</span>";
+		contenido+="		<span class='dato col-md-7 col-sm-7 col-xs-7 textoBlanco conNegrilla'>Total liquidación costos de importación</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris textoBlanco conNegrilla'>$ "+parseFloat(Math.round(granTotal * 100) / 100).toFixed(2)+"</span>";
 		contenido+="	</div>";
 		contenido+="</div>";
 	}
@@ -539,7 +539,7 @@ function pintarPagina3(json, tipoCotizacion)
 +"							<div class='row'>"
 +"								<span class='dato col-md-7 col-sm-7 col-xs-7 textoBlanco conNegrilla'>Total liquidación costos de importación</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris textoBlanco conNegrilla'>$ 54.471.693</span>"
 +"							</div>"
-+"						</div>"
++"						</div>";
 	}
 	$("#zonaCentro").html(contenido);
 	invocar_Descripciones();

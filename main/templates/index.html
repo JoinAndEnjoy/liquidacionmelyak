@@ -8,7 +8,8 @@
 		<!-- imports css y algunos javascript-->
 		<!-- Bootstrap & Angular; es posible que los queramos local-->
 		<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen">
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> <!-- Para Angular -->
 	</head>
 	<body>
@@ -44,7 +45,7 @@
 						<select ng-model="user.paisDatos" id="paisDatos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" ng-change="cambiarCiudades(user.paisDatos, 0)" ng-options="template.cc_fips as template.nombre_pais for template in configPais"></select><br/>
 
 						<div class="row">
-							<span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><img id="icono_datos" class="col-md-1 col-sm-1 col-xs-1" src="/static/img/loading.gif"/><br/>
+							<span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><i id="icono_datos" class="col-md-1 col-sm-1 col-xs-1 fa fa-spinner fa-spin"></i><br/>
 						</div>
 						<select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select><br/>
 
@@ -62,7 +63,7 @@
 			</div>
 			<div id="Parte2" class="row"><!-- XXX PARTE2 XXX -->
 				<form action="." method="post">{% csrf_token %}
-					<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+					<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
 						<div id="part2_cuadrado1" class="cuadrado"><!--Aqui voy a poner lo del tipo de envio-->
 							<span class="dato agrandado">Tipo de Envío</span><br/>
 							<select ng-model="user.tipoEnvio" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio)" ng-options="template.value as template.name for template in configTipoEnvio"></select>
@@ -93,7 +94,7 @@
 								<br/><br/>
 							</div>
 							<div class="row">
-								<p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 20ft</p><span class="col-md-2 col-sm-2 col-xs-2"></span><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 40ft</p>
+								<i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 20ft</p><i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 40ft</p>
 							</div><br/>
 							<div class="row">
 								<div id="slider20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="slider40" class="col-md-5 col-sm-5 col-xs-5"></div>
@@ -152,16 +153,16 @@
 			<div id="Parte3"><!-- XXX PARTE3 XXX -->
 				<form action="." method="post">{% csrf_token %}
 					<div class="row">
-						<div class="col-md-3 col-md-push-9 col-sm-3 col-sm-push-9 col-xs-12">
+						<div class="col-md-2 col-md-push-10 col-sm-2 col-sm-push-10 col-xs-12">
 							<div id="part3_cuadrado_lado1" class="cuadradoBlanco">
 								<span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
 								<p id="textoInformacion">Situa el puntero encima de cualquier item para ver mas información</p>
 							</div>
 						</div>
-						<div id="zonaCentro"   class="col-md-6 col-md-offset-3 col-md-pull-3 col-sm-6 col-sm-offset-3 col-sm-pull-3 col-xs-12"></div>
+						<div id="zonaCentro"   class="col-md-8 col-md-offset-2 col-md-pull-2 col-sm-8 col-sm-offset-2 col-sm-pull-2 col-xs-12"></div>
 					</div>
 					<div class="row">
-						<div id="botonCuadro3" class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+						<div id="botonCuadro3" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
 							<div id='part3_cuadrado6' class='cuadrado'>
 								<button class='btn elboton uppercase separado agrandado' type='button' ng-click='enviarLiquidacion()'/>Enviar a mi Email</button>
 								<span class='textoGris'>Este correo será enviado a &nbsp;</span><span class='textoGris' ng-bind='user.correo'></span>
@@ -171,7 +172,7 @@
 				</form>
 			</div>
 			<div id="waitting" class="row"><!-- XXX Cambio entre el 2 y el 3 XXX -->
-				<div class="cuadrado col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+				<div class="cuadrado col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
 					<center><img id="icono_destino" src="/static/img/loadingGrande.gif"/></center>
 				</div>
 			</div>

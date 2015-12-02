@@ -1,10 +1,11 @@
+#TODO: importante, se consume este servicio: http://fixer.io/ para pasar de EUR a USD
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
 from .models import *
 
-import json
-import time
+import json, requests, time
 from django.forms.models import model_to_dict
 # Create your views here.
 def index(request):
@@ -79,10 +80,7 @@ def metodoPrincipal(request):
                             esOTM=d['otm']
 
                             parte4={} #La voy a usar para mandar los costos opcionales
-                            if pidioBL:
-                                parte4['bl']=infoNecesaria.bl
-                            else:
-                                parte4['bl']=0
+                            #TODO:
                             response_data['parte4']=parte4
 
                             parte3={} #La voy a usar para mandar los costos fijos
@@ -94,8 +92,21 @@ def metodoPrincipal(request):
 
                             parte2={} #La voy a usar para mandar los costos de la carga
                             parte2['Divisa']=infoNecesaria.divisa
-                            parte2['Costo Transoprte contenedores 20 ft']=len(arreglo20)*infoNecesaria.FCL_20
-                            parte2['Costo Transoprte contenedores 40 ft']=len(arreglo40)*infoNecesaria.FCL_40
+
+                            multiplicador=1;
+                            if infoNecesaria.divisa=="EUR":
+                                resp = requests.get("http://api.fixer.io/latest?symbols=USD")
+                                tazaCambioEUR_USD=json.loads(resp.text)['rates']['USD']
+                                multiplicador=tazaCambioEUR_USD;
+                            elif infoNecesaria.divisa=="USD":
+                                multiplicador=1;
+
+                            parte2['Costo Transoprte contenedores 20 ft']=(len(arreglo20)*infoNecesaria.FCL_20*multiplicador)
+                            parte2['Costo Transoprte contenedores 40 ft']=(len(arreglo40)*infoNecesaria.FCL_40*multiplicador)
+                            if pidioBL:
+                                parte2['bl']=infoNecesaria.bl
+                            else:
+                                parte2['bl']=0
                             response_data['parte2']=parte2
 
                             parte1={} #La voy a usar para mandar la informacion del transporte
