@@ -34,9 +34,21 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   text-align: center;
 }
 
-#textoB1 {color:#000000; margin-right:76px;}
-#textoB2 {color:#909090; margin-right:55px;}
-#textoB3 {color:#909090;}
+#textoB1 {
+  color:#000000; 
+  display: block;
+  margin-left: -14px;
+}
+#textoB2 {
+  color:#909090; 
+  display: block;
+  margin-left: -10px;
+}
+#textoB3 {
+  color:#909090;
+  display: block;
+  margin-left: -25px;
+}
 /* 3) Aqui va lo relacionado con la parte de arriba donde van las bolas*/
 .cajaBolas
 {
@@ -47,28 +59,29 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 .bolitas
 {
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  border:3px solid transparent;
+  width: 33px;
+  height: 33px;
+  border:2px solid transparent;
   border-color: black;
   display: inline-block;
-  padding-top: 3px;
-  font-size: 16px;
-  font-weight: 900;
+  padding-top: 5px;
+  font-size: 13px;
+  font-weight: 700;
   color: white;
   position:relative;
+  text-align: center;
 }
 
 .bolitas.primera:before,.bolitas.segunda:before
 {
   content:"";
   width:101px;
-  height:3px;
+  height:2px;
   background-color:#000000;
   top:-webkit-calc(50% - 3px);
   top:-moz-calc(50% - 3px);
   top:calc(50% - 3px);
-  left:110%;
+  left:106%;
   position:absolute;
 }
 
@@ -85,9 +98,8 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 .textoBolas
 {
   font-size:15px;
-  font-weight:600;
-  position: relative;
-  top: 10px;
+  font-weight:500;
+  margin-top: 10px;
 }
 
 /* 4) Para el cuadrado*/
@@ -97,9 +109,6 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   border-style: solid;
   border-color: #cfcfcf;
   border-width: 1px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 3px;
   padding-left: 50px;
   padding-right: 50px;
@@ -108,7 +117,11 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 }
 
 /*Esto es para que al comienzo solo se vea la parte 1 del formulario*/
-#Parte1   {display: block;}
+#Parte1   {
+  display: block;
+  margin-left: 0px;
+  margin-right: 0px;
+}
 #Parte2   {display: none;}
 #Parte3   {display: none;}
 #waitting {display: none;}
@@ -131,7 +144,14 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   font-weight: 500;
 }
 
-.entrada {width: 100%;}
+.entrada {
+  width: 100%;
+  margin-top: 7px;
+  border-radius: 2px;
+  margin-bottom: 7px;
+}
+
+
 
 .dropdowns {width: 100%;}
 
@@ -151,10 +171,9 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 .elboton:hover {background-color: #579f43;}
 
 /* EXTRA) Este esta en todos los input*/
-.agrandado
-{
-  font-size: 18px;
-  font-weight: 500;
+.agrandado {
+  font-size: 14px;
+  color: #222222;
 }
 
 .orientadoDerecha {padding-left: 15px;}
@@ -226,3 +245,79 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 img#icono_destino {max-width: 100%; max-height: 100%;}
 
 #icono_datos {display: none;}
+
+select{
+  border-radius: 2px;
+  -webkit-appearance: none;
+  outline: none;
+  
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+
+
+.simplebox {
+  outline: none;
+  
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.icono-select{
+
+  position: relative;
+  top: 141px;
+  left: 496px;
+  position: absolute;
+  top: 139px;
+  color: #DEDEDE;
+  font-size: 19px;
+}
+
+.bola-container{
+  display: inline-block;
+  text-align: left;
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+  .icono-select{
+    left: 393px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+  .icono-select{
+    left: 281px;
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+  .icono-select{
+    left: 373px;
+  }
+
+  .cuadrado{
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-bottom: 17px;
+    padding-top: 10px;
+  }
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 380px) {
+  .icono-select{
+    left: 268px;
+  }
+}
