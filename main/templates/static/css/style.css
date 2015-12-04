@@ -35,12 +35,12 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 }
 
 #textoB1 {
-  color:#000000; 
+  color:#000000;
   display: block;
   margin-left: -14px;
 }
 #textoB2 {
-  color:#909090; 
+  color:#909090;
   display: block;
   margin-left: -10px;
 }
@@ -218,9 +218,9 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 .cuadrado#part3_cuadrado2 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 2px;}
 .cuadrado#part3_cuadrado3 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 4px;}
 .cuadrado#part3_cuadrado4 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 6px;}
-.cuadrado#part3_cuadrado5 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 8px; background-color: #52B259}
+.cuadrado#part3_cuadradoVerde {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 8px; background-color: #52B259}
 .textoBlanco {color: white;}
-.cuadrado#part3_cuadrado6 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 10px; text-align: center;}
+.cuadrado#part3_cuadradoBoton {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 10px; text-align: center;}
 
 /*9) Esto es el estilo que va en las cajas de la derecha*/
 .cuadradoBlanco
@@ -246,11 +246,11 @@ img#icono_destino {max-width: 100%; max-height: 100%;}
 
 #icono_datos {display: none;}
 
-select{
+select, .cosasSerias{
   border-radius: 2px;
   -webkit-appearance: none;
   outline: none;
-  
+
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
@@ -260,7 +260,7 @@ select{
 
 .simplebox {
   outline: none;
-  
+
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
@@ -301,7 +301,7 @@ select{
 
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
   .icono-select{
     left: 373px;
@@ -315,7 +315,7 @@ select{
   }
 }
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina */
 @media only screen and (max-width : 380px) {
   .icono-select{
     left: 268px;

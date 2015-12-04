@@ -41,7 +41,6 @@ class InfoFCL(models.Model):
     FCL_40 = models.FloatField()
     servicio = models.CharField(max_length=90)
     tiempo_transito = models.FloatField()
-    bl = models.FloatField()
     gastos_fob = models.FloatField()
     gastos_naviera = models.FloatField()
     manejo = models.FloatField()
@@ -54,6 +53,22 @@ class InfoFCL(models.Model):
     def __repr__(self):
         return self.__str__()
 
+class InfoLCL(models.Model):
+    pais = models.CharField(max_length=90)
+    puerto_cargue = models.CharField(max_length=90)
+    servicio = models.CharField(max_length=90)
+    puerto_descargue = models.CharField(max_length=90)
+    tarifaTon_m3 = models.FloatField()
+    gasolinaBAF = models.FloatField()
+    minimo = models.FloatField()
+    frecuencia = models.CharField(max_length=90)
+    tiempo_transito = models.FloatField()
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.puerto_cargue+" "+self.puerto_descargue
+
+    def __repr__(self):
+        return self.__str__()
 
 class Descripcion(models.Model):
     idDescripcion = models.CharField(max_length=100, primary_key=True)

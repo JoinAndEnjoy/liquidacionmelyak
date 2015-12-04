@@ -1,208 +1,206 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Liquidación de costos de importación</title>
-	<!-- imports css y algunos javascript-->
-	<!-- Bootstrap & Angular; es posible que los queramos local-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Liquidación de costos de importación</title>
+        <!-- imports css y algunos javascript-->
+        <!-- Bootstrap & Angular; es posible que los queramos local-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> <!-- Para Angular -->
+    </head>
+    <body>
+        <div class="container" ng-app="appMelyak" ng-controller="ctrlMelyak">
+            <h3 class="uppercase separado centrado">Liquidación de costos de importación</h3>
+            <h4 class="uppercase centrado">Aproximacion presupuestal</h4>
+            <div class="cajaBolas">
+                <div class="palCentro">
+                    <div class = "bola-container">
+                        <span id="bola1" class="bolitas primera activa movidas">
+                            <span id="chulo1" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            <span id="num1">1</span>
+                        </span>
+                        <span id="textoB1" class="textoBolas">Tus datos</span>
+                    </div>
+                    <div class = "bola-container">
+                        <span id="bola2" class="bolitas segunda apagada movidas">
+                            <span id="chulo2" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            <span id="num2">2</span>
+                        </span>
+                        <span id="textoB2" class="textoBolas">Tu carga</span>
+                    </div>
+                    <div class = "bola-container">
+                        <span id="bola3" class="bolitas tercera apagada"><span id="num3">3</span></span><br/>
+                        <span id="textoB3" class="textoBolas">Tu cotización</span>
+                    </div>
+                </div>
+            </div>
+            <div id="Parte1" class="row"><!-- XXX PARTE1 XXX -->
+                <div class="cuadrado col-sm-6 col-sm-offset-3">
+                    <form name="myForm1">
+                        <span class="dato agrandado">Nombre de la empresa</span><br/>
+                        <input ng-model="user.nombre" type="text" name="nombreDeEmpresa" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Nombre de empresa"/>
+                        <span id="avisoNombre" class="aviso">Debes poner el nombre de tu compañia</span>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="{{STATIC_URL}}css/style.css" type="text/css" media="screen">
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> <!-- Para Angular -->
-</head>
-<body>
-	<div class="container" ng-app="appMelyak" ng-controller="ctrlMelyak">
-		<h3 class="uppercase separado centrado">Liquidación de costos de importación</h3>
-		<h4 class="uppercase centrado">Aproximacion presupuestal</h4>
-		<div class="cajaBolas">
-			<div class="palCentro">
-				<div class = "bola-container">
-					<span id="bola1" class="bolitas primera activa movidas">
-						<span id="chulo1" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						<span id="num1">1</span>
-					</span>
-					<span id="textoB1" class="textoBolas">Tus datos</span>
-				</div>
-				<div class = "bola-container">
-					<span id="bola2" class="bolitas segunda apagada movidas">
-						<span id="chulo2" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						<span id="num2">2</span>
-					</span>
-					<span id="textoB2" class="textoBolas">Tu carga</span>
-				</div>
-				<div class = "bola-container">
-					<span id="bola3" class="bolitas tercera apagada"><span id="num3">3</span></span><br/>
-					<span id="textoB3" class="textoBolas">Tu cotización</span>
-				</div>
+                        <span class="dato agrandado">País</span><br/>
+                        <div class = "mi-clase">
+                            <select ng-model="user.paisDatos" id="paisDatos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" ng-change="cambiarCiudades(user.paisDatos, 0)" ng-options="template.cc_fips as template.nombre_pais for template in configPais"></select>
+                            <span class = "fa fa-caret-down icono-select" onclick='mostrarDropdown("paisDatos")'></span>
+                        </div>
 
-				
-				
-			</div>
-		</div>
-		<div id="Parte1" class="row"><!-- XXX PARTE1 XXX -->
-			<div class="cuadrado col-sm-6 col-sm-offset-3">
-				<form name="myForm1">
-					<span class="dato agrandado">Nombre de la empresa</span><br/>
-					<input ng-model="user.nombre" type="text" name="nombreDeEmpresa" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Nombre de empresa"/>
-					<span id="avisoNombre" class="aviso">Debes poner el nombre de tu compañia</span>
+                        <div class="row">
+                            <span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><i id="icono_datos" class="col-md-1 col-sm-1 col-xs-1 fa fa-circle-o-notch fa-spin"></i>
+                        </div>
+                        <select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select>
 
-					<span class="dato agrandado">País</span><br/>
-					<div class = "mi-clase">
-						<select ng-model="user.paisDatos" id="paisDatos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" ng-change="cambiarCiudades(user.paisDatos, 0)" ng-options="template.cc_fips as template.nombre_pais for template in configPais"></select>
+                        <span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
+                        <input ng-model="user.correo" type="email" name="correoElectronico" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/>
+                        <span id="avisoCorreo" class="aviso">Debes poner el correo de tu compañia</span>
 
-						<span class = "fa fa-caret-down icono-select"></span>
+                        <span class="dato agrandado">Teléfono</span>
+                        <input ng-model="user.telefono" type="tel" name="telefono" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Teléfono"/>
+                        <span id="avisoTelefono" class="aviso">Debes poner el telefono de tu compañia</span><br/><br/>
 
-					</div>
+                        <button id="boton1" class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(2)" disabled/>Siguiente</button>
+                    </form>
+                </div>
+            </div>
+            <div id="Parte2" class="row"><!-- XXX PARTE2 XXX -->
+                <form action="." method="post">{% csrf_token %}
+                    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+                        <div id="part2_cuadrado1" class="cuadrado"><!--Aqui voy a poner lo del tipo de envio-->
+                            <span class="dato agrandado">Tipo de Envío</span><br/>
+                            <select ng-model="user.tipoEnvio" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio)" ng-options="template.value as template.name for template in configTipoEnvio"></select>
+                            <span id="avisoTipoEnvio" class="aviso">Debes poner el tipo de envio</span><br/>
+                            <div id="TipoEnvioBarco">
+                                <span class="dato agrandado">Modalidad de Envío</span><br/>
+                                <select ng-model="user.tipoEnvio2" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio2)" ng-options="template.value as template.name for template in configTipoEnvio2"></select>
+                                <span id="avisoTipoEnvio2" class="aviso">Debes especificar la modalidad de envio</span>
+                            </div>
+                        </div>
+                        <div id="envioAereo" class="cuadrado"><!--Esto debe cambiar segun el tipo de envio-->
+                            <span class="dato agrandado escondido uppercase">Trayecto</span><br/><br/>
+                            <div id="sliderAereo"></div><br/>
+                            <div id="containersAereo"></div>
+                        </div>
+                        <div id="proyectoEspecial" class="cuadrado">
+                            <span class="dato agrandado escondido uppercase">Escribenos tu pedido</span>
+                            <textarea id="textoEspecial" ng-model="user.textoEspecial" rows="15" cols="50"></textarea>
+                        </div>
+                        <div id="maritimoFCL" class="cuadrado maritimo">
+                            <span class="dato agrandado">Puerto de Origen</span><br/>
+                            <select ng-model="user.idPuertosFCL" id="puertoFCL" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.id as template.puerto_cargue for template in configParPuertosFCL" ng-change="cambiarPuertosFCL(user.idPuertosFCL)">
+                                <option value="" ng-if="false"></option>
+                            </select><br/>
+                            <div class="palCentro">
+                                <span class="textoGris">La entrega se reliza en: &nbsp;</span>
+                                <span class="textoGris" ng-bind="puertoLlegadaFCL"></span>
+                                <br/><br/>
+                            </div>
+                            <div class="row">
+                                <i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 20ft</p><i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 40ft</p>
+                            </div><br/>
+                            <div class="row">
+                                <div id="slider20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="slider40" class="col-md-5 col-sm-5 col-xs-5"></div>
+                            </div><br/>
+                            <div id="textosPreguntaPeso">
+                                <center><p>¿Cuanto pesa? [ton]</p></center>
+                            </div><br/>
+                            <div class="row">
+                                <div id="containers20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="containers40" class="col-md-5 col-sm-5 col-xs-5"></div>
+                            </div>
+                        </div>
+                        <div id="maritimoLCL" class="cuadrado maritimo">
+                            <span class="dato agrandado">Puerto de Origen</span><br/>
+                            <select ng-model="user.idPuertosLCL" id="puertoLCL" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.id as template.puerto_cargue for template in configParPuertosLCL" ng-change="cambiarPuertosLCL(user.idPuertosLCL)">
+                                <option value="" ng-if="false"></option>
+                            </select><br/>
+                            <div class="palCentro">
+                                <span class="textoGris">La entrega se reliza en: &nbsp;</span>
+                                <span class="textoGris" ng-bind="puertoLlegadaLCL"></span>
+                                <br/><br/>
+                            </div>
+                        </div>
+                        <div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
+                            <span class="dato agrandado">Tipo de producto</span><br/>
+                            <select ng-model="user.tipoProducto" id="tipoProducto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.value as template.name for template in configTipoProducto">
+                                <option value="" ng-if="false"></option>
+                            </select><br/>
+                            <span class="dato agrandado">País de procedencia</span><br/>
+                            <select ng-model="user.paisProducto" id="paisProducto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.cc_fips as template.nombre_pais for template in configPais">
+                                <option value="" ng-if="false"></option>
+                            </select><br/>
+                            <div class="row">
+                                <span class="dato agrandado col-md-8 col-sm-8 col-xs-8">Valor de la mercancia</span><span class="dato agrandado col-md-4 col-sm-4 col-xs-4">Moneda</span>
+                            </div>
+                            <div class="containerEnLinea">
+                                <input ng-model="user.valorMercancia" id="valorMercancia" type="number" class="entrada form-control cosasSerias" min="1">
+                                <p class="division6prc">&nbsp;</p>
+                                <select ng-model="user.tipoMoneda" id="valorMercancia" class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" ng-options="template.value as template.name for template in configTipoMoneda">
+                                    <option value="" ng-if="false"></option>
+                                </select>
+                            </div>
+                            <span id="avisoValMerc" class="aviso">Debes poner el valor de tu mercancia</span>
+                            <br/><br/>
 
-					<div class="row">
-						<span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><i id="icono_datos" class="col-md-1 col-sm-1 col-xs-1 fa fa-spinner fa-spin"></i>
-					</div>
-					<select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select>
+                            <span class="dato agrandado">Número de productos diferentes</span><br/>
+                            <input ng-model="user.prdif" id="prdif" type="number" class="entrada form-control cosasSerias" min="1" step="1">
+                            <span id="avisoPrdif" class="aviso">Debes poner la cantidad de procuctos diferentes</span></br>
+                            <div class="row">
+                                <span class="dato col-md-11 col-sm-11 col-xs-11">¿La carga es OTM?</span>
+                                <input ng-model="user.otm" type="checkbox"/>
+                            </div>
 
-					<span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
-					<input ng-model="user.correo" type="email" name="correoElectronico" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/>
-					<span id="avisoCorreo" class="aviso">Debes poner el correo de tu compañia</span>
+                        </div>
+                        <div id="part2_cuadrado4" class="cuadrado">
+                            <button class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(3)"/>Siguiente</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="Parte3"><!-- XXX PARTE3 XXX -->
+                <form action="." method="post">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-2 col-md-push-10 col-sm-2 col-sm-push-10 col-xs-12">
+                            <div id="part3_cuadrado_lado1" class="cuadradoBlanco">
+                                <span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
+                                <p id="textoInformacion">Situa el puntero encima de cualquier item para ver mas información</p>
+                            </div>
+                        </div>
+                        <div id="zonaCentro"   class="col-md-8 col-md-offset-2 col-md-pull-2 col-sm-8 col-sm-offset-2 col-sm-pull-2 col-xs-12"></div>
+                    </div>
+                    <div class="row">
+                        <div id="botonCuadro3" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+                            <div id='part3_cuadradoBoton' class='cuadrado'>
+                                <button class='btn elboton uppercase separado agrandado' type='button' ng-click='enviarLiquidacion()'/>Enviar a mi Email</button>
+                                <span class='textoGris'>Este correo será enviado a &nbsp;</span><span class='textoGris' ng-bind='user.correo'></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="waitting" class="row"><!-- XXX Cambio entre el 2 y el 3 XXX -->
+                <div class="cuadrado col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <center><img id="icono_destino" src="/static/img/loadingGrande.gif"/></center>
+                </div>
+            </div>
+            <br/>
+            <!--TODO QUITAR LINEA -->
+            <!--center><p ng-bind="user | json"></p></center-->
+        </div>
+        <!-- imports js -->
+        <!--Estas 3 lineas son para incluir JQuery y poder usar la libreria de los sliders... include the jQuery and jQuery UI scripts -->
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"><!-- plus a jQuery UI theme, here I use "flick" -->
+        <link rel="stylesheet" href="{{STATIC_URL}}css/jquery-ui-slider-pips.css">
 
-					<span class="dato agrandado">Teléfono</span>
-					<input ng-model="user.telefono" type="tel" name="telefono" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Teléfono"/><br/>
-					<span id="avisoTelefono" class="aviso">Debes poner el telefono de tu compañia</span><br/>
-
-					<button id="boton1" class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(2)" disabled/>Siguiente</button>
-				</form>
-			</div>
-		</div>
-		<div id="Parte2" class="row"><!-- XXX PARTE2 XXX -->
-			<form action="." method="post">{% csrf_token %}
-				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
-					<div id="part2_cuadrado1" class="cuadrado"><!--Aqui voy a poner lo del tipo de envio-->
-						<span class="dato agrandado">Tipo de Envío</span><br/>
-						<select ng-model="user.tipoEnvio" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio)" ng-options="template.value as template.name for template in configTipoEnvio"></select>
-						<span id="avisoTipoEnvio" class="aviso">Debes poner el tipo de envio</span><br/>
-						<div id="TipoEnvioBarco">
-							<span class="dato agrandado">Modalidad de Envío</span><br/>
-							<select ng-model="user.tipoEnvio2" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-change="cambiarTipoEnvio(user.tipoEnvio2)" ng-options="template.value as template.name for template in configTipoEnvio2"></select>
-							<span id="avisoTipoEnvio2" class="aviso">Debes especificar la modalidad de envio</span>
-						</div>
-					</div>
-					<div id="envioAereo" class="cuadrado"><!--Esto debe cambiar segun el tipo de envio-->
-						<span class="dato agrandado escondido uppercase">Trayecto</span><br/><br/>
-						<div id="sliderAereo"></div><br/>
-						<div id="containersAereo"></div>
-					</div>
-					<div id="proyectoEspecial" class="cuadrado">
-						<span class="dato agrandado escondido uppercase">Escribenos tu pedido</span>
-						<textarea id="textoEspecial" ng-model="user.textoEspecial" rows="15" cols="50"></textarea>
-					</div>
-					<div id="maritimoFCL" class="cuadrado maritimo">
-						<span class="dato agrandado">Puerto de Origen</span><br/>
-						<select ng-model="user.idPuertosFCL" id="puertoFCL" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.id as template.puerto_cargue for template in configParPuertos" ng-change="cambiarPuertos(user.idPuertosFCL)">
-							<option value="" ng-if="false"></option>
-						</select><br/>
-						<div align="center">
-							<span class="textoGris">La entrega se reliza en: &nbsp;</span>
-							<span class="textoGris" ng-bind="puertoLlegadaFCL"></span>
-							<br/><br/>
-						</div>
-						<div class="row">
-							<i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 20ft</p><i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 40ft</p>
-						</div><br/>
-						<div class="row">
-							<div id="slider20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="slider40" class="col-md-5 col-sm-5 col-xs-5"></div>
-						</div><br/>
-						<div id="textosPreguntaPeso">
-							<center><p>¿Cuanto pesa? [ton]</p></center>
-						</div><br/>
-						<div class="row">
-							<div id="containers20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="containers40" class="col-md-5 col-sm-5 col-xs-5"></div>
-						</div>
-					</div>
-					<div id="maritimoLCL" class="cuadrado maritimo">
-						<span class="dato agrandado escondido uppercase">TODO</span><br/><br/>
-					</div>
-					<div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
-						<span class="dato agrandado">Tipo de producto</span><br/>
-						<select ng-model="user.tipoProducto" id="tipoProducto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.value as template.name for template in configTipoProducto">
-							<option value="" ng-if="false"></option>
-						</select><br/>
-						<span class="dato agrandado">País de procedencia</span><br/>
-						<select ng-model="user.paisProducto" id="paisProducto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.cc_fips as template.nombre_pais for template in configPais">
-							<option value="" ng-if="false"></option>
-						</select><br/>
-						<div class="row">
-							<span class="dato col-md-6 col-sm-6 col-xs-6">Valor de la mercancia</span><span class="dato col-md-6 col-sm-6 col-xs-6">Moneda</span>
-						</div>
-						<div class="containerEnLinea">
-							<input ng-model="user.valorMercancia" id="valorMercancia" type="number" class="form-control" min="1">
-							<p class="division6prc">&nbsp;</p>
-							<select ng-model="user.tipoMoneda" id="valorMercancia" class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" ng-options="template.value as template.name for template in configTipoMoneda">
-								<option value="" ng-if="false"></option>
-							</select>
-						</div>
-						<span id="avisoValMerc" class="aviso">Debes poner el valor de tu mercancia</span>
-						<br/><br/>
-
-						<span class="dato agrandado">Número de productos diferentes</span><br/>
-						<input ng-model="user.prdif" id="prdif" type="number" class="form-control" min="1" step="1">
-						<span id="avisoPrdif" class="aviso">Debes poner la cantidad de procuctos diferentes</span></br>
-						<div class="row">
-							<span class="dato col-md-11 col-sm-11 col-xs-11">¿La carga es OTM?</span>
-							<input ng-model="user.otm" type="checkbox"/>
-						</div>
-						<div class="row">
-							<span class="dato col-md-11 col-sm-11 col-xs-11">¿Desea emitir BL?</span>
-							<input ng-model="user.bl" type="checkbox"/>
-						</div>
-
-					</div>
-					<div id="part2_cuadrado4" class="cuadrado">
-						<button class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(3)"/>Siguiente</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div id="Parte3"><!-- XXX PARTE3 XXX -->
-			<form action="." method="post">{% csrf_token %}
-				<div class="row">
-					<div class="col-md-2 col-md-push-10 col-sm-2 col-sm-push-10 col-xs-12">
-						<div id="part3_cuadrado_lado1" class="cuadradoBlanco">
-							<span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
-							<p id="textoInformacion">Situa el puntero encima de cualquier item para ver mas información</p>
-						</div>
-					</div>
-					<div id="zonaCentro"   class="col-md-8 col-md-offset-2 col-md-pull-2 col-sm-8 col-sm-offset-2 col-sm-pull-2 col-xs-12"></div>
-				</div>
-				<div class="row">
-					<div id="botonCuadro3" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
-						<div id='part3_cuadrado6' class='cuadrado'>
-							<button class='btn elboton uppercase separado agrandado' type='button' ng-click='enviarLiquidacion()'/>Enviar a mi Email</button>
-							<span class='textoGris'>Este correo será enviado a &nbsp;</span><span class='textoGris' ng-bind='user.correo'></span>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div id="waitting" class="row"><!-- XXX Cambio entre el 2 y el 3 XXX -->
-			<div class="cuadrado col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
-				<center><img id="icono_destino" src="/static/img/loadingGrande.gif"/></center>
-			</div>
-		</div>
-		<br/>
-		<!--TODO QUITAR LINEA -->
-		<!--center><p ng-bind="user | json"></p></center-->
-	</div>
-	<!-- imports js -->
-	<!--Estas 3 lineas son para incluir JQuery y poder usar la libreria de los sliders... include the jQuery and jQuery UI scripts -->
-	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css"><!-- plus a jQuery UI theme, here I use "flick" -->
-	<link rel="stylesheet" href="{{STATIC_URL}}css/jquery-ui-slider-pips.css">
-
-	<!--Luego si meto las librerias que uso y finalmente mis javascripts-->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="{{STATIC_URL}}js/jquery-ui-slider-pips.js"></script>
-	<script src="{{STATIC_URL}}js/scripts.js"></script>
-</body>
+        <!--Luego si meto las librerias que uso y finalmente mis javascripts-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="{{STATIC_URL}}js/jquery-ui-slider-pips.js"></script>
+        <script src="{{STATIC_URL}}js/scripts.js"></script>
+    </body>
 </html>

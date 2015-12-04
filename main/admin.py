@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Pais, Ciudad, Descripcion, InfoFCL
+from .models import *
 
 # Register your models here.
 
@@ -8,3 +8,4 @@ admin.site.register(Pais)
 admin.site.register(Ciudad)
 admin.site.register(Descripcion)
 admin.site.register(InfoFCL)
+admin.site.register(InfoLCL)

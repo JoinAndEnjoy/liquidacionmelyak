@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^auxiliar/get/tarifas_HTTP', views.getTarifasHTTP, name='getTarifasHTTP'),
     url(r'^auxiliar/get/descripcionesJSON', views.getDescripcionesJSON, name='getDescripcionesJSON'),
     url(r'^auxiliar/post/metodoPrincipal', views.metodoPrincipal, name='metodoPrincipal'),
-    url(r'^auxiliar/get/getParejasPuertosJSON', views.getParejasPuertosJSON, name='getParejasPuertosJSON'),
+    url(r'^auxiliar/post/hacerCotizacion', views.hacerCotizacion, name='hacerCotizacion'),
+    url(r'^auxiliar/get/getParejasPuertosJSON_FCL', views.getParejasPuertosJSON_FCL, name='getParejasPuertosJSON_FCL'),
+    url(r'^auxiliar/get/getParejasPuertosJSON_LCL', views.getParejasPuertosJSON_LCL, name='getParejasPuertosJSON_LCL'),
 ]
