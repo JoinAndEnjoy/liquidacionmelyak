@@ -4,6 +4,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^login', views.login, name ="login"),
+    url(r'^configuracion$', views.configuracion, name ="configuracion"),
+    url(r'^logout$', views.logout_view, name ="logout_view"),
     url(r'^auxiliar/get/paisesJSON', views.getPaisesJSON, name='getPaisesJSON'),
     url(r'^auxiliar/get/JSON_(?P<pais_cc_fips>[^\.]+)', views.getCiudadesJSON, name='getCiudadesJSON'),
     url(r'^auxiliar/get/tarifas_HTTP', views.getTarifasHTTP, name='getTarifasHTTP'),
