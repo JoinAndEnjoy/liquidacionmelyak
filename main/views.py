@@ -54,7 +54,7 @@ def login(request):
 
 @login_required
 def configuracion(request):
-    return render(request, "configuracion.html")
+    return render(request, "configuracion2.html")
 
 def logout_view(request):
     logout(request)

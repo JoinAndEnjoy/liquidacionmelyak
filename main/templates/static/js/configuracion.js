@@ -53,3 +53,10 @@ function editarAereo()
     }
     boolAereo=!boolAereo;
 }
+
+$('#tabla-puertos').Tabledit({
+    columns: {
+        identifier: [0, 'id'],
+        editable: [[1, 'Puerto cargue'], [2, 'Puerto descargue'], [3, 'FCL 40']]
+    }
+});
