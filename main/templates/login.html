@@ -19,10 +19,16 @@
     <body>
         <div class="container">
             <form class="form-signin" action="login" method="post"> {% csrf_token %}
-                <h2 class="form-signin-heading">Tus datos</h2>
-                {{formularioLogin.user}}
-                {{formularioLogin.password}}
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                <div class="outer">
+                    <div class="middle">
+                        <div class="inner cuadrado">
+                            <h2 class="form-signin-heading">Tus datos</h2>
+                            {{formularioLogin.user}}
+                            {{formularioLogin.password}}
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </body>

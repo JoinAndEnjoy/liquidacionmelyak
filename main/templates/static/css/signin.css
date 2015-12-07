@@ -2,6 +2,10 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #eee;
+  background-image: url("../img/fondo.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
 }
 
 .form-signin {
@@ -37,4 +41,34 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    /*width: 100%;*/
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto; 
+}
+
+.cuadrado
+{
+  background-color: #F8F8F8;
+  border-style: solid;
+  border-color: #cfcfcf;
+  border-width: 1px;
+  border-radius: 3px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-top: 35px;
 }
