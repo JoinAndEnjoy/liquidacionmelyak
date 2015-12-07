@@ -123,6 +123,16 @@
                                 <span class="textoGris" ng-bind="puertoLlegadaLCL"></span>
                                 <br/><br/>
                             </div>
+                            <div class="row">
+                                <span class="dato col-xs-6">¿Cuanto pesa tu carga?</span>
+                                <input ng-model="user.pesoLCL" type="number" min="0" class="col-md-6"/>
+                            </div>
+                            <div class="row">
+                                <span class="dato col-md-11 col-sm-11 col-xs-11">¿Que dimensiones tiene tu carga?</span>
+                                <input ng-model="user.anchoLCL" type="number" min="0"/>
+                                <input ng-model="user.altoLCL" type="number" min="0"/>
+                                <input ng-model="user.profundoLCL" type="number" min="0"/>
+                            </div>
                         </div>
                         <div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
                             <span class="dato agrandado">Tipo de producto</span><br/>
