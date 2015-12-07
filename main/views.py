@@ -1,8 +1,13 @@
 #TODO: importante, se consume este servicio: http://fixer.io/ para pasar de EUR a USD
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.mail import send_mail
+
+from main.forms import *
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth import login as auth_login
 
 from .models import *
 
@@ -10,9 +15,50 @@ import json
 import requests
 
 from django.forms.models import model_to_dict
+
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+def login(request):
+    formularioLogin = LoginForm(request.POST or None)
+    
+    if request.method == 'POST':
+	formulario = formularioLogin
+	if formulario.is_valid():
+            usern = formulario.cleaned_data['user']
+            print(usern)
+            password = formulario.cleaned_data['password']
+            print(password)
+            user = authenticate(username = usern, password = password)
+            if user is not None:
+                if user.is_active:
+                    print("Usuario valido, activo y autenticado")
+                    auth_login(request,user)
+                    return redirect('configuracion')
+                else:
+                    print("Usuario valido pero la cuenta ha sido deshabilitada")
+            else:
+                print("Usuario y contrasena incorrectas")
+                mensaje = "login-fail"
+                context = {"mensaje":mensaje,"formularioLogin": formularioLogin}
+		return render(request,'login.html', context)
+    
+    context = {"formularioLogin": formularioLogin}
+    if not request.user.is_authenticated():    
+        return render(request,"login.html", context)
+    else:
+        return redirect('configuracion')
+
+@login_required
+def configuracion(request):
+    return render(request, "configuracion.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def getPaisesJSON(request):
     response_data = {}
