@@ -52,7 +52,7 @@ def login(request):
     else:
         return redirect('configuracion')
 
-@login_required
+@login_required(login_url='/main/login/')
 def configuracion(request):
     return render(request, "configuracion2.html")
 
@@ -132,18 +132,20 @@ def metodoPrincipal(request):
                             arreglo20=d['arregloFCL_20']
                             arreglo40=d['arregloFCL_40']
                             infoNecesaria=InfoFCL.objects.get(id = d['idPuertosFCL'])
+                            negocio=SettingsNegocio.objects.all()[0]
                             esOTM=d['otm']
+                            flete=0
 
-                            parte4={} #La voy a usar para mandar los costos opcionales
-                            #TODO:
-                            response_data['parte4']=parte4
-
-                            parte3={} #La voy a usar para mandar los costos fijos
-                            parte3['Gastos fob']=infoNecesaria.gastos_fob
-                            parte3['Gastos naviera']=infoNecesaria.gastos_naviera
-                            parte3['Manejo']=infoNecesaria.manejo
-                            parte3['Collect fee']=infoNecesaria.collect_fee
-                            response_data['parte3']=parte3
+                            parte1={} #La voy a usar para mandar la informacion del transporte
+                            string=""
+                            string+=infoNecesaria.puerto_cargue
+                            string+=" - "
+                            string+=infoNecesaria.pais
+                            parte1['Origen']=string
+                            parte1['Destino']=infoNecesaria.puerto_descargue
+                            parte1['Servicio']=infoNecesaria.servicio
+                            parte1['Tiempo de transito']=infoNecesaria.tiempo_transito
+                            response_data['parte1']=parte1
 
                             parte2={} #La voy a usar para mandar los costos de la carga
                             parte2['Divisa']=infoNecesaria.divisa
@@ -158,33 +160,25 @@ def metodoPrincipal(request):
 
                             parte2['Costo Transoprte contenedores 20 ft']=(len(arreglo20)*infoNecesaria.FCL_20*multiplicador)
                             parte2['Costo Transoprte contenedores 40 ft']=(len(arreglo40)*infoNecesaria.FCL_40*multiplicador)
-                            parte2['bl']=50 #TODO: crear variables globales
+                            parte2['bl']=negocio.blGeneral_FCL
                             response_data['parte2']=parte2
-
-                            parte1={} #La voy a usar para mandar la informacion del transporte
-                            string=""
-                            string+=infoNecesaria.puerto_cargue
-                            string+=" - "
-                            string+=infoNecesaria.pais
-                            parte1['Origen']=string
-                            parte1['Destino']=infoNecesaria.puerto_descargue
-                            parte1['Servicio']=infoNecesaria.servicio
-                            parte1['Tiempo de transito']=infoNecesaria.tiempo_transito
-                            response_data['parte1']=parte1
-
-                        elif d['tipoEnvio2']=="LCL":
-                            infoNecesaria=InfoLCL.objects.get(id = d['idPuertosLCL'])
-                            esOTM=d['otm']
-
+                            
+                            parte3={} #La voy a usar para mandar los costos fijos
+                            parte3['Gastos fob']=infoNecesaria.gastos_fob
+                            parte3['Gastos naviera']=infoNecesaria.gastos_naviera
+                            parte3['Manejo']=infoNecesaria.manejo
+                            parte3['Collect fee']=infoNecesaria.collect_fee
+                            response_data['parte3']=parte3
+                            
                             parte4={} #La voy a usar para mandar los costos opcionales
                             #TODO:
                             response_data['parte4']=parte4
 
-                            parte3={} #La voy a usar para mandar los costos fijos
-                            response_data['parte3']=parte3
-
-                            parte2={} #La voy a usar para mandar los costos de la carga
-                            response_data['parte2']=parte2
+                        elif d['tipoEnvio2']=="LCL":
+                            infoNecesaria=InfoLCL.objects.get(id = d['idPuertosLCL'])
+                            negocio=SettingsNegocio.objects.all()[0]
+                            esOTM=d['otm']
+                            flete=0
 
                             parte1={} #La voy a usar para mandar la informacion del transporte
                             string=""
@@ -197,6 +191,30 @@ def metodoPrincipal(request):
                             parte1['Tiempo de transito']=infoNecesaria.tiempo_transito
                             parte1['Frecuencia']=infoNecesaria.frecuencia
                             response_data['parte1']=parte1
+                            
+                            parte2={} #La voy a usar para mandar los costos de la carga
+                            volumenCarga=d['anchoLCL']*d['altoLCL']*d['largoLCL']
+                            pesoCarga=d['pesoLCL']
+                            parte2['Costo Transporte']=max(volumenCarga, pesoCarga)*infoNecesaria.tarifaTon_m3
+                            parte2['Costo gasolina']=max(volumenCarga, pesoCarga)*infoNecesaria.gasolinaBAF
+                            parte2['Desconsolidacion de la carga']=max(volumenCarga, pesoCarga)*negocio.desconsolidacion
+                            parte2['Uso de las instalaciones portuarias']=max(volumenCarga, pesoCarga)*negocio.usoDePuerto
+                            parte2['Collect Fee']=0 #TODO: preguntar esta regla de nuevo(recordar que es un porcentaje)
+                            response_data['parte2']=parte2
+                            
+                            parte3={} #La voy a usar para mandar los costos fijos
+                            parte3['BL']=negocio.blGeneral_LCL
+                            parte3['Radicacion']=negocio.radicacion
+                            parte3['Manejo Logistico']=negocio.manejoLogistico
+                            parte3['Emision HBL en destino']=negocio.emisionHBL
+                            response_data['parte3']=parte3
+                            
+                            parte4={} #La voy a usar para mandar los costos opcionales
+                            if d['seguro']:
+                                parte4['Seguro']=max(90, negocio.polizaDeSeguro*d['valorMercancia']/100.0)
+                            else:
+                                parte4['Seguro']=0
+                            response_data['parte4']=parte4
 
                 elif d['tipoEnvio']=="Via Aerea":
                     print("aereo")

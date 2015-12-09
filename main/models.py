@@ -25,6 +25,30 @@ class Ciudad(models.Model):
     def __repr__(self):
         return self.__str__()
 
+"""
+La que sigue va a ser una tabla de solo una fila, su funcion es guardar variables globales
+Existen otra forma de implementar lo mismo como una tabla llave valor, pero me tramo mas esta
+http://programmers.stackexchange.com/questions/163606/configuration-data-single-row-table-vs-name-value-pair-table
+
+"""
+class SettingsNegocio(models.Model):
+    blGeneral_LCL = models.FloatField()
+    blGeneral_FCL = models.FloatField()
+    desconsolidacion = models.FloatField()
+    usoDePuerto = models.FloatField()
+    radicacion = models.FloatField()
+    collectFee = models.FloatField()
+    emisionHBL = models.FloatField()
+    manejoLogistico = models.FloatField()
+    polizaDeSeguro = models.FloatField()
+    
+    def __str__(self):              # __unicode__ on Python 2
+        return "Objeto Creado"
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class InfoFCL(models.Model):
     puerto_cargue = models.CharField(max_length=90)
     puerto_descargue = models.CharField(max_length=90)

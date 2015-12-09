@@ -321,3 +321,5 @@ select, .cosasSerias{
     left: 268px;
   }
 }
+
+#medidas{display: inline-flex;}

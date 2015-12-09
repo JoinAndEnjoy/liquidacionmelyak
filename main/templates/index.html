@@ -124,14 +124,32 @@
                                 <br/><br/>
                             </div>
                             <div class="row">
-                                <span class="dato col-xs-6">¿Cuanto pesa tu carga?</span>
-                                <input ng-model="user.pesoLCL" type="number" min="0" class="col-md-6"/>
+                                <span class="dato agrandado col-xs-9">¿Cuanto pesa tu carga?</span>
+                                <div class="col-xs-3 input-group">
+                                    <input ng-model="user.pesoLCL" type="number" min="0" class="form-control cosasSerias" placeholder="[Ton]" aria-describedby="basic-addonpeso">
+                                    <span class="input-group-addon" id="basic-addonpeso"><i class="fa fa-balance-scale"></i></span>
+                                </div>
                             </div>
-                            <div class="row">
-                                <span class="dato col-md-11 col-sm-11 col-xs-11">¿Que dimensiones tiene tu carga?</span>
-                                <input ng-model="user.anchoLCL" type="number" min="0"/>
-                                <input ng-model="user.altoLCL" type="number" min="0"/>
-                                <input ng-model="user.profundoLCL" type="number" min="0"/>
+                            <br/>
+                            <span class="dato agrandado">¿Que dimensiones tiene tu carga?</span>
+                            <br/>
+                            <br/>
+                            <div class="row" id="medidas">
+                                <span class="col-xs-1"></span>
+                                <div class="col-xs-3 input-group">
+                                    <input ng-model="user.anchoLCL" type="number" min="0" class="form-control cosasSerias" placeholder="X [m]" aria-describedby="basic-addonancho">
+                                    <span class="input-group-addon" id="basic-addonancho"><i class="fa fa-arrows-h fa-lg"></i></span>
+                                </div>
+                                <span class="col-xs-1"></span>
+                                <div class="col-xs-3 input-group">
+                                    <input ng-model="user.altoLCL" type="number" min="0" class="form-control cosasSerias" placeholder="Y [m]" aria-describedby="basic-addonalto">
+                                    <span class="input-group-addon" id="basic-addonalto"><i class="fa fa-arrows-v fa-lg"></i></span>
+                                </div>
+                                <span class="col-xs-1"></span>
+                                <div class="col-xs-3 input-group">
+                                    <input ng-model="user.largoLCL" type="number" min="0" class="form-control cosasSerias" placeholder="Z [m]" aria-describedby="basic-addonprofundo">
+                                    <span class="input-group-addon" id="basic-addonprofundo"><i class="fa fa-expand fa-lg"></i></span>
+                                </div>
                             </div>
                         </div>
                         <div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
@@ -162,6 +180,10 @@
                             <div class="row">
                                 <span class="dato col-md-11 col-sm-11 col-xs-11">¿La carga es OTM?</span>
                                 <input ng-model="user.otm" type="checkbox"/>
+                            </div>
+                            <div class="row">
+                                <span class="dato col-md-11 col-sm-11 col-xs-11">¿Deseas comprar un seguro?</span>
+                                <input ng-model="user.seguro" type="checkbox"/>
                             </div>
 
                         </div>
