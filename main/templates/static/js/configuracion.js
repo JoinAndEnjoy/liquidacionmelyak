@@ -1,4 +1,10 @@
 var boolGeneral=true;
+
+jQuery(window).load(function () {
+    console.log("loaded");
+});
+
+
 function editarConfGeneral()
 {
     if(boolGeneral){
@@ -57,6 +63,18 @@ function editarAereo()
 $('#tabla-puertos').Tabledit({
     columns: {
         identifier: [0, 'id'],
-        editable: [[1, 'Puerto cargue'], [2, 'Puerto descargue'], [3, 'FCL 40']]
+        editable: [ [3, 'FCL 20'], [4, 'FCL 40'], [5, 'Tiempo de tránsito'], [6, 'Gastos FOB'], [7, 'Gastos naviera'], [8, 'Manejo'], [9, 'Collect Fee']]
+    },
+    buttons: {
+        save: {
+            html: 'Guardar'
+        },
+        confirm: {
+            html: 'Confirmar'
+        }
     }
+});
+
+$('#tabla-puertos').stickyTableHeaders({
+    fixedOffset: $('.navbar-inverse')
 });

@@ -54,7 +54,9 @@ def login(request):
 
 @login_required(login_url='/main/login/')
 def configuracion(request):
-    return render(request, "configuracion2.html")
+    infoFCL_all = InfoFCL.objects.all()
+    context = {"infoFCL":infoFCL_all }
+    return render(request, "configuracion2.html", context)
 
 def logout_view(request):
     logout(request)

@@ -68,39 +68,39 @@
 
         <div id="page-wrapper">
 
-            <div class="container-fluid">
 
                 <table id="tabla-puertos">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Puerto cargue</th>
-            <th>Puerto descargue</th>
-            <th>FCL 40</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Cartagena</td>
-            <td>Cartagena</td>
-            <td>30</td>s
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Cartagena</td>
-            <td>Cartagena</td>
-            <td>30</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Cartagena</td>
-            <td>Cartagena</td>
-            <td>30</td>
-        </tr>
-    </tbody>
-</table>
-            </div>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Puerto cargue</th>
+                            <th>Puerto descargue</th>
+                            <th>FCL 20</th>
+                            <th>FCL 40</th>
+                            <th>Tiempo de tránsito</th>
+                            <th>Gastos FOB</th>
+                            <th>Gastos naviera</th>
+                            <th>Manejo</th>
+                            <th>Collect Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in infoFCL %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td class = "thick-font">{{item.puerto_cargue}}</td>
+                            <td class = "thick-font">{{item.puerto_descargue}}</td>
+                            <td>{{item.FCL_20}}</td>
+                            <td>{{item.FCL_40}}</td>
+                            <td>{{item.tiempo_transito}}</td>
+                            <td>{{item.gastos_fob}}</td>
+                            <td>{{item.gastos_naviera}}</td>
+                            <td>{{item.manejo}}</td>
+                            <td>{{item.collect_fee}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             <!-- /.container-fluid -->
 
         </div>
@@ -116,7 +116,10 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="{{STATIC_URL}}js/jquery.tabledit.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.stickytableheaders.js"></script>
     <script src="{{STATIC_URL}}js/configuracion.js"></script>
+
+    
 </body>
 
 </html>
