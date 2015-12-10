@@ -233,8 +233,7 @@ def hacerCotizacion(request):
             d = json.loads(str) #Se carga en esta estructura especial para json y ahora se puede acceder cada parametro ej: print d['telefono']
             #-------------------------------------------------
             elCorreo=d['correo']
-            """
-            send_mail('Subject here', 'Here is the message.', 'from@example.com',[elCorreo, 'correoDeMelyak@dominio.com'], fail_silently=False)
-            """
+            print(elCorreo)
+            send_mail('Subject here', 'Here is the message.', 'from@example.com',[elCorreo, 'jmanuel816@gmail.com'], fail_silently=True)
             response_data=d
             return HttpResponse(json.dumps(response_data), content_type="application/json")
