@@ -394,6 +394,7 @@ app.controller('ctrlMelyak', function ($scope)
 
     $scope.enviarLiquidacion = function () {
         $scope.cotizacion.correo=$scope.user.correo;
+        $scope.cotizacion.contenido=$("#zonaCentro").html().replace(new RegExp("\"", 'g'), "\'");
         $.ajax({
             url: 'auxiliar/post/hacerCotizacion/', // the endpoint
             type: "POST", // http method
@@ -478,7 +479,7 @@ function pintarPagina3(json, tipoCotizacion)
         {
             k = keys[i];
             contenido += "<div id='part3_cuadrado" + (i + 1) + "' class='cuadrado'>";
-            contenido += "	<span class='dato agrandado escondido uppercase'>" + textospar3[i] + "</span><br/><br/>";
+            contenido += "<span class='dato agrandado escondido uppercase'>" + textospar3[i] + "</span><br/><br/>";
 
             var total = 0;
             //console.log(k);
@@ -491,10 +492,10 @@ function pintarPagina3(json, tipoCotizacion)
                 if ($.isNumeric(json[k][key]) && i > 0)
                 {
                     var valorAPoner = parseFloat(Math.round(json[k][key] * 100) / 100).toFixed(2);
-                    contenido += "	<span id='" + key.replace(/\s/g, "") + "' class='dato dato col-md-7 col-sm-7 col-xs-7'>" + key + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ " + valorAPoner + "</span>";
+                    contenido += "<span id='" + key.replace(/\s/g, "") + "' class='dato col-md-7 col-sm-7 col-xs-7'>" + key + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ " + valorAPoner + "</span>";
                     total += json[k][key];
                 } else
-                    contenido += "	<span id='" + key.replace(/\s/g, "") + "' class='dato dato col-md-7 col-sm-7 col-xs-7'>" + key + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>" + json[k][key] + "</span>";
+                    contenido += "<span id='" + key.replace(/\s/g, "") + "' class='dato col-md-7 col-sm-7 col-xs-7'>" + key + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>" + json[k][key] + "</span>";
                 contenido += "</div>";
             }
             if (i > 0) //No se espera que el primero tenga un total porque es el de informacion general
@@ -524,7 +525,7 @@ function pintarPagina3(json, tipoCotizacion)
                 + "								<span id='gravamen' class='dato col-md-7 col-sm-7 col-xs-7'>Gravamen</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 0</span>"
                 + "							</div>"
                 + "							<div class='row'>"
-                + "								<span id='iva' class='dato dato col-md-7 col-sm-7 col-xs-7'>IVA 16% (IVA deducible de aduanas)</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 5.843.456</span>"
+                + "								<span id='iva' class='dato col-md-7 col-sm-7 col-xs-7'>IVA 16% (IVA deducible de aduanas)</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 5.843.456</span>"
                 + "							</div>"
                 + "							<div class='row'>"
                 + "								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 5.843.456</span>"
