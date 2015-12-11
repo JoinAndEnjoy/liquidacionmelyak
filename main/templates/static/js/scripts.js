@@ -319,7 +319,7 @@ app.controller('ctrlMelyak', function ($scope)
                         $scope.user.arregloFCL_20.push($("#FCL20_" + i).val());
                     else if (c === 1)
                         $scope.user.arregloFCL_40.push($("#FCL40_" + i).val());
-                    else if (c === 2)
+                    else if (c === 2)// TODO: esto debe guardar un objeto con 4 atributos
                         $scope.user.arregloAereo.push($("#Aereo_" + i).val());
                 }
             }
