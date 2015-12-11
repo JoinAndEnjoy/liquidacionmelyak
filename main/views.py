@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-#from django.core.mail import send_mail
+from django.template import RequestContext, loader
 from django.core.mail import EmailMultiAlternatives
 
 from main.forms import *
@@ -14,6 +14,7 @@ from .models import *
 
 import json
 import requests
+import os
 
 from django.forms.models import model_to_dict
 
@@ -235,24 +236,33 @@ def hacerCotizacion(request):
             str=str.replace("\\", "")[1:-1] #Viene con algo de ruido que hay que limpiar
             d = json.loads(str) #Se carga en esta estructura especial para json y ahora se puede acceder cada parametro ej: print d['telefono']
             #-------------------------------------------------
-            elCorreo=d['correo']
+            elCorreo=d['infoUser']['correo']
             print(elCorreo)
-            contenido=d['contenido']
-            #TODO : las pruebas son con mi correo pero debo ponder uno valido
+            
             subject = 'Tu cotizacion'
             from_email = 'noreply@melyakinternational.com'
             text_content = 'Te enviamos tu aproximacion presupuestal'
-            html_content = armarMail(contenido)
+            html_content = armar_mail(request, d)
+            #TODO : las pruebas son con mi correo pero debo ponder uno de ellos
             msg = EmailMultiAlternatives(subject, text_content, from_email, [elCorreo, 'jmanuel816@gmail.com'])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
             response_data=d
             return HttpResponse(json.dumps(response_data), content_type="application/json")
 
-def armarMail(contenido):
-    rta="<head><meta charset='utf-8'><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'/><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'/><style>"
-    rta+=".cuadrado{background-color: #F8F8F8; border-style: solid; border-color: #cfcfcf; border-width: 1px; border-radius: 3px; padding-left: 50px; padding-right: 50px; padding-bottom: 50px; padding-top: 35px;} .dato{color: #000000; font-size: 16px; font-weight: 400;} .escondido{color: #999999; font-size: 14px;font-weight: 500;} .agrandado {font-size: 14px; color: #222222;} .derecha { direction: rtl;} .distanciado {margin-bottom: 10px;} .textoGris {color: #999999;} .conNegrilla {font-weight: 900;} .cuadrado#part3_cuadrado1 {padding-top: 16px;padding-bottom: 22px;} .cuadrado#part3_cuadrado2 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 2px;} .cuadrado#part3_cuadrado3 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 4px;} .cuadrado#part3_cuadrado4 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 6px;} .cuadrado#part3_cuadradoVerde {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 8px; background-color: #52B259}"
-    rta+="</style></head><body>"
-    rta+=contenido
-    rta+="</body>"
-    return rta
+def armar_mail(request, contenido):
+    print(contenido)
+    t = loader.get_template('correo.html')
+    c = RequestContext(request, contenido)
+    return t.render(c)
+
+def testDev(request):
+    t = loader.get_template('correo.html')
+    d={}
+    delUser={}
+    delUser['correo']="jmanuel816@gmail.com"
+    d['infoUser']=delUser
+    d['lol']="jajajajaj"
+    c = RequestContext(request, d)
+    return HttpResponse(t.render(c))#t.render(c), json.dumps(d)
+    #return HttpResponse(json.dumps(response_data), content_type="application/json")

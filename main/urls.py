@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^auxiliar/post/hacerCotizacion', views.hacerCotizacion, name='hacerCotizacion'),
     url(r'^auxiliar/get/getParejasPuertosJSON_FCL', views.getParejasPuertosJSON_FCL, name='getParejasPuertosJSON_FCL'),
     url(r'^auxiliar/get/getParejasPuertosJSON_LCL', views.getParejasPuertosJSON_LCL, name='getParejasPuertosJSON_LCL'),
+    url(r'^auxiliar/testDev$', views.testDev, name ="testDev"),
 ]

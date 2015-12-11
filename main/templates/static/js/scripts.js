@@ -393,8 +393,7 @@ app.controller('ctrlMelyak', function ($scope)
     };
 
     $scope.enviarLiquidacion = function () {
-        $scope.cotizacion.correo=$scope.user.correo;
-        $scope.cotizacion.contenido=$("#zonaCentro").html().replace(new RegExp("\"", 'g'), "\'");
+        $scope.cotizacion.infoUser=$scope.user;
         $.ajax({
             url: 'auxiliar/post/hacerCotizacion/', // the endpoint
             type: "POST", // http method
