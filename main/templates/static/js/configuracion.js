@@ -89,13 +89,15 @@ $('#tabla-puertos').Tabledit({
         console.log('onAjax(action, serialize)');
         console.log(action);
         console.log(serialize);
+        $(window).trigger('resize');
+        actualizarDatos(serialize);
     }
 });
 
 function actualizarDatos(serialize){
     console.log("it is working!") // sanity check
     $.ajax({
-        url : "editFCL/", // the endpoint
+        url : "configuracion/editFCL/", // the endpoint
         type : "POST", // http method
         data : { payload : serialize }, // data sent with the post request
 

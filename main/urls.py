@@ -1,11 +1,11 @@
-from django.conf.urls import url
+from django.conf.urls import include,url
 
 from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login', views.login, name ="login"),
-    url(r'^configuracion$', views.configuracion, name ="configuracion"),
+    url(r'^configuracion$',include('main.urls_admin')),
     url(r'^logout$', views.logout_view, name ="logout_view"),
     url(r'^auxiliar/get/paisesJSON', views.getPaisesJSON, name='getPaisesJSON'),
     url(r'^auxiliar/get/JSON_(?P<pais_cc_fips>[^\.]+)', views.getCiudadesJSON, name='getCiudadesJSON'),
@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^auxiliar/post/hacerCotizacion', views.hacerCotizacion, name='hacerCotizacion'),
     url(r'^auxiliar/get/getParejasPuertosJSON_FCL', views.getParejasPuertosJSON_FCL, name='getParejasPuertosJSON_FCL'),
     url(r'^auxiliar/get/getParejasPuertosJSON_LCL', views.getParejasPuertosJSON_LCL, name='getParejasPuertosJSON_LCL'),
+    
 ]
