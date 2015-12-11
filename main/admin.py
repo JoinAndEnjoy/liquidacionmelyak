@@ -4,10 +4,16 @@ from .models import *
 
 # Register your models here.
 
+class InfoFCLAdmin(admin.ModelAdmin):
+	list_display = ['id','puerto_cargue','puerto_descargue']
+
+	class Meta:
+		model = InfoFCL
+
 admin.site.register(Pais)
 admin.site.register(Ciudad)
 admin.site.register(Descripcion)
-admin.site.register(InfoFCL)
+admin.site.register(InfoFCL, InfoFCLAdmin)
 admin.site.register(InfoLCL)
 """
 No debe ser posible agregar mas registros a la tabla. Deje esto comentado por favor

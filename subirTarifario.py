@@ -5,7 +5,7 @@ import sys,os
 from main.models import *
 import csv
 
-csv_tarifas = "/home/juan/Documents/GIT/liquidacionmelyak/csv-files/tarifario.csv"
+csv_tarifas = "csv-files/tarifario.csv"
 
 print("----------------------INIT----------------------")
 InfoFCL.objects.all().delete()

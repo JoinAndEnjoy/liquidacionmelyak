@@ -20,6 +20,8 @@ from django.forms.models import model_to_dict
 
 from django.contrib.auth.decorators import login_required
 
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -55,10 +57,35 @@ def login(request):
         return redirect('configuracion')
 
 @login_required(login_url='/main/login/')
+#@csrf_exempt
 def configuracion(request):
-    infoFCL_all = InfoFCL.objects.all()
+    if request.method == 'POST':
+        print "me meto por post"
+    infoFCL_all = InfoFCL.objects.all().order_by("puerto_cargue")
     context = {"infoFCL":infoFCL_all }
     return render(request, "configuracion2.html", context)
+
+#@csrf_exempt
+def editFCL(request):
+    if request.method == 'POST':
+        response_data = {}
+        response_data['respuesta'] = "SUCCESS"
+        payloadArray = request.POST['payload'].split("&")
+        editObjectCargue = payloadArray[0].split("=")[1].upper().replace('+',' ')
+        editObject = InfoFCL.objects.get(puerto_cargue=editObjectCargue)
+        editObject.FCL_20 = float(payloadArray[1].split("=")[1].upper())
+        editObject.FCL_40 = float(payloadArray[2].split("=")[1].upper())
+        editObject.tiempo_transito = float(payloadArray[3].split("=")[1].upper())
+        editObject.gastos_fob = float(payloadArray[4].split("=")[1].upper())
+        editObject.gastos_naviera = float(payloadArray[5].split("=")[1].upper())
+        editObject.manejo = float(payloadArray[6].split("=")[1].upper())
+        editObject.collect_fee = float(payloadArray[7].split("=")[1].upper())
+        editObject.save()
+
+        return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
 
 def logout_view(request):
     logout(request)

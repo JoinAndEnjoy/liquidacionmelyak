@@ -18,70 +18,54 @@
 
 <body>
 
+    <div class = "my-loader">
+        <div class = "my-loader-div">
+            <div class="sk-three-bounce">
+                <div class="sk-child sk-bounce1"></div>
+                <div class="sk-child sk-bounce2"></div>
+                <div class="sk-child sk-bounce3"></div>
+            </div>
+        </div>
+    </div>
+    
+
     <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="configuracion">Configuracion</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a href="logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                </li>
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="#configGeneral"><i class="fa fa-fw fa-wrench"></i> Configuracines Generales</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-ship"></i> Via Maritma <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#viaMaritimaFCL"><i class="fa fa-fw fa-star"></i> FCL</a>
-                            </li>
-                            <li>
-                                <a href="#viaMaritimaLCL"><i class="fa fa-fw fa-star-half"></i> LCL</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#viaAerea"><i class="fa fa-fw fa-plane"></i> Via Aerea</a>
-                    </li>
-                    <li>
-                        <a href="#proyectoEspecial"><i class="fa fa-fw fa-file"></i> Proyecto especial</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
         <div id="page-wrapper">
-
-
+          <div class="overlay"></div>
+          <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+              <ul class="nav sidebar-nav">
+                <li>
+                  <a href="#">Home</a>
+              </li>
+              <li>
+                  <a href="#">Contact</a>
+              </li>
+              <li>
+                  <a href="#">Blog</a>
+              </li>
+          </ul>
+      </nav>
+      <div id="page-content-wrapper">
+          <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+            <span class="hamb-top"></span>
+            <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
+        </button>
+        <div class="container">
+            <div id = "viaMaritimaFCL">
                 <table id="tabla-puertos">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Puerto cargue</th>
                             <th>Puerto descargue</th>
-                            <th>FCL 20</th>
-                            <th>FCL 40</th>
-                            <th>Tiempo de tránsito</th>
-                            <th>Gastos FOB</th>
-                            <th>Gastos naviera</th>
-                            <th>Manejo</th>
-                            <th>Collect Fee</th>
+                            <th class = "text-center">LCL 20</th>
+                            <th class = "text-center">LCL 40</th>
+                            <th class = "text-center">Tiempo de tránsito</th>
+                            <th class = "text-center">Gastos FOB</th>
+                            <th class = "text-center">Gastos naviera</th>
+                            <th class = "text-center">Manejo</th>
+                            <th class = "text-center">Collect Fee</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,25 +85,29 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            <!-- /.container-fluid -->
-
+                <!-- /.container-fluid -->
+            </div> 
         </div>
-        <!-- /#page-wrapper -->
-
     </div>
-    <!-- /#wrapper -->
+</div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="{{STATIC_URL}}js/jquery.tabledit.js"></script>
-    <script src="{{STATIC_URL}}js/jquery.stickytableheaders.js"></script>
-    <script src="{{STATIC_URL}}js/configuracion.js"></script>
+</div>
+<!-- /#page-wrapper -->
 
-    
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="{{STATIC_URL}}js/jquery.tabledit.js"></script>
+<script src="{{STATIC_URL}}js/jquery.stickytableheaders.js"></script>
+<script src="{{STATIC_URL}}js/configuracion.js"></script>
+
+
 </body>
 
 </html>
