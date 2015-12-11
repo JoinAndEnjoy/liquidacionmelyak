@@ -7,6 +7,35 @@ jQuery(window).load(function () {
     $(".my-loader").css("display","none");
 });
 
+$(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();      
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {          
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else {   
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      }
+  }
+  
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+  });  
+});
+
 
 function editarConfGeneral()
 {
@@ -65,7 +94,7 @@ function editarAereo()
 
 $('#tabla-puertos').Tabledit({
     columns: {
-        identifier: [0, 'id'],
+        identifier: [1,'puerto_cargue'],
         editable: [ [3, 'FCL_20'], [4, 'FCL_40'], [5, 'tiempo_transito'], [6, 'gastos_fob'], [7, 'gastos_naviera'], [8, 'manejo'], [9, 'collect_fee']]
     },
     buttons: {
@@ -74,7 +103,7 @@ $('#tabla-puertos').Tabledit({
         }
     },
     inputClass: "form-control input-sm table-input",
-    deleteButton:false,
+    deleteButton:false,/*
     onSuccess: function(data, textStatus, jqXHR) {
         console.log('onSuccess(data, textStatus, jqXHR)');
         console.log(data);
@@ -85,7 +114,7 @@ $('#tabla-puertos').Tabledit({
         console.log(jqXHR);
         console.log(textStatus);
         console.log(errorThrown);
-    },onAjax: function(action, serialize) {
+    }*/onAjax: function(action, serialize) {
         console.log('onAjax(action, serialize)');
         console.log(action);
         console.log(serialize);
@@ -97,7 +126,7 @@ $('#tabla-puertos').Tabledit({
 function actualizarDatos(serialize){
     console.log("it is working!") // sanity check
     $.ajax({
-        url : "configuracion/editFCL/", // the endpoint
+        url : "editFCL/", // the endpoint
         type : "POST", // http method
         data : { payload : serialize }, // data sent with the post request
 
@@ -123,7 +152,11 @@ $('.tabledit-edit-button').click(function(){
     $(window).trigger('resize');
 });
 
-
+$("body").on("keyup", function(e){
+    if (e.which === 27){
+        return false;
+    } 
+});
 //----------------------------------------------------------------------------------------------------------
 //                      PARTE 1: Obligatorios AJAX
 //----------------------------------------------------------------------------------------------------------
