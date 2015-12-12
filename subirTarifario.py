@@ -20,6 +20,7 @@ with open(csv_tarifas,'rt') as csv_file:
 		try:
 			if i>1: # No se mete el primer registro
 				inf = InfoFCL()
+                                inf.id = i-1
 				inf.puerto_cargue = row[0].strip()
 				inf.puerto_descargue = row[1].strip()
 				inf.divisa = row[2].strip()
@@ -34,9 +35,9 @@ with open(csv_tarifas,'rt') as csv_file:
 				inf.collect_fee = row[11].strip()
 				inf.pais = row[12].strip()
 				inf.save()
-				print(i)
+				print(i-1)
 		except Exception as err:
-			print(i)
+			print(i-1)
 			print("error")
 			print(row[0])
 			print(traceback.format_exc())

@@ -88,6 +88,7 @@ app.controller('ctrlMelyak', function ($scope)
     $scope.user.tipoMoneda = $scope.configTipoMoneda[0].value;
     $scope.configTipoEnvio = [{name: "Via Maritima", value: "Via Maritima"}, {name: "Via Aerea", value: "Via Aerea"}, {name: "Proyecto Especial", value: "Proyecto Especial"}];
     $scope.configTipoEnvio2 = [{name: "Full Container Load (FCL)", value: "FCL"}, {name: "Less than Container Load (LCL)", value: "LCL"}];
+    $scope.user.tipoEnvio2="";
 
     //Para pedir los pasises a la base de datos
     $.ajax({
@@ -193,7 +194,27 @@ app.controller('ctrlMelyak', function ($scope)
                 else if (index === 1)
                     texto += "<i class='col-md-1 col-sm-1 col-xs-1 fa fa-cube'></i><p class='col-md-2 col-sm-6 col-xs-2'>" + aPoner + ":</p><input class='col-xs-8' id='FCL40_" + aPoner + "' type='number' min=0 value=0\>";
                 else if (index === 2)
-                    texto += "<p>" + aPoner + "</p>";
+                {
+                    //texto += "<p> Caja #" + aPoner + ":</p>";
+                    texto += "<div class='row medidas'>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_ancho" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='X [m]' aria-describedby='basic-addonancho'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonancho" + aPoner + "'><i class='fa fa-arrows-h fa-lg'></i></span>";
+                    texto += "  </div>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_alto" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='Y [m]' aria-describedby='basic-addonalto'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonalto" + aPoner + "'><i class='fa fa-arrows-v fa-lg'></i></span>";
+                    texto += "  </div>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_profundo" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='Z [m]' aria-describedby='basic-addonprofundo'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonprofundo" + aPoner + "'><i class='fa fa-expand fa-lg'></i></span>";
+                    texto += "  </div>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_peso" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='[Ton]' aria-describedby='basic-addonpeso'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonpeso" + aPoner + "'><i class='fa fa-balance-scale'></i></span>";
+                    texto += "  </div>";
+                    texto += "</div>";
+                }
                 texto += "</div>";
                 $("#containers" + nombres[index]).append(texto);
                 aPoner++;
@@ -300,7 +321,11 @@ app.controller('ctrlMelyak', function ($scope)
                     else if (c === 1)
                         $scope.user.arregloFCL_40.push($("#FCL40_" + i).val());
                     else if (c === 2)
-                        $scope.user.arregloAereo.push($("#Aereo_" + i).val());
+                    {
+                        var caja = {ancho:$("#Aereo_ancho" + i).val(), alto:$("#Aereo_alto" + i).val(), profundo:$("#Aereo_profundo" + i).val(), peso:$("#Aereo_peso" + i).val()};
+                        $scope.user.arregloAereo.push(caja);
+                    }
+                
                 }
             }
 
@@ -393,8 +418,7 @@ app.controller('ctrlMelyak', function ($scope)
     };
 
     $scope.enviarLiquidacion = function () {
-        $scope.cotizacion.correo=$scope.user.correo;
-        $scope.cotizacion.contenido=$("#zonaCentro").html().replace(new RegExp("\"", 'g'), "\'");
+        $scope.cotizacion.infoUser=$scope.user;
         $.ajax({
             url: 'auxiliar/post/hacerCotizacion/', // the endpoint
             type: "POST", // http method
