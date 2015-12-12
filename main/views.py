@@ -61,7 +61,8 @@ def configuracion(request):
     if request.method == 'POST':
         print "me meto por post"
     infoFCL_all = InfoFCL.objects.all().order_by("puerto_cargue")
-    context = {"infoFCL":infoFCL_all }
+    infoLCL_all = InfoLCL.objects.all().order_by("puerto_cargue")
+    context = {"infoFCL":infoFCL_all, "infoLCL":infoLCL_all }
     return render(request, "configuracion2.html", context)
 
 #@csrf_exempt

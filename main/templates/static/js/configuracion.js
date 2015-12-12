@@ -4,7 +4,12 @@ jQuery(window).load(function () {
     console.log("loaded");
     $(".table-input").prop("type","number");
     console.log("hosdf");
-    $(".my-loader").css("display","none");
+    //$(".my-loader").css("display","none");
+    $('.my-loader').animate({
+        opacity: 0
+    }, 1000, function(){
+        jQuery(this).css("display","none");
+    });
 });
 
 $(document).ready(function () {
@@ -34,6 +39,19 @@ $(document).ready(function () {
   $('[data-toggle="offcanvas"]').click(function () {
         $('#wrapper').toggleClass('toggled');
   });  
+
+
+  $('nav ul li:first').addClass('active');
+    $('.tab-content:not(:first)').hide();
+    $('nav ul li a').click(function (event) {
+        event.preventDefault();
+        var content = $(this).attr('href');
+        $(this).parent().addClass('active');
+        $(this).parent().siblings().removeClass('active');
+        $(content).show();
+        $(content).siblings('.tab-content').hide();
+    });
+
 });
 
 
@@ -123,6 +141,37 @@ $('#tabla-puertos').Tabledit({
     }
 });
 
+$('#tabla-puertos-LCL').Tabledit({
+    columns: {
+        identifier: [1,'puerto_cargue'],
+        editable: [ [3, 'FCL_20'], [4, 'FCL_40'], [5, 'tiempo_transito'], [6, 'gastos_fob'], [7, 'gastos_naviera'], [8, 'manejo'], [9, 'collect_fee']]
+    },
+    buttons: {
+        save: {
+            html: 'Guardar'
+        }
+    },
+    inputClass: "form-control input-sm table-input",
+    deleteButton:false,/*
+    onSuccess: function(data, textStatus, jqXHR) {
+        console.log('onSuccess(data, textStatus, jqXHR)');
+        console.log(data);
+        console.log(textStatus);
+        console.log(jqXHR);
+    },onFail: function(jqXHR, textStatus, errorThrown) {
+        console.log('onFail(jqXHR, textStatus, errorThrown)');
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+    }*/onAjax: function(action, serialize) {
+        console.log('onAjax(action, serialize)');
+        console.log(action);
+        console.log(serialize);
+        $(window).trigger('resize');
+        actualizarDatos(serialize);
+    }
+});
+
 function actualizarDatos(serialize){
     console.log("it is working!") // sanity check
     $.ajax({
@@ -145,7 +194,11 @@ function actualizarDatos(serialize){
 }
 
 $('#tabla-puertos').stickyTableHeaders({
-    fixedOffset: $('.navbar-inverse')
+    fixedOffset: $('.temp-stripe')
+});
+
+$('#tabla-puertos-LCL').stickyTableHeaders({
+    fixedOffset: $('.temp-stripe')
 });
 
 $('.tabledit-edit-button').click(function(){
@@ -156,6 +209,14 @@ $("body").on("keyup", function(e){
     if (e.which === 27){
         return false;
     } 
+});
+
+$(".hamburger").click(function(){
+    $(window).trigger('resize');
+    $('html, body').animate({
+        scrollTop: 0
+    }, 10);
+    return false;
 });
 //----------------------------------------------------------------------------------------------------------
 //                      PARTE 1: Obligatorios AJAX
