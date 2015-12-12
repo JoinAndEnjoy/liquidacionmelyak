@@ -88,6 +88,26 @@ def editFCL(request):
                 content_type="application/json"
             )
 
+def editLCL(request):
+    if request.method == 'POST':
+        response_data = {}
+        response_data['respuesta'] = "SUCCESS"
+        payloadArray = request.POST['payload'].split("&")
+        editObjectCargue = payloadArray[0].split("=")[1].upper().replace('+',' ')
+        editObject = InfoLCL.objects.get(puerto_cargue=editObjectCargue)
+
+        editObject.tarifaTon_m3 = float(payloadArray[1].split("=")[1].upper())
+        editObject.gasolinaBAF = float(payloadArray[2].split("=")[1].upper())
+        editObject.minimo = float(payloadArray[3].split("=")[1].upper())
+        editObject.tiempo_transito = float(payloadArray[4].split("=")[1].upper())
+
+        editObject.save()
+
+        return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+
 def logout_view(request):
     logout(request)
     return redirect('login')

@@ -2,7 +2,8 @@ var boolGeneral=true;
 
 jQuery(window).load(function () {
     console.log("loaded");
-    $(".table-input").prop("type","number");
+    $("#tabla-puertos .table-input").prop("type","number");
+    $("#tabla-puertos-LCL .table-input").prop("type","number");
     console.log("hosdf");
     //$(".my-loader").css("display","none");
     $('.my-loader').animate({
@@ -50,6 +51,8 @@ $(document).ready(function () {
         $(this).parent().siblings().removeClass('active');
         $(content).show();
         $(content).siblings('.tab-content').hide();
+        hamburger_cross(); 
+        $('#wrapper').toggleClass('toggled');
     });
 
 });
@@ -137,14 +140,14 @@ $('#tabla-puertos').Tabledit({
         console.log(action);
         console.log(serialize);
         $(window).trigger('resize');
-        actualizarDatos(serialize);
+        actualizarDatosFCL(serialize);
     }
 });
 
 $('#tabla-puertos-LCL').Tabledit({
     columns: {
         identifier: [1,'puerto_cargue'],
-        editable: [ [3, 'FCL_20'], [4, 'FCL_40'], [5, 'tiempo_transito'], [6, 'gastos_fob'], [7, 'gastos_naviera'], [8, 'manejo'], [9, 'collect_fee']]
+        editable: [ [3, 'tarifaTon_m3'], [4, 'gasolinaBAF'], [5, 'minimo'], [7, 'tiempo_transito']]
     },
     buttons: {
         save: {
@@ -168,14 +171,35 @@ $('#tabla-puertos-LCL').Tabledit({
         console.log(action);
         console.log(serialize);
         $(window).trigger('resize');
-        actualizarDatos(serialize);
+        actualizarDatosLCL(serialize);
     }
 });
 
-function actualizarDatos(serialize){
+function actualizarDatosFCL(serialize){
     console.log("it is working!") // sanity check
     $.ajax({
         url : "editFCL/", // the endpoint
+        type : "POST", // http method
+        data : { payload : serialize }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+function actualizarDatosLCL(serialize){
+    console.log("it is working!") // sanity check
+    $.ajax({
+        url : "editLCL/", // the endpoint
         type : "POST", // http method
         data : { payload : serialize }, // data sent with the post request
 

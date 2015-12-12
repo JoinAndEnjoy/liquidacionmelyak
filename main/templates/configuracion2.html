@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
     <!-- Custom CSS -->
+    <link href="{{STATIC_URL}}css/animate.css" rel="stylesheet">
     <link href="{{STATIC_URL}}css/configuracion.css" rel="stylesheet">
 </head>
 
@@ -99,13 +100,11 @@
                             <th>#</th>
                             <th>Puerto cargue</th>
                             <th>Puerto descargue</th>
-                            <th class = "text-center">LCL 20</th>
-                            <th class = "text-center">LCL 40</th>
+                            <th class = "text-center">Tarifa Ton m<sup>3</sup></th>
+                            <th class = "text-center">Gasolina BAF</th>
+                            <th class = "text-center">Mínimo</th>
+                            <th class = "text-center">Frecuencia</th>
                             <th class = "text-center">Tiempo de tránsito</th>
-                            <th class = "text-center">Gastos FOB</th>
-                            <th class = "text-center">Gastos naviera</th>
-                            <th class = "text-center">Manejo</th>
-                            <th class = "text-center">Collect Fee</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -114,13 +113,11 @@
                             <td>{{forloop.counter}}</td>
                             <td class = "thick-font">{{item.puerto_cargue}}</td>
                             <td class = "thick-font">{{item.puerto_descargue}}</td>
-                            <td>{{item.FCL_20}}</td>
-                            <td>{{item.FCL_40}}</td>
+                            <td>{{item.tarifaTon_m3}}</td>
+                            <td>{{item.gasolinaBAF}}</td>
+                            <td>{{item.minimo}}</td>
+                            <td>{{item.frecuencia}}</td>
                             <td>{{item.tiempo_transito}}</td>
-                            <td>{{item.gastos_fob}}</td>
-                            <td>{{item.gastos_naviera}}</td>
-                            <td>{{item.manejo}}</td>
-                            <td>{{item.collect_fee}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
