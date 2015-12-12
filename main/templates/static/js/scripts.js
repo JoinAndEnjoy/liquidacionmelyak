@@ -88,6 +88,7 @@ app.controller('ctrlMelyak', function ($scope)
     $scope.user.tipoMoneda = $scope.configTipoMoneda[0].value;
     $scope.configTipoEnvio = [{name: "Via Maritima", value: "Via Maritima"}, {name: "Via Aerea", value: "Via Aerea"}, {name: "Proyecto Especial", value: "Proyecto Especial"}];
     $scope.configTipoEnvio2 = [{name: "Full Container Load (FCL)", value: "FCL"}, {name: "Less than Container Load (LCL)", value: "LCL"}];
+    $scope.user.tipoEnvio2="";
 
     //Para pedir los pasises a la base de datos
     $.ajax({
@@ -195,23 +196,23 @@ app.controller('ctrlMelyak', function ($scope)
                 else if (index === 2)
                 {
                     //texto += "<p> Caja #" + aPoner + ":</p>";
-                    texto += "<div class='row' id='medidas'>";
-                    texto += "<div class='col-xs-3 input-group'>";
-                    texto += "<input type='number' min='0' class='form-control cosasSerias' placeholder='X [m]' aria-describedby='basic-addonancho'>";
-                    texto += "<span class='input-group-addon' id='basic-addonancho'><i class='fa fa-arrows-h fa-lg'></i></span>";
-                    texto += "</div>";
-                    texto += "<div class='col-xs-3 input-group'>";
-                    texto += "<input type='number' min='0' class='form-control cosasSerias' placeholder='Y [m]' aria-describedby='basic-addonalto'>";
-                    texto += "<span class='input-group-addon' id='basic-addonalto'><i class='fa fa-arrows-v fa-lg'></i></span>";
-                    texto += "</div>";
-                    texto += "<div class='col-xs-3 input-group'>";
-                    texto += "<input type='number' min='0' class='form-control cosasSerias' placeholder='Z [m]' aria-describedby='basic-addonprofundo'>";
-                    texto += "<span class='input-group-addon' id='basic-addonprofundo'><i class='fa fa-expand fa-lg'></i></span>";
-                    texto += "</div>";
-                    texto += "<div class='col-xs-3 input-group'>";
-                    texto += "<input type='number' min='0' class='form-control cosasSerias' placeholder='[Ton]' aria-describedby='basic-addonpeso'>";
-                    texto += "<span class='input-group-addon' id='basic-addonpeso'><i class='fa fa-balance-scale'></i></span>";
-                    texto += "</div>";
+                    texto += "<div class='row medidas'>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_ancho" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='X [m]' aria-describedby='basic-addonancho'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonancho" + aPoner + "'><i class='fa fa-arrows-h fa-lg'></i></span>";
+                    texto += "  </div>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_alto" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='Y [m]' aria-describedby='basic-addonalto'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonalto" + aPoner + "'><i class='fa fa-arrows-v fa-lg'></i></span>";
+                    texto += "  </div>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_profundo" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='Z [m]' aria-describedby='basic-addonprofundo'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonprofundo" + aPoner + "'><i class='fa fa-expand fa-lg'></i></span>";
+                    texto += "  </div>";
+                    texto += "  <div class='col-xs-3 input-group'>";
+                    texto += "      <input id='Aereo_peso" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='[Ton]' aria-describedby='basic-addonpeso'>";
+                    texto += "      <span class='input-group-addon' id='basic-addonpeso" + aPoner + "'><i class='fa fa-balance-scale'></i></span>";
+                    texto += "  </div>";
                     texto += "</div>";
                 }
                 texto += "</div>";
@@ -319,8 +320,12 @@ app.controller('ctrlMelyak', function ($scope)
                         $scope.user.arregloFCL_20.push($("#FCL20_" + i).val());
                     else if (c === 1)
                         $scope.user.arregloFCL_40.push($("#FCL40_" + i).val());
-                    else if (c === 2)// TODO: esto debe guardar un objeto con 4 atributos
-                        $scope.user.arregloAereo.push($("#Aereo_" + i).val());
+                    else if (c === 2)
+                    {
+                        var caja = {ancho:$("#Aereo_ancho" + i).val(), alto:$("#Aereo_alto" + i).val(), profundo:$("#Aereo_profundo" + i).val(), peso:$("#Aereo_peso" + i).val()};
+                        $scope.user.arregloAereo.push(caja);
+                    }
+                
                 }
             }
 

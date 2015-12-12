@@ -202,7 +202,10 @@ def metodoPrincipal(request):
                             response_data['parte3']=parte3
                             
                             parte4={} #La voy a usar para mandar los costos opcionales
-                            #TODO:
+                            if d['seguro']:
+                                parte4['Seguro']=max(90, negocio.polizaDeSeguro*d['valorMercancia']/100.0)
+                            else:
+                                parte4['Seguro']=0
                             response_data['parte4']=parte4
 
                         elif d['tipoEnvio2']=="LCL":
@@ -288,6 +291,8 @@ def testDev(request):
     d={}
     delUser={}
     delUser['correo']="jmanuel816@gmail.com"
+    delUser['tipoEnvio']="Via Maritima"
+    delUser['tipoEnvio2']="LCL"
     d['infoUser']=delUser
     d['lol']="jajajajaj"
     c = RequestContext(request, d)

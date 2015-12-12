@@ -9,10 +9,10 @@
     <table border='0' cellpadding='0' cellspacing='0' width='100%'>    
         <tr>
             <td style='padding: 10px 0 30px 0;'>
-                <table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;'>
+                <table align='center' border='1' cellpadding='0' cellspacing='0' width='600' style='border: 5px solid #000000; border-collapse: collapse;'>
                     <tr>
-                        <td align='center' bgcolor='#70bbd9' style='padding: 40px 0 30px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>
-                            <img src='https://raw.githubusercontent.com/tutsplus/build-an-html-email-template-from-scratch/master/images/h1.gif' alt='Creating Email Magic' width='300' height='230' style='display: block;' />
+                        <td align='center' bgcolor='#223462' style='padding: 40px 0 30px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;'>
+                            <img src='{{STATIC_URL}}img/Logo.png' alt='Creating Email Magic' style='display: block;' />
                         </td>
                     </tr>
                     <tr>
@@ -20,11 +20,94 @@
                             <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                                 <tr>
                                     <td style='color: #153643; font-family: Arial, sans-serif; font-size: 24px;'>
-                                        <b>{{infoUser.correo}}</b>
+                                        <center><b>Tu cotización</b></center>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>
+                                        A continuación te presentamos los datos que nos entregaste, con los que preparamos tu aprximación presupuestal.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='color: #153643; font-family: Arial, sans-serif; font-size: 18px;'>
+                                        <b>Tus datos:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                            <tr>
+                                                <td width='260' valign='top'>
+                                                    <table border='2' cellpadding='0' cellspacing='0' width='100%'>
+                                                        <tr>
+                                                            <td>Nombre de la empresa</td> 
+                                                            <td>50</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>País</td> 
+                                                            <td>94</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Ciudad</td> 
+                                                            <td>94</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Correo electrónico</td> 
+                                                            <td>94</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Teléfono</td> 
+                                                            <td>94</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='color: #153643; font-family: Arial, sans-serif; font-size: 18px;'>
+                                        <br/><b>Tu cotización:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                            <tr>
+                                                <td width='260' valign='top'>
+                                                    <table border='2' cellpadding='0' cellspacing='0' width='100%'>
+                                                        <tr>
+                                                            <td>Nombre de la empresa</td> 
+                                                            <td>50</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jackson</td> 
+                                                            <td>94</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>
+                                        {% if infoUser.tipoEnvio == "Via Maritima" %}
+                                            Maritima
+                                            {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                FCL
+                                            {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                LCL
+                                            {% else %}
+                                                Nope
+                                            {% endif %}
+                                        {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                            Aerea
+                                        {% elif infoUser.tipoEnvio == "Proyecto Especial" %}
+                                            Proyecto Especial
+                                        {% else %}
+                                            Nope
+                                        {% endif %}
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.
                                     </td>
                                 </tr>
@@ -33,35 +116,20 @@
                                         <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                                             <tr>
                                                 <td width='260' valign='top'>
-                                                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
-                                                        <tr>
-                                                            <td>
-                                                                <img src='https://raw.githubusercontent.com/tutsplus/build-an-html-email-template-from-scratch/master/images/left.gif' alt='' width='100%' height='140' style='display: block;' />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style='padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style='font-size: 0; line-height: 0;' width='20'>
-                                                    &nbsp;
-                                                </td>
-                                                <td width='260' valign='top'>
-                                                    <table border='0' cellpadding='0' cellspacing='0' width='100%'>
-                                                        <tr>
-                                                            <td>
-                                                                <img src='https://raw.githubusercontent.com/tutsplus/build-an-html-email-template-from-scratch/master/images/right.gif' alt='' width='100%' height='140' style='display: block;' />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style='padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>
-                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                    <center>
+                                                        <table border='2' cellpadding='0' cellspacing='0' width='100%'>
+                                                            <tr>
+                                                                <td>Smith</td> 
+                                                                <td>50</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jackson</td> 
+                                                                <td>94</td>
+                                                            </tr>
+                                                        </table>
+                                                    </center>
+                                                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                                                 </td>
                                             </tr>
                                         </table>
@@ -71,25 +139,20 @@
                         </td>
                     </tr>
                     <tr>
-                        <td bgcolor='#ee4c50' style='padding: 30px 30px 30px 30px;'>
+                        <td bgcolor='#223462' style='padding: 30px 30px 30px 30px;'>
                             <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                                 <tr>
                                     <td style='color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;' width='75%'>
-                                        &reg; Someone, somewhere 2013<br/>
-                                        <a href='#' style='color: #ffffff;'><font color='#ffffff'>Unsubscribe</font></a> to this newsletter instantly
+                                        Cra. 106 No.15a-25 Manzana 24 Bodega 143<br/>
+                                        Zona Franca Bogotá / Cra 69a No. 65-81<br/>
+                                        Phone: PBX(571)492 6666 * Fax:404 6847 - 439 6539
                                     </td>
                                     <td align='right' width='25%'>
                                         <table border='0' cellpadding='0' cellspacing='0'>
                                             <tr>
                                                 <td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>
-                                                    <a href='http://www.twitter.com/' style='color: #ffffff;'>
-                                                        <img src='https://raw.githubusercontent.com/tutsplus/build-an-html-email-template-from-scratch/master/images/tw.gif' alt='Twitter' width='38' height='38' style='display: block;' border='0' />
-                                                    </a>
-                                                </td>
-                                                <td style='font-size: 0; line-height: 0;' width='20'>&nbsp;</td>
-                                                <td style='font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;'>
-                                                    <a href='http://www.twitter.com/' style='color: #ffffff;'>
-                                                        <img src='https://raw.githubusercontent.com/tutsplus/build-an-html-email-template-from-scratch/master/images/fb.gif' alt='Facebook' width='38' height='38' style='display: block;' border='0' />
+                                                    <a href='http://melyakinternational.com/' style='color: #ffffff;'>
+                                                        <img src='{{STATIC_URL}}img/logo.png' alt='Twitter' width='70' height='70' style='display: block;' border='0' />
                                                     </a>
                                                 </td>
                                             </tr>
