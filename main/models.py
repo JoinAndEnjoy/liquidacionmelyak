@@ -43,7 +43,7 @@ class SettingsNegocio(models.Model):
     polizaDeSeguro = models.FloatField()
     
     def __str__(self):              # __unicode__ on Python 2
-        return "Objeto Creado"
+        return "Objeto Creado %.2f" % self.blGeneral_FCL
 
     def __repr__(self):
         return self.__str__()

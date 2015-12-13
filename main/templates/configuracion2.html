@@ -45,7 +45,7 @@
                   <a href="#LCL">LCL</a>
               </li>
               <li>
-                  <a href="#">Aéreo</a>
+                  <a href="#settings">General</a>
               </li>
           </ul>
       </nav>
@@ -78,8 +78,8 @@
                         {% for item in infoFCL %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td class = "thick-font">{{item.puerto_cargue}}</td>
-                            <td class = "thick-font">{{item.puerto_descargue}}</td>
+                            <td class = "thick-font capitalize lowercase">{{item.puerto_cargue}}</td>
+                            <td class = "thick-font capitalize lowercase">{{item.puerto_descargue}}</td>
                             <td>{{item.FCL_20}}</td>
                             <td>{{item.FCL_40}}</td>
                             <td>{{item.tiempo_transito}}</td>
@@ -111,8 +111,8 @@
                         {% for item in infoLCL %}
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td class = "thick-font">{{item.puerto_cargue}}</td>
-                            <td class = "thick-font">{{item.puerto_descargue}}</td>
+                            <td class = "thick-font capitalize lowercase">{{item.puerto_cargue}}</td>
+                            <td class = "thick-font capitalize lowercase">{{item.puerto_descargue}}</td>
                             <td>{{item.tarifaTon_m3}}</td>
                             <td>{{item.gasolinaBAF}}</td>
                             <td>{{item.minimo}}</td>
@@ -120,6 +120,67 @@
                             <td>{{item.tiempo_transito}}</td>
                         </tr>
                         {% endfor %}
+                    </tbody>
+                </table>
+                <!-- /.container-fluid -->
+            </div> 
+            <div id = "settings" class = "tab-content">
+                <table id="tabla-settings" class = "tabla-puertos">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th class = "text-center">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in settings %}
+                        <tr>
+                            <td>blGeneral_FCL</td>
+                            <td class = "thick-font">BL General FCL</td>
+                            <td>{{item.blGeneral_FCL}}</td>
+                        </tr>
+                        <tr>
+                            <td>blGeneral_LCL</td>
+                            <td class = "thick-font">BL General LCL</td>
+                            <td>{{item.blGeneral_LCL}}</td>
+                        </tr>
+                        <tr>
+                            <td>desconsolidacion</td>
+                            <td class = "thick-font">Desconsolidación</td>
+                            <td>{{item.desconsolidacion}}</td>
+                        </tr>
+                        <tr>
+                            <td>usoDePuerto</td>
+                            <td class = "thick-font">Uso del puerto</td>
+                            <td>{{item.usoDePuerto}}</td>
+                        </tr>
+                        <tr>
+                            <td>radicacion</td>
+                            <td class = "thick-font">Radicación</td>
+                            <td>{{item.radicacion}}</td>
+                        </tr>
+                        <tr>
+                            <td>collectFee</td>
+                            <td class = "thick-font">Collect Fee</td>
+                            <td>{{item.collectFee}}</td>
+                        </tr>
+                        <tr>
+                            <td>emisionHBL</td>
+                            <td class = "thick-font">Emisión HBL</td>
+                            <td>{{item.emisionHBL}}</td>
+                        </tr>
+                        <tr>
+                            <td>manejoLogistico</td>
+                            <td class = "thick-font">Manejo Logístico</td>
+                            <td>{{item.manejoLogistico}}</td>
+                        </tr>
+                        <tr>
+                            <td>polizaDeSeguro</td>
+                            <td class = "thick-font">Poliza de seguro</td>
+                            <td>{{item.polizaDeSeguro}}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
                 <!-- /.container-fluid -->

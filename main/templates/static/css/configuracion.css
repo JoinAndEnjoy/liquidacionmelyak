@@ -12,7 +12,7 @@
 
 
 body {
-    background-color: #222;
+    background-color: white;
       font-family: "Lato";
   font-weight: 300;
   font-size: 14px;
@@ -120,7 +120,7 @@ body {
   color: #ffffff;
   display: none;
 }
-.sidebar-nav li:before { background-color: #222222; }
+.sidebar-nav li:before { background-color: #292929; }
 
 /*
 .sidebar-nav li:nth-child(2):before { background-color: #52418a; }
@@ -539,14 +539,17 @@ a:hover {cursor: pointer;}
 }
 
 .thick-font{
-    text-transform: lowercase;
     font-weight: 700;
     color: #666666;
     font-size: 13px;
 }
 
-.thick-font:first-letter{
+.thick-font.capitalize:first-letter{
     text-transform: uppercase;
+}
+
+.thick-font.lowercase{
+    text-transform: lowercase;
 }
 
 .tabla-puertos tbody tr:nth-of-type(odd){
@@ -671,6 +674,14 @@ a:hover {cursor: pointer;}
 
 .tabledit-save-button:hover{
     background-color: #27ae60;
+}
+
+#settings{
+    width: 35%;
+}
+
+#settings .input-sm{
+    width: 50%;
 }
 
 .input-sm{

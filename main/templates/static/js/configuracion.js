@@ -4,6 +4,7 @@ jQuery(window).load(function () {
     console.log("loaded");
     $("#tabla-puertos .table-input").prop("type","number");
     $("#tabla-puertos-LCL .table-input").prop("type","number");
+    $("#tabla-settings .table-input").prop("type","number");
     console.log("hosdf");
     //$(".my-loader").css("display","none");
     $('.my-loader').animate({
@@ -115,7 +116,7 @@ function editarAereo()
 
 $('#tabla-puertos').Tabledit({
     columns: {
-        identifier: [1,'puerto_cargue'],
+        identifier: [[1,'puerto_cargue'],[2,'puerto_descargue']],
         editable: [ [3, 'FCL_20'], [4, 'FCL_40'], [5, 'tiempo_transito'], [6, 'gastos_fob'], [7, 'gastos_naviera'], [8, 'manejo'], [9, 'collect_fee']]
     },
     buttons: {
@@ -146,7 +147,7 @@ $('#tabla-puertos').Tabledit({
 
 $('#tabla-puertos-LCL').Tabledit({
     columns: {
-        identifier: [1,'puerto_cargue'],
+        identifier: [[1,'puerto_cargue'],[2,'puerto_descargue']],
         editable: [ [3, 'tarifaTon_m3'], [4, 'gasolinaBAF'], [5, 'minimo'], [7, 'tiempo_transito']]
     },
     buttons: {
@@ -155,23 +156,33 @@ $('#tabla-puertos-LCL').Tabledit({
         }
     },
     inputClass: "form-control input-sm table-input",
-    deleteButton:false,/*
-    onSuccess: function(data, textStatus, jqXHR) {
-        console.log('onSuccess(data, textStatus, jqXHR)');
-        console.log(data);
-        console.log(textStatus);
-        console.log(jqXHR);
-    },onFail: function(jqXHR, textStatus, errorThrown) {
-        console.log('onFail(jqXHR, textStatus, errorThrown)');
-        console.log(jqXHR);
-        console.log(textStatus);
-        console.log(errorThrown);
-    }*/onAjax: function(action, serialize) {
+    deleteButton:false,
+    onAjax: function(action, serialize) {
         console.log('onAjax(action, serialize)');
         console.log(action);
         console.log(serialize);
         $(window).trigger('resize');
         actualizarDatosLCL(serialize);
+    }
+});
+$('#tabla-settings').Tabledit({
+    columns: {
+        identifier: [[0,'id']],
+        editable: [ [2, 'valor']]
+    },
+    buttons: {
+        save: {
+            html: 'Guardar'
+        }
+    },
+    inputClass: "form-control input-sm table-input",
+    deleteButton:false,
+    onAjax: function(action, serialize) {
+        console.log('onAjax(action, serialize)');
+        console.log(action);
+        console.log(serialize);
+        $(window).trigger('resize');
+        actualizarDatosSettings(serialize);
     }
 });
 
@@ -217,11 +228,36 @@ function actualizarDatosLCL(serialize){
     });
 }
 
+function actualizarDatosSettings(serialize){
+    console.log("it is working!") // sanity check
+    $.ajax({
+        url : "editSettings/", // the endpoint
+        type : "POST", // http method
+        data : { payload : serialize }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
 $('#tabla-puertos').stickyTableHeaders({
     fixedOffset: $('.temp-stripe')
 });
 
 $('#tabla-puertos-LCL').stickyTableHeaders({
+    fixedOffset: $('.temp-stripe')
+});
+
+$('#tabla-settings').stickyTableHeaders({
     fixedOffset: $('.temp-stripe')
 });
 
