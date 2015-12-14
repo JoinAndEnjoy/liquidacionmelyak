@@ -127,6 +127,43 @@ def editSettings(request):
             )           
 
 
+def editLCL(request):
+    if request.method == 'POST':
+        response_data = {}
+        response_data['respuesta'] = "SUCCESS"
+        payloadArray = request.POST['payload'].split("&")
+
+        editObjectCargue = payloadArray[0].split("=")[1].upper().replace('+',' ')
+        editObjectDescargue = payloadArray[1].split("=")[1].upper().replace('+',' ')
+        editObject = InfoLCL.objects.get(puerto_cargue=editObjectCargue, puerto_descargue = editObjectDescargue)
+
+        editObject.tarifaTon_m3 = float(payloadArray[2].split("=")[1])
+        editObject.gasolinaBAF = float(payloadArray[3].split("=")[1])
+        editObject.minimo = float(payloadArray[4].split("=")[1])
+        editObject.tiempo_transito = float(payloadArray[5].split("=")[1])
+
+        editObject.save()
+
+        return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+
+def editSettings(request):
+    if request.method == 'POST':
+        response_data = {}
+        response_data['respuesta'] = "SUCCESS"
+        payloadArray = request.POST['payload'].split("&")
+        editObjectNombre = payloadArray[0].split("=")[1]
+        editObject = list(SettingsNegocio.objects.all()[:1])[0]
+        editObject.__dict__[editObjectNombre] = float(payloadArray[1].split("=")[1])
+        editObject.save()
+        return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )           
+
+
 def logout_view(request):
     logout(request)
     return redirect('login')
