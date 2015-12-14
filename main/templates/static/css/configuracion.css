@@ -548,6 +548,12 @@ a:hover {cursor: pointer;}
     text-transform: uppercase;
 }
 
+
+
+#part3_cuadradoVerde span {
+    color: white !important;
+}
+
 .thick-font.lowercase{
     text-transform: lowercase;
 }

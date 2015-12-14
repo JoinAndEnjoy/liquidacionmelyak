@@ -43,12 +43,11 @@
                     <form name="myForm1">
                         <span class="dato agrandado">Nombre de la empresa</span><br/>
                         <input ng-model="user.nombre" type="text" name="nombreDeEmpresa" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Nombre de empresa"/>
-                        <span id="avisoNombre" class="aviso">Debes poner el nombre de tu compañia</span>
+                        <span id="avisoNombre" class="aviso">Este campo es obligatorio</span>
 
                         <span class="dato agrandado">País</span><br/>
                         <div class = "mi-clase">
                             <select ng-model="user.paisDatos" id="paisDatos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="el_pais_datos" ng-change="cambiarCiudades(user.paisDatos, 0)" ng-options="template.cc_fips as template.nombre_pais for template in configPais"></select>
-                            <span class = "fa fa-caret-down icono-select" onclick='mostrarDropdown("paisDatos")'></span>
                         </div>
 
                         <div class="row">
@@ -58,11 +57,11 @@
 
                         <span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
                         <input ng-model="user.correo" type="email" name="correoElectronico" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/>
-                        <span id="avisoCorreo" class="aviso">Debes poner el correo de tu compañia</span>
+                        <span id="avisoCorreo" class="aviso">Este campo es obligatorio</span>
 
                         <span class="dato agrandado">Teléfono</span>
                         <input ng-model="user.telefono" type="tel" name="telefono" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Teléfono"/>
-                        <span id="avisoTelefono" class="aviso">Debes poner el telefono de tu compañia</span><br/><br/>
+                        <span id="avisoTelefono" class="aviso">Este campo es obligatorio</span><br/>
 
                         <button id="boton1" class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(2)" disabled/>Siguiente</button>
                     </form>
@@ -96,15 +95,25 @@
                                 <option value="" ng-if="false"></option>
                             </select><br/>
                             <div class="palCentro">
-                                <span class="textoGris">La entrega se reliza en: &nbsp;</span>
-                                <span class="textoGris" ng-bind="puertoLlegadaFCL"></span>
+                                <span class="textoGris">La entrega se reliza en &nbsp;</span>
+                                <span class="textoGris" id = "puerto-entrega" ng-bind="puertoLlegadaFCL"></span>
                                 <br/><br/>
                             </div>
                             <div class="row">
-                                <i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 20ft</p><i class="fa fa-cubes col-md-1 col-sm-1 col-xs-1"></i><p class="col-md-5 col-sm-5 col-xs-5">Contenedores de 40ft</p>
+                            <div class = "contenedor-lbl-div col-sm-6">
+                                 <i class="fa fa-cubes"></i><span >Contenedores de 20ft</span>
+                            </div>
+                            <div class = "contenedor-lbl-div col-sm-6">
+                                 <i class="fa fa-cubes"></i><span >Contenedores de 40ft</span>
+                            </div>
                             </div><br/>
                             <div class="row">
-                                <div id="slider20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="slider40" class="col-md-5 col-sm-5 col-xs-5"></div>
+                                <div class = "col-sm-6 ">
+                                    <div id="slider20" class = "sliders-container"></div>
+                                </div>
+                                <div class = "col-sm-6 ">
+                                    <div id="slider40" class = "sliders-container"></div>    
+                                </div>
                             </div><br/>
                             <div id="textosPreguntaPeso">
                                 <center><p>¿Cuanto pesa? [ton]</p></center>
@@ -119,8 +128,8 @@
                                 <option value="" ng-if="false"></option>
                             </select><br/>
                             <div class="palCentro">
-                                <span class="textoGris">La entrega se reliza en: &nbsp;</span>
-                                <span class="textoGris" ng-bind="puertoLlegadaLCL"></span>
+                                <span class="textoGris">La entrega se reliza en &nbsp;</span>
+                                <span class="textoGris" id = "puerto-entrega" ng-bind="puertoLlegadaLCL"></span>
                                 <br/><br/>
                             </div>
                             <div class="row">
@@ -195,7 +204,7 @@
             </div>
             <div id="Parte3"><!-- XXX PARTE3 XXX -->
                 <form action="." method="post">{% csrf_token %}
-                    <div class="row">
+                    <div class="row main-container-step-3">
                         <div class="col-md-2 col-md-push-10 col-sm-2 col-sm-push-10 col-xs-12">
                             <div id="part3_cuadrado_lado1" class="cuadradoBlanco">
                                 <span class="dato agrandado escondido uppercase distanciado">Descripción</span><br/><br/>
@@ -204,7 +213,7 @@
                         </div>
                         <div id="zonaCentro"   class="col-md-8 col-md-offset-2 col-md-pull-2 col-sm-8 col-sm-offset-2 col-sm-pull-2 col-xs-12"></div>
                     </div>
-                    <div class="row">
+                    <div class="row cuadradoBoton-div">
                         <div id="botonCuadro3" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
                             <div id='part3_cuadradoBoton' class='cuadrado'>
                                 <button class='btn elboton uppercase separado agrandado' type='button' ng-click='enviarLiquidacion()'/>Enviar a mi Email</button>

@@ -38,6 +38,11 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   text-align: center;
 }
 
+.titulo-seccion{
+  font-weight: 600;
+  opacity: 0.4;
+}
+
 #textoB1 {
   color:#000000;
   display: block;
@@ -114,10 +119,10 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   border-color: #cfcfcf;
   border-width: 1px;
   border-radius: 3px;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 50px;
-  padding-top: 35px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  padding-top: 30px;
 }
 
 /*Esto es para que al comienzo solo se vea la parte 1 del formulario*/
@@ -136,9 +141,39 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 /* 5) Para las entradas de texto*/
 .dato
 {
-  color: #000000;
+  color: #252525;
   font-size: 16px;
   font-weight: 400;
+}
+
+.derecha{
+  direction: rtl;
+  text-transform: lowercase;
+  font-weight: 400;
+  color: #5A5A5A !important;
+}
+
+#part3_cuadradoVerde span {
+    color: white !important;
+}
+
+.cuadradoBoton-div{
+  width: 100%;
+  margin: auto;
+}
+
+.main-container-step-3 .dato.agrandado.escondido.uppercase{
+      font-weight: 700;
+    color: #aaaaaa;
+}
+
+.derecha:first-letter{
+  text-transform: uppercase; 
+}
+
+.main-container-step-3{
+  width: 95%;
+  margin: auto;
 }
 
 .escondido
@@ -157,7 +192,12 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 
 .dropdowns {width: 100%;}
 
-.aviso {color: orange; display: none;}
+.aviso {
+  color: #e74c3c; 
+  display: none;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
 /* 6) Para el boton*/
 .elboton
 {
@@ -170,12 +210,39 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   border-color: #071323;
 }
 
-.elboton:hover {background-color: #579f43;}
+.elboton:hover {background-color: #01060D;}
 
 /* EXTRA) Este esta en todos los input*/
 .agrandado {
   font-size: 14px;
   color: #222222;
+}
+
+.contenedor-lbl-div{
+  text-align: center;
+}
+
+.contenedor-lbl-div span{
+    font-weight: 400;
+    color: #333333;
+    opacity: 0.8;
+}
+
+.sliders-container{
+  width: 80%;
+  margin: auto;
+}
+
+.fa-cubes{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.btn.agrandado {
+  color: white;
+  border-radius: 2px;
+  padding-top: 13px;
+  padding-bottom: 11px;
 }
 
 .orientadoDerecha {padding-left: 15px;}
@@ -212,9 +279,24 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
   bottom: 6px;
 }
 
+#puerto-entrega{
+  text-transform: lowercase;
+}
+
+#puerto-entrega:first-letter{
+  text-transform: uppercase;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
 /*8) Esto es todo lo del panel 3*/
 .distanciado {margin-bottom: 10px;}
-.textoGris {color: #999999;}
+.textoGris {color: #666666;}
 .conNegrilla {font-weight: 900;}
 .cuadrado#part3_cuadrado1 {padding-top: 16px;padding-bottom: 22px;}
 .cuadrado#part3_cuadrado2 {padding-top: 16px;padding-bottom: 22px;position: relative; bottom: 2px;}
@@ -242,7 +324,6 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 }
 
 .cuadradoBlanco#part3_cuadrado_lado1 {}
-.derecha { direction: rtl;}
 
 img#icono_destino {max-width: 100%; max-height: 100%;}
 
@@ -250,7 +331,6 @@ img#icono_destino {max-width: 100%; max-height: 100%;}
 
 select, .cosasSerias{
   border-radius: 2px;
-  -webkit-appearance: none;
   outline: none;
 
   -webkit-box-shadow: none !important;
@@ -325,3 +405,7 @@ select, .cosasSerias{
 }
 
 .medidas{display: inline-flex;}
+
+.mi-clase{
+  display: relative;
+}
