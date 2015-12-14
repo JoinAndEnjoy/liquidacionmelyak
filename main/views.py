@@ -290,9 +290,21 @@ def testDev(request):
     t = loader.get_template('correo.html')
     d={}
     delUser={}
-    delUser['correo']="jmanuel816@gmail.com"
     delUser['tipoEnvio']="Via Maritima"
     delUser['tipoEnvio2']="LCL"
+    delUser['nombre']="Juan Manuel"
+    delUser['paisDatos']="CO"
+    delUser['ciudad_datos']="Bogota"
+    delUser['correo']="jmanuel816@gmail.com"
+    delUser['telefono']="2954428"
+    
+    delUser['tipoProducto']="Ferreteria"
+    delUser['paisProducto']="AF"
+    delUser['valorMercancia']="45"
+    delUser['prdif']="12"
+    delUser['otm']="false"
+    delUser['seguro']="true"
+    
     d['infoUser']=delUser
     d['lol']="jajajajaj"
     c = RequestContext(request, d)

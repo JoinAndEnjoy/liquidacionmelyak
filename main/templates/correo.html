@@ -41,23 +41,23 @@
                                                     <table border='2' cellpadding='0' cellspacing='0' width='100%'>
                                                         <tr>
                                                             <td>Nombre de la empresa</td> 
-                                                            <td>50</td>
+                                                            <td>{{infoUser.nombre}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>País</td> 
-                                                            <td>94</td>
+                                                            <td>{{infoUser.paisDatos}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Ciudad</td> 
-                                                            <td>94</td>
+                                                            <td>{{infoUser.ciudad_datos}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Correo electrónico</td> 
-                                                            <td>94</td>
+                                                            <td>{{infoUser.correo}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Teléfono</td> 
-                                                            <td>94</td>
+                                                            <td>{{infoUser.telefono}}</td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -67,7 +67,7 @@
                                 </tr>
                                 <tr>
                                     <td style='color: #153643; font-family: Arial, sans-serif; font-size: 18px;'>
-                                        <br/><b>Tu cotización:</b>
+                                        <br/><b>Tu carga</b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -77,12 +77,58 @@
                                                 <td width='260' valign='top'>
                                                     <table border='2' cellpadding='0' cellspacing='0' width='100%'>
                                                         <tr>
-                                                            <td>Nombre de la empresa</td> 
-                                                            <td>50</td>
+                                                            <td>Tipo de Envio</td> 
+                                                            <td>{% if infoUser.tipoEnvio == "Via Maritima" %}
+                                                                    Envío Maritimo
+                                                                    {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                                         (FCL)
+                                                                    {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                                         (LCL)
+                                                                    {% else %}
+                                                                        Nope
+                                                                    {% endif %}
+                                                                {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                                                    Envío Aereo
+                                                                {% elif infoUser.tipoEnvio == "Proyecto Especial" %}
+                                                                    Proyecto Especial
+                                                                {% else %}
+                                                                    Nope
+                                                                {% endif %}
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Jackson</td> 
-                                                            <td>94</td>
+                                                            <td>Tipo de producto</td> 
+                                                            <td>{{infoUser.tipoProducto}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>País de procedencia</td> 
+                                                            <td>{{infoUser.paisProducto}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Valor de la mercancía</td> 
+                                                            <td>{{infoUser.valorMercancia}} Dolares</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Numero de productos diferentes</td> 
+                                                            <td>{{infoUser.prdif}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>La carga es OTM</td> 
+                                                            <td>{% if infoUser.otm == "true" %}
+                                                                    Si
+                                                                {% else %}
+                                                                    No
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Desea comprar un seguro para su mercancía</td> 
+                                                            <td>{% if infoUser.seguro == "true" %}
+                                                                    Si
+                                                                {% else %}
+                                                                    No
+                                                                {% endif %}
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -91,24 +137,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>
-                                        {% if infoUser.tipoEnvio == "Via Maritima" %}
-                                            Maritima
-                                            {% if infoUser.tipoEnvio2 == "FCL" %}
-                                                FCL
-                                            {% elif infoUser.tipoEnvio2 == "LCL" %}
-                                                LCL
-                                            {% else %}
-                                                Nope
-                                            {% endif %}
-                                        {% elif infoUser.tipoEnvio == "Via Aerea" %}
-                                            Aerea
-                                        {% elif infoUser.tipoEnvio == "Proyecto Especial" %}
-                                            Proyecto Especial
-                                        {% else %}
-                                            Nope
-                                        {% endif %}
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, nisi libero ultricies ipsum, in posuere mauris neque at erat.
+                                    <td style='color: #153643; font-family: Arial, sans-serif; font-size: 18px;'>
+                                        <br/><b>Tu Cotización</b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,6 +146,23 @@
                                         <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                                             <tr>
                                                 <td width='260' valign='top'>
+                                                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                    {% if infoUser.tipoEnvio == "Via Maritima" %}
+                                                        Maritima
+                                                        {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                            FCL
+                                                        {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                            LCL
+                                                        {% else %}
+                                                            Nope
+                                                        {% endif %}
+                                                    {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                                        Aerea
+                                                    {% elif infoUser.tipoEnvio == "Proyecto Especial" %}
+                                                        Proyecto Especial
+                                                    {% else %}
+                                                        Nope
+                                                    {% endif %}
                                                     <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                                                     <center>
                                                         <table border='2' cellpadding='0' cellspacing='0' width='100%'>
@@ -129,7 +176,6 @@
                                                             </tr>
                                                         </table>
                                                     </center>
-                                                    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                                                 </td>
                                             </tr>
                                         </table>

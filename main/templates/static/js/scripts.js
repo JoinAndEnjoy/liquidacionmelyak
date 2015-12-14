@@ -70,6 +70,7 @@ app.controller('ctrlMelyak', function ($scope)
 {
     $scope.user = {};
     $scope.user.otm = false;
+    $scope.user.seguro = false;
     //TODO: poner los valores que son.
     $scope.configTipoProducto = [{name: "Textiles", value: "Textiles"},
         {name: "Confecciones", value: "Confecciones"},
