@@ -489,7 +489,7 @@ function pintarPagina3(json, tipoCotizacion)
 {
     //"Via Aerea" "LCL"
     var contenido = "";
-    var textospar3 = ["1. Informacion del Transporte", "2. Costos de la Carga", "3. Costos Fijos", "4. Costos Opcionales"];
+    var textospar3 = ["1. Informacion del transporte", "2. Costos de la Carga", "3. Costos Fijos", "4. Costos Opcionales"];
     if (tipoCotizacion === "FCL" || tipoCotizacion === "LCL" )
     {
         var k, keys = [];
@@ -504,7 +504,7 @@ function pintarPagina3(json, tipoCotizacion)
         {
             k = keys[i];
             contenido += "<div id='part3_cuadrado" + (i + 1) + "' class='cuadrado'>";
-            contenido += "<span class='dato agrandado escondido uppercase'>" + textospar3[i] + "</span><br/><br/>";
+            contenido += "<span class='dato agrandado escondido uppercase titulo-seccion'>" + textospar3[i] + "</span><br/><br/>";
 
             var total = 0;
             //console.log(k);

@@ -2,9 +2,16 @@ var boolGeneral=true;
 
 jQuery(window).load(function () {
     console.log("loaded");
-    $(".table-input").prop("type","number");
+    $("#tabla-puertos .table-input").prop("type","number");
+    $("#tabla-puertos-LCL .table-input").prop("type","number");
+    $("#tabla-settings .table-input").prop("type","number");
     console.log("hosdf");
-    $(".my-loader").css("display","none");
+    //$(".my-loader").css("display","none");
+    $('.my-loader').animate({
+        opacity: 0
+    }, 1000, function(){
+        jQuery(this).css("display","none");
+    });
 });
 
 $(document).ready(function () {
@@ -34,6 +41,21 @@ $(document).ready(function () {
   $('[data-toggle="offcanvas"]').click(function () {
         $('#wrapper').toggleClass('toggled');
   });  
+
+
+  $('nav ul li:first').addClass('active');
+    $('.tab-content:not(:first)').hide();
+    $('nav ul li a').click(function (event) {
+        event.preventDefault();
+        var content = $(this).attr('href');
+        $(this).parent().addClass('active');
+        $(this).parent().siblings().removeClass('active');
+        $(content).show();
+        $(content).siblings('.tab-content').hide();
+        hamburger_cross(); 
+        $('#wrapper').toggleClass('toggled');
+    });
+
 });
 
 
@@ -94,7 +116,7 @@ function editarAereo()
 
 $('#tabla-puertos').Tabledit({
     columns: {
-        identifier: [1,'puerto_cargue'],
+        identifier: [[1,'puerto_cargue'],[2,'puerto_descargue']],
         editable: [ [3, 'FCL_20'], [4, 'FCL_40'], [5, 'tiempo_transito'], [6, 'gastos_fob'], [7, 'gastos_naviera'], [8, 'manejo'], [9, 'collect_fee']]
     },
     buttons: {
@@ -119,11 +141,52 @@ $('#tabla-puertos').Tabledit({
         console.log(action);
         console.log(serialize);
         $(window).trigger('resize');
-        actualizarDatos(serialize);
+        actualizarDatosFCL(serialize);
     }
 });
 
-function actualizarDatos(serialize){
+$('#tabla-puertos-LCL').Tabledit({
+    columns: {
+        identifier: [[1,'puerto_cargue'],[2,'puerto_descargue']],
+        editable: [ [3, 'tarifaTon_m3'], [4, 'gasolinaBAF'], [5, 'minimo'], [7, 'tiempo_transito']]
+    },
+    buttons: {
+        save: {
+            html: 'Guardar'
+        }
+    },
+    inputClass: "form-control input-sm table-input",
+    deleteButton:false,
+    onAjax: function(action, serialize) {
+        console.log('onAjax(action, serialize)');
+        console.log(action);
+        console.log(serialize);
+        $(window).trigger('resize');
+        actualizarDatosLCL(serialize);
+    }
+});
+$('#tabla-settings').Tabledit({
+    columns: {
+        identifier: [[0,'id']],
+        editable: [ [2, 'valor']]
+    },
+    buttons: {
+        save: {
+            html: 'Guardar'
+        }
+    },
+    inputClass: "form-control input-sm table-input",
+    deleteButton:false,
+    onAjax: function(action, serialize) {
+        console.log('onAjax(action, serialize)');
+        console.log(action);
+        console.log(serialize);
+        $(window).trigger('resize');
+        actualizarDatosSettings(serialize);
+    }
+});
+
+function actualizarDatosFCL(serialize){
     console.log("it is working!") // sanity check
     $.ajax({
         url : "editFCL/", // the endpoint
@@ -144,8 +207,58 @@ function actualizarDatos(serialize){
     });
 }
 
+function actualizarDatosLCL(serialize){
+    console.log("it is working!") // sanity check
+    $.ajax({
+        url : "editLCL/", // the endpoint
+        type : "POST", // http method
+        data : { payload : serialize }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
+function actualizarDatosSettings(serialize){
+    console.log("it is working!") // sanity check
+    $.ajax({
+        url : "editSettings/", // the endpoint
+        type : "POST", // http method
+        data : { payload : serialize }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
 $('#tabla-puertos').stickyTableHeaders({
-    fixedOffset: $('.navbar-inverse')
+    fixedOffset: $('.temp-stripe')
+});
+
+$('#tabla-puertos-LCL').stickyTableHeaders({
+    fixedOffset: $('.temp-stripe')
+});
+
+$('#tabla-settings').stickyTableHeaders({
+    fixedOffset: $('.temp-stripe')
 });
 
 $('.tabledit-edit-button').click(function(){
@@ -156,6 +269,14 @@ $("body").on("keyup", function(e){
     if (e.which === 27){
         return false;
     } 
+});
+
+$(".hamburger").click(function(){
+    $(window).trigger('resize');
+    $('html, body').animate({
+        scrollTop: 0
+    }, 10);
+    return false;
 });
 //----------------------------------------------------------------------------------------------------------
 //                      PARTE 1: Obligatorios AJAX

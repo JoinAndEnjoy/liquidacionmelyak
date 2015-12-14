@@ -59,10 +59,10 @@ def login(request):
 @login_required(login_url='/main/login/')
 #@csrf_exempt
 def configuracion(request):
-    if request.method == 'POST':
-        print "me meto por post"
     infoFCL_all = InfoFCL.objects.all().order_by("puerto_cargue")
-    context = {"infoFCL":infoFCL_all }
+    infoLCL_all = InfoLCL.objects.all().order_by("puerto_cargue")
+    settings = SettingsNegocio.objects.all()
+    context = {"infoFCL":infoFCL_all, "infoLCL":infoLCL_all, "settings":settings}
     return render(request, "configuracion2.html", context)
 
 #@csrf_exempt
@@ -71,21 +71,61 @@ def editFCL(request):
         response_data = {}
         response_data['respuesta'] = "SUCCESS"
         payloadArray = request.POST['payload'].split("&")
+
         editObjectCargue = payloadArray[0].split("=")[1].upper().replace('+',' ')
-        editObject = InfoFCL.objects.get(puerto_cargue=editObjectCargue)
-        editObject.FCL_20 = float(payloadArray[1].split("=")[1].upper())
-        editObject.FCL_40 = float(payloadArray[2].split("=")[1].upper())
-        editObject.tiempo_transito = float(payloadArray[3].split("=")[1].upper())
-        editObject.gastos_fob = float(payloadArray[4].split("=")[1].upper())
-        editObject.gastos_naviera = float(payloadArray[5].split("=")[1].upper())
-        editObject.manejo = float(payloadArray[6].split("=")[1].upper())
-        editObject.collect_fee = float(payloadArray[7].split("=")[1].upper())
+        editObjectDescargue = payloadArray[1].split("=")[1].upper().replace('+',' ')
+        editObject = InfoFCL.objects.get(puerto_cargue=editObjectCargue, puerto_descargue = editObjectDescargue)
+
+        editObject.FCL_20 = float(payloadArray[2].split("=")[1])
+        editObject.FCL_40 = float(payloadArray[3].split("=")[1])
+        editObject.tiempo_transito = float(payloadArray[4].split("=")[1])
+        editObject.gastos_fob = float(payloadArray[5].split("=")[1])
+        editObject.gastos_naviera = float(payloadArray[6].split("=")[1])
+        editObject.manejo = float(payloadArray[7].split("=")[1])
+        editObject.collect_fee = float(payloadArray[8].split("=")[1])
         editObject.save()
 
         return HttpResponse(
                 json.dumps(response_data),
                 content_type="application/json"
             )
+
+def editLCL(request):
+    if request.method == 'POST':
+        response_data = {}
+        response_data['respuesta'] = "SUCCESS"
+        payloadArray = request.POST['payload'].split("&")
+
+        editObjectCargue = payloadArray[0].split("=")[1].upper().replace('+',' ')
+        editObjectDescargue = payloadArray[1].split("=")[1].upper().replace('+',' ')
+        editObject = InfoLCL.objects.get(puerto_cargue=editObjectCargue, puerto_descargue = editObjectDescargue)
+
+        editObject.tarifaTon_m3 = float(payloadArray[2].split("=")[1])
+        editObject.gasolinaBAF = float(payloadArray[3].split("=")[1])
+        editObject.minimo = float(payloadArray[4].split("=")[1])
+        editObject.tiempo_transito = float(payloadArray[5].split("=")[1])
+
+        editObject.save()
+
+        return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+
+def editSettings(request):
+    if request.method == 'POST':
+        response_data = {}
+        response_data['respuesta'] = "SUCCESS"
+        payloadArray = request.POST['payload'].split("&")
+        editObjectNombre = payloadArray[0].split("=")[1]
+        editObject = list(SettingsNegocio.objects.all()[:1])[0]
+        editObject.__dict__[editObjectNombre] = float(payloadArray[1].split("=")[1])
+        editObject.save()
+        return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )           
+
 
 def logout_view(request):
     logout(request)
