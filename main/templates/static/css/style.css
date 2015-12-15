@@ -164,7 +164,6 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 
 .main-container-step-3 .dato.agrandado.escondido.uppercase{
       font-weight: 700;
-    color: #aaaaaa;
 }
 
 .derecha:first-letter{
@@ -281,6 +280,7 @@ h1,h2,h3,h4,h5,h6 {font-family: "Lato";}
 
 #puerto-entrega{
   text-transform: lowercase;
+  display: inline-block;
 }
 
 #puerto-entrega:first-letter{
@@ -408,4 +408,9 @@ select, .cosasSerias{
 
 .mi-clase{
   display: relative;
+}
+
+#containers20, #containers40{
+  width: 80%;
+  margin: auto;
 }
