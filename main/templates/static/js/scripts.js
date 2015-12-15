@@ -259,6 +259,11 @@ app.controller('ctrlMelyak', function ($scope)
                 $("#avisoTelefono").css("display", "block");
             } else
                 $("#avisoTelefono").css("display", "none");
+            if (angular.isUndefined($scope.user.ciudad_datos) || $scope.user.ciudad_datos === "") {
+                pasa = false;
+                $("#avisoCiudad").css("display", "block");
+            } else
+                $("#avisoCiudad").css("display", "none");
 
             if (pasa)
             {

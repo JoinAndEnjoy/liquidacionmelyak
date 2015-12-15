@@ -54,7 +54,8 @@
                             <span class="col-md-11 col-sm-11 col-xs-11 dato agrandado">Ciudad</span><img id="icono_datos" src="/static/img/loading.gif"/>
                         </div>
                         <select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select>
-
+                        <span id="avisoCiudad" class="aviso">Este campo es obligatorio</span><br/>
+                        
                         <span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
                         <input ng-model="user.correo" type="email" name="correoElectronico" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/>
                         <span id="avisoCorreo" class="aviso">Este campo es obligatorio</span>
@@ -143,7 +144,7 @@
                             <span class="dato agrandado">¿Que dimensiones tiene tu carga?</span>
                             <br/>
                             <br/>
-                            <div class="row" id="medidas">
+                            <div class="row medidas">
                                 <span class="col-xs-1"></span>
                                 <div class="col-xs-3 input-group">
                                     <input ng-model="user.anchoLCL" type="number" min="0" class="form-control cosasSerias" placeholder="X [m]" aria-describedby="basic-addonancho">
