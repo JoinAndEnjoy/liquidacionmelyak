@@ -96,8 +96,8 @@
                                 <option value="" ng-if="false"></option>
                             </select><br/>
                             <div class="palCentro">
-                                <span class="textoGris">La entrega se reliza en &nbsp;</span>
-                                <span class="textoGris" id = "puerto-entrega" ng-bind="puertoLlegadaFCL"></span>
+                                <span class="textoGris">La entrega se realiza en</span>
+                                <p class="textoGris" id = "puerto-entrega" ng-bind="puertoLlegadaFCL"></p>
                                 <br/><br/>
                             </div>
                             <div class="row">
@@ -120,7 +120,12 @@
                                 <center><p>¿Cuanto pesa? [ton]</p></center>
                             </div><br/>
                             <div class="row">
-                                <div id="containers20" class="col-md-5 col-sm-5 col-xs-5"></div><span class="col-md-2 col-sm-2 col-xs-2"></span><div id="containers40" class="col-md-5 col-sm-5 col-xs-5"></div>
+                                <div class = "col-xs-6">
+                                    <div id="containers20"></div>
+                                </div>
+                                <div class = "col-xs-6">
+                                    <div id="containers40"></div>
+                                </div>
                             </div>
                         </div>
                         <div id="maritimoLCL" class="cuadrado maritimo">
