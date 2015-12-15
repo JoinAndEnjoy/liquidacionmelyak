@@ -187,7 +187,7 @@
                                                                 {% endif %}
                                                             {% elif infoUser.tipoEnvio == "Via Aerea" %}
                                                                 <tr>
-                                                                    <td>Número</td>
+                                                                    <td>Paquete #</td>
                                                                     <td>Ancho [m]</td>
                                                                     <td>Alto [m]</td>
                                                                     <td>Largo [m]</td>
@@ -216,6 +216,9 @@
                                         </table>
                                     </td>
                                 </tr>
+                                {% if infoUser.tipoEnvio == "Proyecto Especial" %}
+                                    Proyecto Especial
+                                {% else %}
                                 <tr>
                                     <td style='color: #153643; font-family: Arial, sans-serif; font-size: 18px;'>
                                         <br/><b>Tu Cotización</b>
@@ -265,6 +268,7 @@
                                         <br/><b>    Tu Cotización</b>
                                     </td>
                                 </tr>
+                                {% endif %}
                             </table>
                         </td>
                     </tr>

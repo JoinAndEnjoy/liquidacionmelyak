@@ -89,7 +89,7 @@ app.controller('ctrlMelyak', function ($scope)
     $scope.user.tipoMoneda = $scope.configTipoMoneda[0].value;
     $scope.configTipoEnvio = [{name: "Via Maritima", value: "Via Maritima"}, {name: "Via Aerea", value: "Via Aerea"}, {name: "Proyecto Especial", value: "Proyecto Especial"}];
     $scope.configTipoEnvio2 = [{name: "Full Container Load (FCL)", value: "FCL"}, {name: "Less than Container Load (LCL)", value: "LCL"}];
-    $scope.user.tipoEnvio2="";
+    $scope.user.tipoEnvio2 = "";
 
     //Para pedir los pasises a la base de datos
     $.ajax({
@@ -211,7 +211,7 @@ app.controller('ctrlMelyak', function ($scope)
                     texto += "      <span class='input-group-addon' id='basic-addonprofundo" + aPoner + "'><i class='fa fa-expand fa-lg'></i></span>";
                     texto += "  </div>";
                     texto += "  <div class='col-xs-3 input-group'>";
-                    texto += "      <input id='Aereo_peso" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='[Ton]' aria-describedby='basic-addonpeso'>";
+                    texto += "      <input id='Aereo_peso" + aPoner + "' type='number' min='0' class='form-control cosasSerias' placeholder='[Kg]' aria-describedby='basic-addonpeso'>";
                     texto += "      <span class='input-group-addon' id='basic-addonpeso" + aPoner + "'><i class='fa fa-balance-scale'></i></span>";
                     texto += "  </div>";
                     texto += "</div>";
@@ -241,7 +241,7 @@ app.controller('ctrlMelyak', function ($scope)
     //Este metodo se llama desde los botones de siguiente y anterior
     $scope.mostrarPag = function (pagina)
     {
-        if(pagina === 2)
+        if (pagina === 2)
         {
             var pasa = true;
             if (angular.isUndefined($scope.user.nombre) || $scope.user.nombre === "") {
@@ -287,7 +287,7 @@ app.controller('ctrlMelyak', function ($scope)
             }
         } else if (pagina === 3)
         {
-            var pasa = true;
+            var pasa=true, pasaFCL20=true, pasaFCL40=true, pasaAereo=true;
             //decide si mostrar o no cada uno de los errores de tipado
             if (angular.isUndefined($scope.user.valorMercancia) || $scope.user.valorMercancia === "" || $scope.user.valorMercancia == null) {
                 pasa = false;
@@ -318,22 +318,56 @@ app.controller('ctrlMelyak', function ($scope)
             $scope.user.arregloFCL_20 = [];
             $scope.user.arregloFCL_40 = [];
             $scope.user.arregloAereo = [];
-            for (var c = 0; c < 3; c++)
+            revision: for (var c = 0; c < 3; c++)
             {
                 for (var i = 1; i <= contenedores[c]; i++)
                 {
                     if (c === 0)
-                        $scope.user.arregloFCL_20.push($("#FCL20_" + i).val());
-                    else if (c === 1)
-                        $scope.user.arregloFCL_40.push($("#FCL40_" + i).val());
-                    else if (c === 2)
                     {
-                        var caja = {ancho:$("#Aereo_ancho" + i).val(), alto:$("#Aereo_alto" + i).val(), profundo:$("#Aereo_profundo" + i).val(), peso:$("#Aereo_peso" + i).val()};
-                        $scope.user.arregloAereo.push(caja);
+                        if ($.isNumeric($("#FCL20_" + i).val()))
+                            $scope.user.arregloFCL_20.push($("#FCL20_" + i).val());
+                        else
+                        {
+                            console.log("Falla FCL 20");
+                            pasaFCL20 = false;
+                            pasa = false;
+                            break revision;
+                            $("#avisoFCL20").css("display", "block");
+                        }
+                    } else if (c === 1)
+                    {
+                        if ($.isNumeric($("#FCL40_" + i).val()))
+                            $scope.user.arregloFCL_40.push($("#FCL40_" + i).val());
+                        else
+                        {
+                            console.log("Falla FCL 40");
+                            pasaFCL40 = false;
+                            pasa = false;
+                            break revision;
+                            $("#avisoFCL40").css("display", "block");
+                        }
+                    } else if (c === 2)
+                    {
+                        if ($.isNumeric($("#Aereo_ancho" + i).val()) && $.isNumeric($("#Aereo_alto" + i).val()) && $.isNumeric($("#Aereo_profundo" + i).val()) && $.isNumeric($("#Aereo_peso" + i).val()))
+                        {
+                            var caja = {ancho: $("#Aereo_ancho" + i).val(), alto: $("#Aereo_alto" + i).val(), profundo: $("#Aereo_profundo" + i).val(), peso: $("#Aereo_peso" + i).val()};
+                            $scope.user.arregloAereo.push(caja);
+                        }
+                        else
+                        {
+                            console.log("Falla Aereo");
+                            pasaAereo=false
+                            pasa=false;
+                            break revision;
+                            $("#avisoAereo").css("display", "block");
+                        }
                     }
-                
+
                 }
             }
+            if(pasaFCL20) $("#avisoFCL20").css("display", "none");
+            if(pasaFCL40) $("#avisoFCL40").css("display", "none");
+            if(pasaAereo) $("#avisoAereo").css("display", "none");
 
             if (pasa)
             {
@@ -363,7 +397,7 @@ app.controller('ctrlMelyak', function ($scope)
                             tipoCotizacion = "Proyecto Especial";
 
                         pintarPagina3(json, tipoCotizacion);
-                        $scope.cotizacion=json;
+                        $scope.cotizacion = json;
                         //-------------------------------------------------------------------
                         $("#waitting").css("display", "none");
                         //Sobre colorear las bolitas
@@ -424,7 +458,7 @@ app.controller('ctrlMelyak', function ($scope)
     };
 
     $scope.enviarLiquidacion = function () {
-        $scope.cotizacion.infoUser=$scope.user;
+        $scope.cotizacion.infoUser = $scope.user;
         $.ajax({
             url: 'auxiliar/post/hacerCotizacion/', // the endpoint
             type: "POST", // http method
@@ -495,7 +529,7 @@ function pintarPagina3(json, tipoCotizacion)
     //"Via Aerea" "LCL"
     var contenido = "";
     var textospar3 = ["1. Informacion del transporte", "2. Costos de la Carga", "3. Costos Fijos", "4. Costos Opcionales"];
-    if (tipoCotizacion === "FCL" || tipoCotizacion === "LCL" )
+    if (tipoCotizacion === "FCL" || tipoCotizacion === "LCL")
     {
         var k, keys = [];
         for (k in json)
@@ -705,7 +739,8 @@ function SoloDejarPositivosDecimal()
     if (num === null)
     {
         num = this.value.match(/^\d+\.\d+$/);
-        if (num === null) this.value = "";
+        if (num === null)
+            this.value = "";
     }
     // If we have no match, value will be empty.
 }

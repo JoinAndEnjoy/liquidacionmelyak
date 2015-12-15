@@ -93,6 +93,22 @@ class InfoLCL(models.Model):
 
     def __repr__(self):
         return self.__str__()
+    
+class InfoAereo(models.Model):
+    destino = models.CharField(max_length=90)
+    flete_minimo = models.FloatField()
+    flete_menos100 = models.FloatField()
+    flete_mas100 = models.FloatField()
+    flete_mas300 = models.FloatField()
+    flete_mas500 = models.FloatField()
+    gasolina_minimo = models.FloatField()
+    gasolina_tarigaKg= models.FloatField()
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.destino
+    
+    def __repr__(self):
+        return self.__str__()
 
 class Descripcion(models.Model):
     idDescripcion = models.CharField(max_length=100, primary_key=True)
