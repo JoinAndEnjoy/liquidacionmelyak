@@ -287,7 +287,7 @@ app.controller('ctrlMelyak', function ($scope)
             }
         } else if (pagina === 3)
         {
-            var pasa=true, pasaFCL20=true, pasaFCL40=true, pasaAereo=true;
+            var pasa = true, pasaFCL20 = true, pasaFCL40 = true, pasaAereo = true;
             //decide si mostrar o no cada uno de los errores de tipado
             if (angular.isUndefined($scope.user.valorMercancia) || $scope.user.valorMercancia === "" || $scope.user.valorMercancia == null) {
                 pasa = false;
@@ -302,25 +302,48 @@ app.controller('ctrlMelyak', function ($scope)
             if (angular.isUndefined($scope.user.tipoEnvio) || $scope.user.tipoEnvio === "") {
                 pasa = false;
                 $("#avisoTipoEnvio").css("display", "block");
-            } else
-            {
+            } else {
                 $("#avisoTipoEnvio").css("display", "none");
                 if ($scope.user.tipoEnvio === "Via Maritima")
                 {
                     if (angular.isUndefined($scope.user.tipoEnvio2) || $scope.user.tipoEnvio2 === "") {
                         pasa = false;
                         $("#avisoTipoEnvio2").css("display", "block");
-                    } else
+                    } else {
                         $("#avisoTipoEnvio2").css("display", "none");
+
+                        //El test de LCL
+                        if ($scope.user.tipoEnvio2 === "LCL")
+                        {
+                            if (angular.isUndefined($scope.user.pesoLCL) || $scope.user.pesoLCL === "" || $scope.user.pesoLCL == null) {
+                                pasa = false;
+                                $("#avisoPesoLCL").css("display", "block");
+                            } else
+                                $("#avisoPesoLCL").css("display", "none");
+
+                            if (angular.isUndefined($scope.user.anchoLCL) || $scope.user.anchoLCL === "" || $scope.user.anchoLCL == null) {
+                                pasa = false;
+                                $("#avisoDimensionesLCL").css("display", "block");
+                            } else if (angular.isUndefined($scope.user.altoLCL) || $scope.user.altoLCL === "" || $scope.user.altoLCL == null) {
+                                pasa = false;
+                                $("#avisoDimensionesLCL").css("display", "block");
+                            } else if (angular.isUndefined($scope.user.largoLCL) || $scope.user.largoLCL === "" || $scope.user.largoLCL == null) {
+                                pasa = false;
+                                $("#avisoDimensionesLCL").css("display", "block");
+                            } else
+                                $("#avisoDimensionesLCL").css("display", "none");
+                        }
+                    }
                 }
             }
 
+            //El test de Aereo, FCL20 y FCL40
             $scope.user.arregloFCL_20 = [];
             $scope.user.arregloFCL_40 = [];
             $scope.user.arregloAereo = [];
-            revision: for (var c = 0; c < 3; c++)
+            for (var c = 0; c < 3; c++)
             {
-                for (var i = 1; i <= contenedores[c]; i++)
+                revision: for (var i = 1; i <= contenedores[c]; i++)
                 {
                     if (c === 0)
                     {
@@ -331,8 +354,9 @@ app.controller('ctrlMelyak', function ($scope)
                             console.log("Falla FCL 20");
                             pasaFCL20 = false;
                             pasa = false;
-                            break revision;
                             $("#avisoFCL20").css("display", "block");
+                            break revision;
+
                         }
                     } else if (c === 1)
                     {
@@ -343,8 +367,8 @@ app.controller('ctrlMelyak', function ($scope)
                             console.log("Falla FCL 40");
                             pasaFCL40 = false;
                             pasa = false;
-                            break revision;
                             $("#avisoFCL40").css("display", "block");
+                            break revision;
                         }
                     } else if (c === 2)
                     {
@@ -352,22 +376,23 @@ app.controller('ctrlMelyak', function ($scope)
                         {
                             var caja = {ancho: $("#Aereo_ancho" + i).val(), alto: $("#Aereo_alto" + i).val(), profundo: $("#Aereo_profundo" + i).val(), peso: $("#Aereo_peso" + i).val()};
                             $scope.user.arregloAereo.push(caja);
-                        }
-                        else
+                        } else
                         {
                             console.log("Falla Aereo");
-                            pasaAereo=false
-                            pasa=false;
-                            break revision;
+                            pasaAereo = false
+                            pasa = false;
                             $("#avisoAereo").css("display", "block");
+                            break revision;
                         }
                     }
-
                 }
             }
-            if(pasaFCL20) $("#avisoFCL20").css("display", "none");
-            if(pasaFCL40) $("#avisoFCL40").css("display", "none");
-            if(pasaAereo) $("#avisoAereo").css("display", "none");
+            if (pasaFCL20)
+                $("#avisoFCL20").css("display", "none");
+            if (pasaFCL40)
+                $("#avisoFCL40").css("display", "none");
+            if (pasaAereo)
+                $("#avisoAereo").css("display", "none");
 
             if (pasa)
             {
@@ -526,10 +551,9 @@ app.controller('ctrlMelyak', function ($scope)
 
 function pintarPagina3(json, tipoCotizacion)
 {
-    //"Via Aerea" "LCL"
     var contenido = "";
     var textospar3 = ["1. Informacion del transporte", "2. Costos de la Carga", "3. Costos Fijos", "4. Costos Opcionales"];
-    if (tipoCotizacion === "FCL" || tipoCotizacion === "LCL")
+    if (tipoCotizacion === "FCL" || tipoCotizacion === "LCL" || tipoCotizacion === "Aerea")
     {
         var k, keys = [];
         for (k in json)
@@ -581,88 +605,6 @@ function pintarPagina3(json, tipoCotizacion)
         contenido = "<div id='part3_cuadrado1' class='cuadrado'>";
         contenido += "  <span class='dato agrandado escondido uppercase'>1. Aviso</span><br/><br/>";
         contenido += "</div>";
-    } else
-    {
-        contenido = "<div id='part3_cuadrado1' class='cuadrado'>"
-                + "							<span class='dato agrandado escondido uppercase'>1. Tributos Aduaneros</span><br/><br/>"
-                + "							<div class='row'>"
-                + "								<span id='gravamen' class='dato col-md-7 col-sm-7 col-xs-7'>Gravamen</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 0</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='iva' class='dato col-md-7 col-sm-7 col-xs-7'>IVA 16% (IVA deducible de aduanas)</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 5.843.456</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 5.843.456</span>"
-                + "							</div>"
-                + "						</div>"
-                + "						<div id='part3_cuadrado2' class='cuadrado'>"
-                + "							<span class='dato agrandado escondido uppercase'>2. Flete internacional</span><br/><br/>"
-                + "							<div class='row'>"
-                + "								<span id='flete' class='dato col-md-7 col-sm-7 col-xs-7'>Flete internacional</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 15.609.600</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='bl' class='dato col-md-7 col-sm-7 col-xs-7'>BL</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 137.500</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='manejo' class='dato col-md-7 col-sm-7 col-xs-7'>Manejo logístico</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 2.100.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='radicacion' class='dato col-md-7 col-sm-7 col-xs-7'>Radicación, liberación y endoso</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 600.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='emisionBl' class='dato col-md-7 col-sm-7 col-xs-7'>Emisión BL</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 137.500</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='colect' class='dato col-md-7 col-sm-7 col-xs-7'>Colect Fee</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 468.288</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='seguro' class='dato col-md-7 col-sm-7 col-xs-7'>Seguro de transporte de mercancía 0.35%</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 136.575</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 19.189.463</span>"
-                + "							</div>"
-                + "						</div>"
-                + "						<div id='part3_cuadrado3' class='cuadrado'>"
-                + "							<span class='dato agrandado escondido uppercase'>3. Transporte Nacional</span><br/><br/>"
-                + "							<div class='row'>"
-                + "								<span id='transporte' class='dato col-md-7 col-sm-7 col-xs-7'>Transporte nacional</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 9.855.730</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 9.855.730</span>"
-                + "							</div>"
-                + "						</div>"
-                + "						<div id='part3_cuadrado4' class='cuadrado'>"
-                + "							<span class='dato agrandado escondido uppercase'>4. Nacionalización</span><br/><br/>"
-                + "							<div class='row'>"
-                + "								<span id='outsourcing' class='dato col-md-7 col-sm-7 col-xs-7'>Outsourcing en comercio exterior</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 500.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='gastosOperativos' class='dato col-md-7 col-sm-7 col-xs-7'>Gastos operativos</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 110.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='declaracion' class='dato col-md-7 col-sm-7 col-xs-7'>Elaboracion de declaracion de impo/valor</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 72.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='transmision' class='dato col-md-7 col-sm-7 col-xs-7'>Transmisión siglo XXI - Formularios</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 12.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='gastosPortuarios' class='dato col-md-7 col-sm-7 col-xs-7'>Gastos portuarios</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 1.500.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='poliza' class='dato col-md-7 col-sm-7 col-xs-7'>Poliza seguro nacional</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 220.500</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span id='decontenerizacion' class='dato col-md-7 col-sm-7 col-xs-7'>Descontenerización</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ 2.100.000</span>"
-                + "							</div>"
-                + "							<div class='row'>"
-                + "								<span class='dato col-md-7 col-sm-7 col-xs-7 total'>Total</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 conNegrilla'>$ 4.514.500</span>"
-                + "							</div>"
-                + "						</div>"
-                + "						<div id='part3_cuadradoVerde' class='cuadrado'>"
-                + "							<div class='row'>"
-                + "								<span class='dato col-md-7 col-sm-7 col-xs-7 textoBlanco conNegrilla'>Total liquidación costos de importación</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris textoBlanco conNegrilla'>$ 54.471.693</span>"
-                + "							</div>"
-                + "						</div>";
     }
     $("#zonaCentro").html(contenido);
     invocar_Descripciones();

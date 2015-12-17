@@ -62,7 +62,7 @@
 
                         <span class="dato agrandado">Teléfono</span>
                         <input ng-model="user.telefono" type="tel" name="telefono" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Teléfono"/>
-                        <span id="avisoTelefono" class="aviso">Este campo es obligatorio</span><br/>
+                        <span id="avisoTelefono" class="aviso">Debes poner un telefono de contacto</span><br/>
 
                         <button id="boton1" class="btn elboton uppercase separado agrandado" type="button" ng-click="mostrarPag(2)" disabled/>Siguiente</button>
                     </form>
@@ -85,7 +85,7 @@
                             <span class="dato agrandado escondido uppercase">Trayecto</span><br/><br/>
                             <div id="sliderAereo"></div><br/>
                             <div id="containersAereo"></div>
-                            <span id="avisoAereo" class="aviso col-sm-6">Estas dejando sin llenar alguno de los campos</span><br/>
+                            <br/><span id="avisoAereo" class="aviso palCentro">Estas dejando sin llenar alguno de los campos</span>
 
                         </div>
                         <div id="proyectoEspecial" class="cuadrado">
@@ -119,8 +119,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <span id="avisoFCL20" class="aviso col-sm-6">Estas dejando sin llenar alguno de los campos</span><br/>
-                                <span id="avisoFCL40" class="aviso col-sm-6">Estas dejando sin llenar alguno de los campos</span><br/>
+                                <span id="avisoFCL20" class="aviso col-sm-6 palCentro">Estas dejando sin llenar alguno de los campos</span>
+                                <span id="avisoFCL40" class="aviso col-sm-6 palCentro">Estas dejando sin llenar alguno de los campos</span>
                             </div><br/>
                             <div id="textosPreguntaPeso">
                                 <center><p>¿Cuanto pesa? [ton]</p></center>
@@ -151,6 +151,7 @@
                                     <span class="input-group-addon" id="basic-addonpeso"><i class="fa fa-balance-scale"></i></span>
                                 </div>
                             </div>
+                            <span id="avisoPesoLCL" class="aviso">Este campo es obligatorio</span>
                             <br/>
                             <span class="dato agrandado">¿Que dimensiones tiene tu carga?</span>
                             <br/>
@@ -172,6 +173,7 @@
                                     <span class="input-group-addon" id="basic-addonprofundo"><i class="fa fa-expand fa-lg"></i></span>
                                 </div>
                             </div>
+                            <br/><span id="avisoDimensionesLCL" class="aviso palCentro">Estas dejando sin llenar alguno de los campos</span>
                         </div>
                         <div id="part2_cuadrado3" class="cuadrado"> <!--Aqui voy a poner lo fijo-->
                             <span class="dato agrandado">Tipo de producto</span><br/>
