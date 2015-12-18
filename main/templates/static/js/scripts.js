@@ -104,7 +104,7 @@ app.controller('ctrlMelyak', function ($scope)
             $scope.$apply(function ()
             {
                 $scope.configPais = data;
-                $scope.user.paisDatos = $scope.configPais[48].nombre_pais;//El numero corresponde a Colombia (48)
+                $scope.user.paisDatos = $scope.configPais[40].nombre_pais;//El numero corresponde a Colombia (40)
                 $scope.user.paisProducto = $scope.configPais[0].nombre_pais;
             });
 
