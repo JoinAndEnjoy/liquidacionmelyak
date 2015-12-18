@@ -149,11 +149,11 @@ def getCiudadesJSON(request, pais_cc_fips):
 
 def getCiudadesAltJSON(request, nombre_pais):
     response_data = {}
-    print nombre_pais
+    print(nombre_pais)
     nombre_pais = nombre_pais.replace("0", " ").strip()
-    print nombre_pais
+    print(nombre_pais)
     pais = PaisAlt.objects.get(nombre_pais=nombre_pais)
-    print pais
+    print(pais)
     todas_ciudades = [model_to_dict(item) for item in CiudadAlt.objects.filter(paisAlt=pais).order_by('nombre_ciudad')]
     response_data['todas_ciudades'] = todas_ciudades
     return HttpResponse(json.dumps(response_data), content_type="application/json")
@@ -183,7 +183,7 @@ def metodoPrincipal(request):
             #Para coger un json de un request post
             str = request.POST['elUsuario'] #envien el json como un texto y el key es "elUsuario"
             str = str.replace("\\", "")[1:-1] #Viene con algo de ruido que hay que limpiar
-            d = json.loads(str) #Se carga en esta estructura especial para json y ahora se puede acceder cada parametro ej: print d['telefono']
+            d = json.loads(str) #Se carga en esta estructura especial para json y ahora se puede acceder cada parametro ej: print(d['telefono'])
             #-------------------------------------------------
             response_data = {}
             #PASO 1) Mirar si llegaron todos los parametros necesarios para realizar una cotizacion, en etapa1, los basicos
