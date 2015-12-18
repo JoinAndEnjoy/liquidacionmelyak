@@ -199,14 +199,14 @@ def metodoPrincipal(request):
             if len(noEncontradas) > 0:
                 #Si no ha llegado todo, se devuelve cuales faltan
                 #TODO tengo que mirar como informo el error
-                return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                return HttpResponse(json.dumps(noEncontradas), content_type="application/json", status=400)
             else:
                 #Si todo llego, paso a una segunda etapa de revision
                 if d['tipoEnvio'] == "Via Maritima":
                     if 'tipoEnvio2' not in d:
                         #Si esto fallo el usuario intervino mi javascript asi que se le muestra un error no especificado
                         #TODO inventar un error no especificado
-                        return HttpResponse(json.dumps(response_data), content_type="application/json", status=400)
+                        return HttpResponse(json.dumps(noEncontradas), content_type="application/json", status=400)
                     else:
                         if d['tipoEnvio2'] == "FCL":
                             arreglo20 = d['arregloFCL_20']
