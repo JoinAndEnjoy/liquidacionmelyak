@@ -55,7 +55,7 @@
                         </div>
                         <select ng-model="user.ciudad_datos" id="ciudad_datos" class="entrada dropdowns agrandado orientadoDerecha form-control" name="ciudad_datos" ng-options="template.nombre_ciudad as template.nombre_ciudad for template in configCiudad"></select>
                         <span id="avisoCiudad" class="aviso">Este campo es obligatorio</span><br/>
-                        
+
                         <span class="dato agrandado">Correo electrónico</span><span class="escondido"> (Enviaremos la cotización a este correo)</span><br/>
                         <input ng-model="user.correo" type="email" name="correoElectronico" value="" class="simplebox entrada agrandado orientadoDerecha form-control" placeholder="Correo electrónico"/>
                         <span id="avisoCorreo" class="aviso">Este campo es obligatorio</span>
@@ -104,12 +104,12 @@
                                 <br/><br/>
                             </div>
                             <div class="row">
-                            <div class = "contenedor-lbl-div col-sm-6">
-                                 <i class="fa fa-cubes"></i><span >Contenedores de 20ft</span>
-                            </div>
-                            <div class = "contenedor-lbl-div col-sm-6">
-                                 <i class="fa fa-cubes"></i><span >Contenedores de 40ft</span>
-                            </div>
+                                <div class = "contenedor-lbl-div col-sm-6">
+                                    <i class="fa fa-cubes"></i><span >Contenedores de 20ft</span>
+                                </div>
+                                <div class = "contenedor-lbl-div col-sm-6">
+                                    <i class="fa fa-cubes"></i><span >Contenedores de 40ft</span>
+                                </div>
                             </div><br/>
                             <div class="row">
                                 <div class = "col-sm-6 ">
@@ -186,14 +186,11 @@
                                 <option value="" ng-if="false"></option>
                             </select><br/>
                             <div class="row">
-                                <span class="dato agrandado col-md-8 col-sm-8 col-xs-8">Valor de la mercancía</span><span class="dato agrandado col-md-4 col-sm-4 col-xs-4">Moneda</span>
-                            </div>
-                            <div class="containerEnLinea">
-                                <input ng-model="user.valorMercancia" id="valorMercancia" type="number" class="entrada form-control cosasSerias" min="1">
-                                <p class="division6prc">&nbsp;</p>
-                                <select ng-model="user.tipoMoneda" id="valorMercancia" class="entrada dropdowns agrandado orientadoDerecha form-control division47prc" ng-options="template.value as template.name for template in configTipoMoneda">
-                                    <option value="" ng-if="false"></option>
-                                </select>
+                                <span class="dato agrandado col-xs-12">Valor de la mercancía</span>
+                            </div>                                
+                            <div class='col-xs-12 input-group'>
+                                <input id='valorMercancia' type='number' min='0' class='form-control cosasSerias' placeholder='$' aria-describedby='basic-addonvalorMercancia'>
+                                <span class='input-group-addon' id='basic-addonvalorMercancia'>USD</span>
                             </div>
                             <span id="avisoValMerc" class="aviso">Debes poner el valor de tu mercancia</span>
                             <br/><br/>

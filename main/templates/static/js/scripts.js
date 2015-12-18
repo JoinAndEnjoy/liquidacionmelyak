@@ -100,7 +100,6 @@ app.controller('ctrlMelyak', function ($scope)
 
             var data = json.todos_pais;
             
-            console.log(data);
             $scope.$apply(function ()
             {
                 $scope.configPais = data;
@@ -480,8 +479,8 @@ app.controller('ctrlMelyak', function ($scope)
                     $scope.$apply(function ()
                     {
                         $scope.configCiudad = data;
-                        if (cc_fips === "CO")
-                            $scope.user.ciudad_datos = $scope.configCiudad[1279].nombre_ciudad;//: El numero corresponde a Bogota es (1279)
+                        if (cc_fips === "Colombia")
+                            $scope.user.ciudad_datos = $scope.configCiudad[5].nombre_ciudad;//: El numero corresponde a Bogota es (1279)
                         else
                             $scope.user.ciudad_datos = $scope.configCiudad[0].nombre_ciudad;
                         $("#icono_datos").css("display", "none");
@@ -516,7 +515,6 @@ app.controller('ctrlMelyak', function ($scope)
             {
                 $("#waitting").css("display", "none");
                 $("#Parte3").css("display", "block");
-                console.log(json);
                 bootbox.dialog({
                     title: "Envio Exitoso",
                     message: '<center><img src="../static/img/logo.png"/><br/>Enviamos tu aproximación presupuestal a tu correo.</center>'
