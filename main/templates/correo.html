@@ -284,16 +284,8 @@
                                                                 {% endif %}
                                                             {% elif infoUser.tipoEnvio == "Via Aerea" %}
                                                                 <tr>
-                                                                    <td>Alto [m]</td>
-                                                                    <td>{{infoUser.altoLCL}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Largo [m]</td>
-                                                                    <td>{{infoUser.largoLCL}}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Peso [Ton]</td>
-                                                                    <td>{{infoUser.pesoLCL}}</td>
+                                                                    <td>Origen</td>
+                                                                    <td>{{parte1.Origen}}</td>
                                                                 </tr>
                                                             {% else %}
                                                             {% endif %}
@@ -361,16 +353,16 @@
                                                                 {% endif %}
                                                             {% elif infoUser.tipoEnvio == "Via Aerea" %}
                                                                 <tr>
-                                                                    <td>Alto [m]</td>
-                                                                    <td>{{infoUser.altoLCL}}</td>
+                                                                    <td>Costo Transporte</td>
+                                                                    <td>{{parte2.Costo_Transporte}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Largo [m]</td>
-                                                                    <td>{{infoUser.largoLCL}}</td>
+                                                                    <td>Costo Gasolina</td>
+                                                                    <td>{{parte2.Costo_Gasolina}}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Peso [Ton]</td>
-                                                                    <td>{{infoUser.pesoLCL}}</td>
+                                                                    <td>Collect_Fee</td>
+                                                                    <td>{{parte2.Collect_Fee}}</td>
                                                                 </tr>
                                                             {% else %}
                                                             {% endif %}
@@ -430,17 +422,9 @@
                                                                 {% endif %}
                                                             {% elif infoUser.tipoEnvio == "Via Aerea" %}
                                                                 <tr>
-                                                                        <td>Alto [m]</td>
-                                                                        <td>{{infoUser.altoLCL}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Largo [m]</td>
-                                                                        <td>{{infoUser.largoLCL}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Peso [Ton]</td>
-                                                                        <td>{{infoUser.pesoLCL}}</td>
-                                                                    </tr>
+                                                                    <td>Manejo Logistico</td>
+                                                                    <td>{{parte3.Manejo_Logistico}}</td>
+                                                                </tr>
                                                             {% else %}
                                                             {% endif %}
                                                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -479,17 +463,9 @@
                                                                 {% endif %}
                                                             {% elif infoUser.tipoEnvio == "Via Aerea" %}
                                                                 <tr>
-                                                                        <td>Alto [m]</td>
-                                                                        <td>{{infoUser.altoLCL}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Largo [m]</td>
-                                                                        <td>{{infoUser.largoLCL}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Peso [Ton]</td>
-                                                                        <td>{{infoUser.pesoLCL}}</td>
-                                                                    </tr>
+                                                                    <td>Seguro</td>
+                                                                    <td>{{parte4.Seguro}}</td>
+                                                                </tr>
                                                             {% else %}
                                                             {% endif %}
                                                             <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->

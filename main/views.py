@@ -141,6 +141,12 @@ def getParejasPuertosJSON_LCL(request):
     response_data['infoLCL'] = infoLCL;
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
+def getAeropuertosJSON(request):
+    response_data = {}
+    infoAeropuertos = [model_to_dict(item) for item in InfoAereo.objects.all().order_by('destino')]
+    response_data['infoAeropuertos'] = infoAeropuertos;
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
 def getCiudadesJSON(request, pais_cc_fips):
     response_data = {}
     todas_ciudades = [model_to_dict(item) for item in Ciudad.objects.filter(cc_fips="" + pais_cc_fips).order_by('nombre_ciudad')]
@@ -300,9 +306,48 @@ def metodoPrincipal(request):
                             response_data['parte4'] = parte4
 
                 elif d['tipoEnvio'] == "Via Aerea":
-                    print("aereo")
-                elif d['tipoEnvio'] == "Proyecto Especial":
-                    print("especial")
+                    infoNecesaria = InfoLCL.objects.get(id=d['idAeropuerto'])
+                    negocio = SettingsNegocio.objects.all()[0]
+                    esOTM = d['otm']
+                    flete = 0
+
+                    parte1 = {} #La voy a usar para mandar la informacion del transporte
+                    string = ""
+                    string += infoNecesaria.destino
+                    parte1['Origen'] = infoNecesaria.destino #Es cobnfuso, pero es que me quedo mal nombrado
+                    response_data['parte1'] = parte1
+
+                    parte2 = {} #La voy a usar para mandar los costos de la carga
+                    pesoCarga = 0
+                    cajas=d['arregloAereo']
+                    for caja in cajas:
+                        pesoCarga+=caja.peso
+                    
+                    if pesoCarga <=100:
+                        parte2['Costo_Transporte'] = max(max(volumenCarga, pesoCarga) * infoNecesaria.flete_menos100, infoNecesaria.flete_minimo)
+                    elif pesoCarga >100 and pesoCarga <=300:
+                        parte2['Costo_Transporte'] = max(max(volumenCarga, pesoCarga) * infoNecesaria.flete_mas100, infoNecesaria.flete_minimo)
+                    elif pesoCarga >300 and pesoCarga <=500:
+                        parte2['Costo_Transporte'] = max(max(volumenCarga, pesoCarga) * infoNecesaria.flete_mas300, infoNecesaria.flete_minimo)
+                    elif pesoCarga >500:
+                        parte2['Costo_Transporte'] = max(max(volumenCarga, pesoCarga) * infoNecesaria.flete_mas500, infoNecesaria.flete_minimo)
+                    
+                    parte2['Costo_Gasolina'] = max(infoNecesaria.gasolina_tarigaKg*pesoCarga, infoNecesaria.gasolina_minimo)
+                    parte2['Collect_Fee'] = 0 #TODO: preguntar esta regla de nuevo(recordar que es un porcentaje)
+                    response_data['parte2'] = parte2
+
+                    parte3 = {} #La voy a usar para mandar los costos fijos
+                    parte3['Manejo_Logistico'] = negocio.manejoLogistico
+                    response_data['parte3'] = parte3
+
+                    parte4 = {} #La voy a usar para mandar los costos opcionales
+                    if d['seguro']:
+                        parte4['Seguro'] = max(90, negocio.polizaDeSeguro * d['valorMercancia'] / 100.0)
+                    else:
+                        parte4['Seguro'] = 0
+                    response_data['parte4'] = parte4
+                #elif d['tipoEnvio'] == "Proyecto Especial":
+                    
                 return HttpResponse(json.dumps(response_data), content_type="application/json")
             #-------------------------------------------------
             print(noEncontradas)

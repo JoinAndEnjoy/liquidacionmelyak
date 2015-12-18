@@ -83,6 +83,10 @@
                         </div>
                         <div id="envioAereo" class="cuadrado"><!--Esto debe cambiar segun el tipo de envio-->
                             <span class="dato agrandado escondido uppercase">Trayecto</span><br/><br/>
+                            <span class="dato agrandado">Aeropuerto de Origen</span><br/>
+                            <select ng-model="user.idAeropuerto" id="Aeropuerto" class="entrada dropdowns agrandado orientadoDerecha form-control" ng-options="template.id as template.destino for template in configAeropuertos">
+                                <option value="" ng-if="false"></option>
+                            </select><br/>
                             <div id="sliderAereo"></div><br/>
                             <div id="containersAereo"></div>
                             <br/><span id="avisoAereo" class="aviso palCentro">Estas dejando sin llenar alguno de los campos</span>

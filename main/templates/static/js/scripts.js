@@ -125,7 +125,6 @@ app.controller('ctrlMelyak', function ($scope)
                 $scope.user.idPuertosFCL = $scope.configParPuertosFCL[0].id;
                 $scope.puertoLlegadaFCL = $scope.configParPuertosFCL[0].puerto_descargue;
             });
-            $("#boton1").removeAttr("disabled");
         }
     });
 
@@ -153,7 +152,6 @@ app.controller('ctrlMelyak', function ($scope)
                 $scope.user.idPuertosLCL = $scope.configParPuertosLCL[0].id;
                 $scope.puertoLlegadaLCL = $scope.configParPuertosLCL[0].puerto_descargue;
             });
-            $("#boton1").removeAttr("disabled");
         }
     });
 
@@ -168,6 +166,19 @@ app.controller('ctrlMelyak', function ($scope)
             }
         }
     };
+    
+    $.ajax({
+        url: 'auxiliar/get/getAeropuertosJSON',
+        type: "GET",
+        success: function (json)
+        {
+            $scope.$apply(function ()
+            {
+                $scope.configAeropuertos = json.infoAeropuertos;
+                $scope.user.idAeropuerto = $scope.configAeropuertos[0].id;
+            });
+        }
+    });
 
     var contenedores = [0, 0, 0];
     var nombres = ["20", "40", "Aereo"];
