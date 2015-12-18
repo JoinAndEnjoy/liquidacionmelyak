@@ -1,5 +1,7 @@
 #TODO: importante, se consume este servicio: http://fixer.io/ para pasar de EUR a USD
 
+# -*- encoding: utf-8 -*-
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
@@ -126,44 +128,6 @@ def editSettings(request):
                 content_type="application/json"
             )           
 
-
-def editLCL(request):
-    if request.method == 'POST':
-        response_data = {}
-        response_data['respuesta'] = "SUCCESS"
-        payloadArray = request.POST['payload'].split("&")
-
-        editObjectCargue = payloadArray[0].split("=")[1].upper().replace('+',' ')
-        editObjectDescargue = payloadArray[1].split("=")[1].upper().replace('+',' ')
-        editObject = InfoLCL.objects.get(puerto_cargue=editObjectCargue, puerto_descargue = editObjectDescargue)
-
-        editObject.tarifaTon_m3 = float(payloadArray[2].split("=")[1])
-        editObject.gasolinaBAF = float(payloadArray[3].split("=")[1])
-        editObject.minimo = float(payloadArray[4].split("=")[1])
-        editObject.tiempo_transito = float(payloadArray[5].split("=")[1])
-
-        editObject.save()
-
-        return HttpResponse(
-                json.dumps(response_data),
-                content_type="application/json"
-            )
-
-def editSettings(request):
-    if request.method == 'POST':
-        response_data = {}
-        response_data['respuesta'] = "SUCCESS"
-        payloadArray = request.POST['payload'].split("&")
-        editObjectNombre = payloadArray[0].split("=")[1]
-        editObject = list(SettingsNegocio.objects.all()[:1])[0]
-        editObject.__dict__[editObjectNombre] = float(payloadArray[1].split("=")[1])
-        editObject.save()
-        return HttpResponse(
-                json.dumps(response_data),
-                content_type="application/json"
-            )           
-
-
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -190,6 +154,23 @@ def getCiudadesJSON(request, pais_cc_fips):
     response_data = {}
     todas_ciudades = [model_to_dict(item) for item in Ciudad.objects.filter(cc_fips=""+pais_cc_fips).order_by('nombre_ciudad')]
     response_data['todas_ciudades'] = todas_ciudades
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+def getCiudadesAltJSON(request, nombre_pais):
+    response_data = {}
+    print nombre_pais
+    nombre_pais = nombre_pais.replace("0"," ").strip()
+    print nombre_pais
+    pais = PaisAlt.objects.get(nombre_pais = nombre_pais)
+    print pais
+    todas_ciudades = [model_to_dict(item) for item in CiudadAlt.objects.filter(paisAlt = pais).order_by('nombre_ciudad')]
+    response_data['todas_ciudades'] = todas_ciudades
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+def getPaisesAltJSON(request):
+    response_data = {}
+    todos_pais = [model_to_dict(item) for item in PaisAlt.objects.all().order_by('nombre_pais')]
+    response_data['todos_pais'] = todos_pais
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def getTarifasHTTP(request):

@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django.db import models
 
 # Create your models here.
@@ -24,6 +26,21 @@ class Ciudad(models.Model):
 
     def __repr__(self):
         return self.__str__()
+
+class PaisAlt(models.Model):
+    nombre_pais = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.nombre_pais
+
+class CiudadAlt(models.Model):
+    paisAlt = models.ForeignKey(PaisAlt, null = True)
+    nombre_ciudad = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.nombre_ciudad
+
+
 
 """
 La que sigue va a ser una tabla de solo una fila, su funcion es guardar variables globales

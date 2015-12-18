@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django.conf.urls import include,url
 
 from . import views
@@ -8,7 +10,9 @@ urlpatterns = [
     url(r'^configuracion/',include('main.urls_admin')),
     url(r'^logout$', views.logout_view, name ="logout_view"),
     url(r'^auxiliar/get/paisesJSON', views.getPaisesJSON, name='getPaisesJSON'),
+    url(r'^auxiliar/get/paisesAltJSON', views.getPaisesAltJSON, name='getPaisesAltJSON'),
     url(r'^auxiliar/get/JSON_(?P<pais_cc_fips>[^\.]+)', views.getCiudadesJSON, name='getCiudadesJSON'),
+    url(r'^auxiliar/get/JSONAlt_(?P<nombre_pais>[^\.]+)', views.getCiudadesAltJSON, name='getCiudadesAltJSON'),
     url(r'^auxiliar/get/tarifas_HTTP', views.getTarifasHTTP, name='getTarifasHTTP'),
     url(r'^auxiliar/get/descripcionesJSON', views.getDescripcionesJSON, name='getDescripcionesJSON'),
     url(r'^auxiliar/post/metodoPrincipal', views.metodoPrincipal, name='metodoPrincipal'),

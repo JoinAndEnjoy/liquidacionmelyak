@@ -93,11 +93,14 @@ app.controller('ctrlMelyak', function ($scope)
 
     //Para pedir los pasises a la base de datos
     $.ajax({
-        url: 'auxiliar/get/paisesJSON',
+        url: 'auxiliar/get/paisesAltJSON',
         type: "GET",
         success: function (json)
         {
+
             var data = json.todos_pais;
+            
+            console.log(data);
             $scope.$apply(function ()
             {
                 $scope.configPais = data;
@@ -105,7 +108,7 @@ app.controller('ctrlMelyak', function ($scope)
                 $scope.user.paisProducto = $scope.configPais[0].cc_fips;
             });
 
-            $scope.cambiarCiudades("CO"); //Para colombia es CO
+            $scope.cambiarCiudades("Colombia"); //Para colombia es CO
 
             $("#boton1").removeAttr("disabled");
         }
@@ -457,7 +460,7 @@ app.controller('ctrlMelyak', function ($scope)
             $("#ciudad_datos").html("");
         else
         {
-            var laUrl = "auxiliar/get/JSON_" + cc_fips;
+            var laUrl = "auxiliar/get/JSONAlt_" + cc_fips.replace(" ","0");
             $.ajax({
                 url: laUrl,
                 type: "GET",
@@ -474,8 +477,14 @@ app.controller('ctrlMelyak', function ($scope)
                         $("#icono_datos").css("display", "none");
                         $("#boton1").removeAttr("disabled");
                     });
+                },
 
-                }
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
             });
             $("#icono_datos").css("display", "block");
             $("#boton1").attr("disabled", "true");
