@@ -32,8 +32,8 @@ def login(request):
     formularioLogin = LoginForm(request.POST or None)
     
     if request.method == 'POST':
-	formulario = formularioLogin
-	if formulario.is_valid():
+        formulario = formularioLogin
+        if formulario.is_valid():
             usern = formulario.cleaned_data['user']
             print(usern)
             password = formulario.cleaned_data['password']
