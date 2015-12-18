@@ -17,7 +17,7 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 import json
 from main.forms import *
-from models import *
+from main.models import *
 import os
 import requests
 
