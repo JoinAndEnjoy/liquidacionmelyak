@@ -252,7 +252,7 @@ def metodoPrincipal(request):
                             parte1['Origen']=string
                             parte1['Destino']=infoNecesaria.puerto_descargue
                             parte1['Servicio']=infoNecesaria.servicio
-                            parte1['Tiempo de transito']=infoNecesaria.tiempo_transito
+                            parte1['Tiempo_de_transito']=infoNecesaria.tiempo_transito
                             response_data['parte1']=parte1
 
                             parte2={} #La voy a usar para mandar los costos de la carga
@@ -266,16 +266,16 @@ def metodoPrincipal(request):
                             elif infoNecesaria.divisa=="USD":
                                 multiplicador=1;
 
-                            parte2['Costo Transoprte contenedores 20 ft']=(len(arreglo20)*infoNecesaria.FCL_20*multiplicador)
-                            parte2['Costo Transoprte contenedores 40 ft']=(len(arreglo40)*infoNecesaria.FCL_40*multiplicador)
+                            parte2['Costo_Transoprte_contenedores_20_ft']=(len(arreglo20)*infoNecesaria.FCL_20*multiplicador)
+                            parte2['Costo_Transoprte_contenedores_40_ft']=(len(arreglo40)*infoNecesaria.FCL_40*multiplicador)
                             parte2['bl']=negocio.blGeneral_FCL
+                            parte2['Collect_fee']=infoNecesaria.collect_fee
                             response_data['parte2']=parte2
                             
                             parte3={} #La voy a usar para mandar los costos fijos
-                            parte3['Gastos fob']=infoNecesaria.gastos_fob
-                            parte3['Gastos naviera']=infoNecesaria.gastos_naviera
+                            parte3['Gastos_fob']=infoNecesaria.gastos_fob
+                            parte3['Gastos_naviera']=infoNecesaria.gastos_naviera
                             parte3['Manejo']=infoNecesaria.manejo
-                            parte3['Collect fee']=infoNecesaria.collect_fee
                             response_data['parte3']=parte3
                             
                             parte4={} #La voy a usar para mandar los costos opcionales
@@ -299,25 +299,25 @@ def metodoPrincipal(request):
                             parte1['Origen']=string
                             parte1['Destino']=infoNecesaria.puerto_descargue
                             parte1['Servicio']=infoNecesaria.servicio
-                            parte1['Tiempo de transito']=infoNecesaria.tiempo_transito
+                            parte1['Tiempo_de_transito']=infoNecesaria.tiempo_transito
                             parte1['Frecuencia']=infoNecesaria.frecuencia
                             response_data['parte1']=parte1
                             
                             parte2={} #La voy a usar para mandar los costos de la carga
                             volumenCarga=d['anchoLCL']*d['altoLCL']*d['largoLCL']
                             pesoCarga=d['pesoLCL']
-                            parte2['Costo Transporte']=max(volumenCarga, pesoCarga)*infoNecesaria.tarifaTon_m3
-                            parte2['Costo gasolina']=max(volumenCarga, pesoCarga)*infoNecesaria.gasolinaBAF
-                            parte2['Desconsolidacion de la carga']=max(volumenCarga, pesoCarga)*negocio.desconsolidacion
-                            parte2['Uso de las instalaciones portuarias']=max(volumenCarga, pesoCarga)*negocio.usoDePuerto
-                            parte2['Collect Fee']=0 #TODO: preguntar esta regla de nuevo(recordar que es un porcentaje)
+                            parte2['Costo_Transporte']=max(volumenCarga, pesoCarga)*infoNecesaria.tarifaTon_m3
+                            parte2['Costo_Gasolina']=max(volumenCarga, pesoCarga)*infoNecesaria.gasolinaBAF
+                            parte2['Desconsolidacion_de_la_carga']=max(volumenCarga, pesoCarga)*negocio.desconsolidacion
+                            parte2['Uso_de_las_instalaciones_portuarias']=max(volumenCarga, pesoCarga)*negocio.usoDePuerto
+                            parte2['Collect_Fee']=0 #TODO: preguntar esta regla de nuevo(recordar que es un porcentaje)
                             response_data['parte2']=parte2
                             
                             parte3={} #La voy a usar para mandar los costos fijos
                             parte3['BL']=negocio.blGeneral_LCL
                             parte3['Radicacion']=negocio.radicacion
-                            parte3['Manejo Logistico']=negocio.manejoLogistico
-                            parte3['Emision HBL en destino']=negocio.emisionHBL
+                            parte3['Manejo_Logistico']=negocio.manejoLogistico
+                            parte3['Emision_HBL_en_destino']=negocio.emisionHBL
                             response_data['parte3']=parte3
                             
                             parte4={} #La voy a usar para mandar los costos opcionales
@@ -344,7 +344,6 @@ def hacerCotizacion(request):
             d = json.loads(str) #Se carga en esta estructura especial para json y ahora se puede acceder cada parametro ej: print d['telefono']
             #-------------------------------------------------
             elCorreo=d['infoUser']['correo']
-            print(elCorreo)
             
             subject = 'Tu cotizacion'
             from_email = 'noreply@melyakinternational.com'
@@ -358,7 +357,6 @@ def hacerCotizacion(request):
             return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 def armar_mail(request, contenido):
-    print(contenido)
     t = loader.get_template('correo.html')
     c = RequestContext(request, contenido)
     return t.render(c)

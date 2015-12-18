@@ -91,6 +91,7 @@
                         <div id="proyectoEspecial" class="cuadrado">
                             <span class="dato agrandado escondido uppercase">Escribenos tu pedido</span>
                             <textarea id="textoEspecial" ng-model="user.textoEspecial" rows="15" cols="50"></textarea>
+                            <span id="avisoTextoEspecial" class="aviso">Este campo es obligatorio</span>
                         </div>
                         <div id="maritimoFCL" class="cuadrado maritimo">
                             <span class="dato agrandado">Puerto de Origen</span><br/>
@@ -226,8 +227,6 @@
                             </div>
                         </div>
                         <div id="zonaCentro"   class="col-md-8 col-md-offset-2 col-md-pull-2 col-sm-8 col-sm-offset-2 col-sm-pull-2 col-xs-12"></div>
-                    </div>
-                    <div class="row cuadradoBoton-div">
                         <div id="botonCuadro3" class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
                             <div id='part3_cuadradoBoton' class='cuadrado'>
                                 <button class='btn elboton uppercase separado agrandado' type='button' ng-click='enviarLiquidacion()'/>Enviar a mi Email</button>
@@ -244,7 +243,7 @@
             </div>
             <br/>
             <!--TODO QUITAR LINEA -->
-            <center><p ng-bind="user | json"></p></center>
+            <!--center><p ng-bind="user | json"></p></center-->
         </div>
         <!-- imports js -->
         <!--Estas 3 lineas son para incluir JQuery y poder usar la libreria de los sliders... include the jQuery and jQuery UI scripts -->
@@ -256,6 +255,7 @@
         <!--Luego si meto las librerias que uso y finalmente mis javascripts-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script src="{{STATIC_URL}}js/jquery-ui-slider-pips.js"></script>
+        <script src="{{STATIC_URL}}js/bootbox.min.js"></script>
         <script src="{{STATIC_URL}}js/scripts.js"></script>
     </body>
 </html>

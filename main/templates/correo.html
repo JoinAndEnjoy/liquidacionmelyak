@@ -217,11 +217,20 @@
                                     </td>
                                 </tr>
                                 {% if infoUser.tipoEnvio == "Proyecto Especial" %}
-                                    Proyecto Especial
+                                <tr>
+                                    <td style='padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;'>
+                                        Vamos a revisar tur pedido, pronto estaremos respondiendote
+                                    </td>
+                                </tr>
                                 {% else %}
                                 <tr>
                                     <td style='color: #153643; font-family: Arial, sans-serif; font-size: 18px;'>
                                         <br/><b>Tu Cotización</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='color: #153643; font-family: Arial, sans-serif; font-size: 14px;'>
+                                        <br/><b>1. Informacion del transporte</b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -231,31 +240,64 @@
                                                 <td width='260' valign='top'>
                                                     <center>
                                                         <table border='2' cellpadding='0' cellspacing='0' width='100%'>
-                                                            <tr>
-                                                                <td>Container</td> 
-                                                                <td>4545</td>
-                                                                <td>Container</td> 
-                                                                <td>4545</td>
-                                                                <td>Container</td> 
-                                                                <td>4545</td>
-                                                                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                                                                {% if infoUser.tipoEnvio == "Via Maritima" %}
-                                                                    {% if infoUser.tipoEnvio2 == "FCL" %}
-                                                                        FCL
-                                                                    {% elif infoUser.tipoEnvio2 == "LCL" %}
-                                                                        LCL
-                                                                    {% else %}
-                                                                    {% endif %}
-                                                                {% elif infoUser.tipoEnvio == "Via Aerea" %}
-                                                                    Aerea
-                                                                {% elif infoUser.tipoEnvio == "Proyecto Especial" %}
-                                                                    Proyecto Especial
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                            {% if infoUser.tipoEnvio == "Via Maritima" %}
+                                                                {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                                    <tr>
+                                                                        <td>Destino</td>
+                                                                        <td>{{parte1.Destino}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Origen</td>
+                                                                        <td>{{parte1.Origen}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Servicio</td>
+                                                                        <td>{{parte1.Servicio}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tiempo de transito</td>
+                                                                        <td>{{parte1.Tiempo_de_transito}}</td>
+                                                                    </tr>
+                                                                {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                                    <tr>
+                                                                        <td>Destino</td>
+                                                                        <td>{{parte1.Destino}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Origen</td>
+                                                                        <td>{{parte1.Origen}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Servicio</td>
+                                                                        <td>{{parte1.Servicio}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tiempo de transito</td>
+                                                                        <td>{{parte1.Tiempo_de_transito}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tiempo de transito</td>
+                                                                        <td>{{parte1.Frecuencia}}</td>
+                                                                    </tr>
                                                                 {% else %}
                                                                 {% endif %}
-                                                                <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-                                                                <td>Container</td> 
-                                                                <td>4545</td>
-                                                            </tr>
+                                                            {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                                                <tr>
+                                                                    <td>Alto [m]</td>
+                                                                    <td>{{infoUser.altoLCL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Largo [m]</td>
+                                                                    <td>{{infoUser.largoLCL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Peso [Ton]</td>
+                                                                    <td>{{infoUser.pesoLCL}}</td>
+                                                                </tr>
+                                                            {% else %}
+                                                            {% endif %}
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
                                                         </table>
                                                     </center>
                                                 </td>
@@ -265,7 +307,197 @@
                                 </tr>
                                 <tr>
                                     <td style='color: #153643; font-family: Arial, sans-serif; font-size: 14px;'>
-                                        <br/><b>    Tu Cotización</b>
+                                        <br/><b>2. Costos de la Carga</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                            <tr>
+                                                <td width='260' valign='top'>
+                                                    <center>
+                                                        <table border='2' cellpadding='0' cellspacing='0' width='100%'>
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                            {% if infoUser.tipoEnvio == "Via Maritima" %}
+                                                                {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                                    <tr>
+                                                                        <td>Costo Transoprte contenedores 20 ft</td>
+                                                                        <td>{{parte2.Costo_Transoprte_contenedores_20_ft}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Costo Transoprte contenedores 40 ft</td>
+                                                                        <td>{{parte2.Costo_Transoprte_contenedores_40_ft}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>bl</td>
+                                                                        <td>{{parte2.bl}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Collect Fee</td>
+                                                                        <td>{{parte2.Collect_Fee}}</td>
+                                                                    </tr>
+                                                                {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                                    <tr>
+                                                                        <td>Costo Transporte</td>
+                                                                        <td>{{parte2.Costo_Transporte}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Costo Gasolina</td>
+                                                                        <td>{{parte2.Costo_Gasolina}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Desconsolidacion de la carga</td>
+                                                                        <td>{{parte2.Desconsolidacion_de_la_carga}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Uso de las instalaciones portuarias</td>
+                                                                        <td>{{parte2.Uso_de_las_instalaciones_portuarias}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Collect Fee</td>
+                                                                        <td>{{parte2.Collect_Fee}}</td>
+                                                                    </tr>
+                                                                {% else %}
+                                                                {% endif %}
+                                                            {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                                                <tr>
+                                                                    <td>Alto [m]</td>
+                                                                    <td>{{infoUser.altoLCL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Largo [m]</td>
+                                                                    <td>{{infoUser.largoLCL}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Peso [Ton]</td>
+                                                                    <td>{{infoUser.pesoLCL}}</td>
+                                                                </tr>
+                                                            {% else %}
+                                                            {% endif %}
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                        </table>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='color: #153643; font-family: Arial, sans-serif; font-size: 14px;'>
+                                        <br/><b>3. Costos Fijos</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                            <tr>
+                                                <td width='260' valign='top'>
+                                                    <center>
+                                                        <table border='2' cellpadding='0' cellspacing='0' width='100%'>
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                            {% if infoUser.tipoEnvio == "Via Maritima" %}
+                                                                {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                                    <tr>
+                                                                        <td>Gastos fob</td>
+                                                                        <td>{{parte3.Gastos_fob}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Gastos naviera</td>
+                                                                        <td>{{parte3.Gastos_naviera}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Manejo</td>
+                                                                        <td>{{parte3.Manejo}}</td>
+                                                                    </tr>
+                                                                {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                                    <tr>
+                                                                        <td>BL</td>
+                                                                        <td>{{parte3.BL}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Radicacion</td>
+                                                                        <td>{{parte3.Radicacion}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Manejo Logistico</td>
+                                                                        <td>{{parte3.Manejo_Logistico}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Emision HBL en destino</td>
+                                                                        <td>{{parte3.Emision_HBL_en_destino}}</td>
+                                                                    </tr>
+                                                                {% else %}
+                                                                {% endif %}
+                                                            {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                                                <tr>
+                                                                        <td>Alto [m]</td>
+                                                                        <td>{{infoUser.altoLCL}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Largo [m]</td>
+                                                                        <td>{{infoUser.largoLCL}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Peso [Ton]</td>
+                                                                        <td>{{infoUser.pesoLCL}}</td>
+                                                                    </tr>
+                                                            {% else %}
+                                                            {% endif %}
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                        </table>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='color: #153643; font-family: Arial, sans-serif; font-size: 14px;'>
+                                        <br/><b>4. Costos Opcionales</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+                                            <tr>
+                                                <td width='260' valign='top'>
+                                                    <center>
+                                                        <table border='2' cellpadding='0' cellspacing='0' width='100%'>
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                            {% if infoUser.tipoEnvio == "Via Maritima" %}
+                                                                {% if infoUser.tipoEnvio2 == "FCL" %}
+                                                                    <tr>
+                                                                        <td>Seguro</td>
+                                                                        <td>{{parte4.Seguro}}</td>
+                                                                    </tr>
+                                                                {% elif infoUser.tipoEnvio2 == "LCL" %}
+                                                                    <tr>
+                                                                        <td>Seguro</td>
+                                                                        <td>{{parte4.Seguro}}</td>
+                                                                    </tr>
+                                                                {% else %}
+                                                                {% endif %}
+                                                            {% elif infoUser.tipoEnvio == "Via Aerea" %}
+                                                                <tr>
+                                                                        <td>Alto [m]</td>
+                                                                        <td>{{infoUser.altoLCL}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Largo [m]</td>
+                                                                        <td>{{infoUser.largoLCL}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Peso [Ton]</td>
+                                                                        <td>{{infoUser.pesoLCL}}</td>
+                                                                    </tr>
+                                                            {% else %}
+                                                            {% endif %}
+                                                            <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+                                                        </table>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                                 {% endif %}

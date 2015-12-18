@@ -101,7 +101,7 @@ app.controller('ctrlMelyak', function ($scope)
             $scope.$apply(function ()
             {
                 $scope.configPais = data;
-                $scope.user.paisDatos = $scope.configPais[50].cc_fips;//El numero corresponde a Colombia (50)
+                $scope.user.paisDatos = $scope.configPais[48].cc_fips;//El numero corresponde a Colombia (48)
                 $scope.user.paisProducto = $scope.configPais[0].cc_fips;
             });
 
@@ -334,6 +334,13 @@ app.controller('ctrlMelyak', function ($scope)
                                 $("#avisoDimensionesLCL").css("display", "none");
                         }
                     }
+                } else if ($scope.user.tipoEnvio === "Proyecto Especial")
+                {
+                    if (angular.isUndefined($scope.user.textoEspecial) || $scope.user.textoEspecial === "" || $scope.user.textoEspecial == null) {
+                        pasa = false;
+                        $("#avisoTextoEspecial").css("display", "block");
+                    } else
+                        $("#avisoTextoEspecial").css("display", "none");
                 }
             }
 
@@ -343,6 +350,9 @@ app.controller('ctrlMelyak', function ($scope)
             $scope.user.arregloAereo = [];
             for (var c = 0; c < 3; c++)
             {
+                if (c===2 && $scope.user.tipoEnvio === "Via Martima") continue;
+                if ((c === 0 || c === 1 ) && $scope.user.tipoEnvio === "Via Aerea") continue;
+                
                 revision: for (var i = 1; i <= contenedores[c]; i++)
                 {
                     if (c === 0)
@@ -483,6 +493,10 @@ app.controller('ctrlMelyak', function ($scope)
     };
 
     $scope.enviarLiquidacion = function () {
+        
+        $("#waitting").css("display", "block");
+        $("#Parte3").css("display", "none");
+        
         $scope.cotizacion.infoUser = $scope.user;
         $.ajax({
             url: 'auxiliar/post/hacerCotizacion/', // the endpoint
@@ -491,14 +505,24 @@ app.controller('ctrlMelyak', function ($scope)
             // handle a successful response
             success: function (json)
             {
+                $("#waitting").css("display", "none");
+                $("#Parte3").css("display", "block");
                 console.log(json);
+                bootbox.dialog({
+                    title: "Envio Exitoso",
+                    message: '<center><img src="../static/img/logo.png"/><br/>Enviamos tu aproximación presupuestal a tu correo.</center>'
+                });
             },
             // handle a non-successful response
             error: function (xhr, errmsg, err)
             {
-                $('body').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
-                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                $("#waitting").css("display", "none");
+                $("#Parte3").css("display", "block");
+                bootbox.dialog({
+                    title: "Envio Fallido",
+                    message: '<center><i class="fa fa-times fa-5x" style="color:#e74c3c;"></i></center><br/>Tuvimos un problema enviando la aproximación presupuestal a tu correo.'
+                });
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to 
             }
         });
     };
@@ -580,10 +604,10 @@ function pintarPagina3(json, tipoCotizacion)
                 if ($.isNumeric(json[k][key]) && i > 0)
                 {
                     var valorAPoner = parseFloat(Math.round(json[k][key] * 100) / 100).toFixed(2);
-                    contenido += "<span id='" + key.replace(/\s/g, "") + "' class='dato col-md-7 col-sm-7 col-xs-7'>" + key + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ " + valorAPoner + "</span>";
+                    contenido += "<span id='" + key.replace(/_/g, "") + "' class='dato col-md-7 col-sm-7 col-xs-7'>" + key.replace(/_/g, " ") + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>$ " + valorAPoner + "</span>";
                     total += json[k][key];
                 } else
-                    contenido += "<span id='" + key.replace(/\s/g, "") + "' class='dato col-md-7 col-sm-7 col-xs-7'>" + key + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>" + json[k][key] + "</span>";
+                    contenido += "<span id='" + key.replace(/_/g, "") + "' class='dato col-md-7 col-sm-7 col-xs-7'>" + key.replace(/_/g, " ") + "</span><span class='dato derecha col-md-5 col-sm-5 col-xs-5 textoGris'>" + json[k][key] + "</span>";
                 contenido += "</div>";
             }
             if (i > 0) //No se espera que el primero tenga un total porque es el de informacion general
@@ -602,8 +626,10 @@ function pintarPagina3(json, tipoCotizacion)
         contenido += "</div>";
     } else if (tipoCotizacion === "Proyecto Especial")
     {
+        $("#part3_cuadrado_lado1").css("display","none");
         contenido = "<div id='part3_cuadrado1' class='cuadrado'>";
         contenido += "  <span class='dato agrandado escondido uppercase'>1. Aviso</span><br/><br/>";
+        contenido += "  <p>Tu cotización llegará a nosotros cuando envíes el correo. Te daremos una respuesta tan pronto como sea posible.</p>";
         contenido += "</div>";
     }
     $("#zonaCentro").html(contenido);
